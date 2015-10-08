@@ -6,3 +6,6 @@ Homestead.json
 /.idea
 /.vagrant
 /public/css
+/public/js
+/public/fonts
+/bower_components

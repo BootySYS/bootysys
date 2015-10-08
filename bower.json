@@ -1,0 +1,23 @@
+{
+  "name": "bootysys",
+  "version": "0.0.0",
+  "homepage": "https://github.com/BootySYS/bootysys",
+  "authors": [
+    "Enes Kaya <eneskaya@me.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "startbootstrap-sb-admin-2": "~1.0.7",
+    "font-awesome": "fontawesome#~4.4.0"
+  }
+}

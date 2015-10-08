@@ -18,5 +18,6 @@ return [
 
     'id' => 'ID',
     'password' => 'Password',
-    'login' => 'Log in'
+    'login' => 'Log in',
+    'login-message' => 'Please log in'
 ];
