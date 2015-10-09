@@ -12,7 +12,7 @@ class CreateCourseGroupTable extends Migration
      */
     public function up()
     {
-        Schema::table('course_group', function (Blueprint $table) {
+        Schema::create('course_group', function (Blueprint $table) {
             $table->increments('id');
 
             $table->integer('course_id')->unsigned();
@@ -32,8 +32,6 @@ class CreateCourseGroupTable extends Migration
      */
     public function down()
     {
-        Schema::table('course_group', function (Blueprint $table) {
-            //
-        });
+        Schema::drop('course_group');
     }
 }

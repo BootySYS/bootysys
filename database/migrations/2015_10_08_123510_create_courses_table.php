@@ -16,7 +16,7 @@ class CreateCoursesTable extends Migration
             $table->increments('id');
             $table->integer('capacity');
 
-            $table->integer('professor_id');
+            $table->integer('professor_id')->unsigned();
             $table->foreign('professor_id')->references('id')->on('professors')->onDelete('cascade');
 
             $table->timestamps();

@@ -12,7 +12,7 @@ class CreateGroupStudentTable extends Migration
      */
     public function up()
     {
-        Schema::table('group_student', function (Blueprint $table) {
+        Schema::create('group_student', function (Blueprint $table) {
 
             $table->increments('id');
 
@@ -36,8 +36,6 @@ class CreateGroupStudentTable extends Migration
      */
     public function down()
     {
-        Schema::table('group_student', function (Blueprint $table) {
-            //
-        });
+        Schema::drop('group_student');
     }
 }
