@@ -1,5 +1,7 @@
 ## BootySYS
 
+[![Build Status](https://travis-ci.org/BootySYS/bootysys.svg?branch=develop)](https://travis-ci.org/BootySYS/bootysys)
+
 Install:
 
 * ```git clone``` the repository on your computer
