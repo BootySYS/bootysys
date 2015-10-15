@@ -1,22 +1,14 @@
 language: php
 
 php:
-  - 5.4
-  - 5.5
   - 5.6
+  - hhvm
+  - nightly
 
 before_script:
   - curl -s http://getcomposer.org/installer | php
   - php composer.phar install
+  - php artisan migrate:refresh --seed
 
 before_install:
   - mysql -e 'create database staging;'
-
-env:
-  - APP_ENV=production
-  - APP_DEBUG=false
-  - DB_CONNECTION=mysql
-  - DB_HOST=127.0.0.1
-  - DB_USERNAME=travis
-  - DB_PASSWORD=
-  - DB_DATABASE=staging
