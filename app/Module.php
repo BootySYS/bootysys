@@ -4,17 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Professor extends Model
+class Module extends Model
 {
-    protected $fillable = [
-        'first_name',
-        'last_name',
-        'email',
-        'password'
-    ];
-
     /**
-     * A professor works at an university.
+     * A module belongs to a university.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -29,8 +22,8 @@ class Professor extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function modules()
+    public function professors()
     {
-        return $this->belongsToMany('App\Module');
+        return $this->belongsToMany('App\Professor');
     }
 }

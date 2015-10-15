@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGroupStudentTable extends Migration
+class CreateStudentTeamTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,20 +12,16 @@ class CreateGroupStudentTable extends Migration
      */
     public function up()
     {
-        Schema::create('group_student', function (Blueprint $table) {
-
+        Schema::create('student_team', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->integer('group_id')->unsigned();
             $table->integer('student_id')->unsigned();
-
-            $table->enum('role', ['leader', 'member']);
-
-            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
             $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
 
-            $table->timestamps();
+            $table->integer('team_id')->unsigned();
+            $table->foreign('team_id')->references('id')->on('teams')->onDelete('cascade');
 
+            $table->timestamps();
         });
     }
 
@@ -36,6 +32,6 @@ class CreateGroupStudentTable extends Migration
      */
     public function down()
     {
-        Schema::drop('group_student');
+        Schema::drop('student_team');
     }
 }

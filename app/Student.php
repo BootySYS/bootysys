@@ -10,6 +10,7 @@ class Student extends Model
         'first_name',
         'last_name',
         'email',
+        'password',
         'major',
         'semester'
     ];
@@ -24,15 +25,14 @@ class Student extends Model
         return $this->belongsTo('App\University');
     }
 
-
     /**
      * A student belongs to many groups.
      *
      * @return $this
      */
-    public function groups()
+    public function teams()
     {
-        return $this->belongsToMany('App\Group')
+        return $this->belongsToMany('App\Teams')
                     ->withPivot('role');
     }
 }

@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Course extends Model
 {
     protected $fillable = [
-      'capacity'
+        'capacity',
+        'type'
     ];
 
     /**
@@ -18,15 +19,5 @@ class Course extends Model
     public function groups()
     {
         return $this->belongsToMany('App\Group');
-    }
-
-    /**
-     * A course has many events.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function events()
-    {
-        return $this->hasMany('App\Event');
     }
 }

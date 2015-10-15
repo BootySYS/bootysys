@@ -6,26 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Group extends Model
 {
-
     /**
+     * A group has many events.
      *
-     *
-     * @return $this
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function students()
+    public function events()
     {
-        return $this->belongsToMany('App\Student')
-                    ->withPivot('role');
+        return $this->hasMany('App\Event');
     }
-
-    /**
-     * A group is enrolled in possibly many courses.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function courses()
-    {
-        return $this->belongsToMany('App\Course');
-    }
-
 }

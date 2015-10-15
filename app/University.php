@@ -11,7 +11,8 @@ class University extends Model
         'name',
         'contact_first_name',
         'contact_last_name',
-        'contact_email',
+        'email',
+        'password',
         'address'
     ];
 
@@ -35,4 +36,13 @@ class University extends Model
         return $this->hasMany('App\Professor');
     }
 
+    /**
+     * A university offers many modules.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function modules()
+    {
+        return $this->hasMany('App\Module');
+    }
 }

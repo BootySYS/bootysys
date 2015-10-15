@@ -16,8 +16,7 @@ class CreateCoursesTable extends Migration
             $table->increments('id');
             $table->integer('capacity');
 
-            $table->integer('professor_id')->unsigned();
-            $table->foreign('professor_id')->references('id')->on('professors')->onDelete('cascade');
+            $table->enum('type', ['lecture', 'practical_cours']);
 
             $table->timestamps();
         });
