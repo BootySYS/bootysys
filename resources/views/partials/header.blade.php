@@ -17,7 +17,7 @@
         <div class="navbar-default sidebar" role="navigation">
             <div class="sidebar-nav">
                 <ul class="nav in">
-                    </li>
+                    @yield('sidebar')
                 </ul>
             </div>
         </div>
