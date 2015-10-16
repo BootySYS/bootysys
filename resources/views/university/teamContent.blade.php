@@ -1,7 +1,7 @@
 <table class="table table-striped">
     <tr>
         <th>Member</th>
-        <th>Student ID</th>
+        <th>Enrollment Number</th>
         <th>First Name</th>
         <th>Last Name</th>
     </tr>

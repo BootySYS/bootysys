@@ -1,6 +1,6 @@
 <table class="table table-striped">
     <tr>
-        <th>Student ID</th>
+        <th>Enrollment Number</th>
         <th>First Name</th>
         <th>Last Name</th>
         <th>Email</th>

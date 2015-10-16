@@ -2,7 +2,7 @@
 
 @section('content')
 
-    @include('university.teamContent')
+    @include('university.professorTable')
 
 @stop
 
