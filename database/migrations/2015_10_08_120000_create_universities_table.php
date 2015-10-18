@@ -19,9 +19,10 @@ class CreateUniversitiesTable extends Migration
             $table->string('contact_first_name');
             $table->string('contact_last_name');
             $table->string('email');
-
-            $table->string('password', 60);
-            $table->string('address');
+            $table->string('city');
+            $table->string('zip_code');
+            $table->string('street');
+            $table->string('state');
 
             $table->timestamps();
         });
