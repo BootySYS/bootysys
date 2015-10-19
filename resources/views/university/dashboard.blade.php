@@ -12,8 +12,8 @@
 
     <div class="row">
 
-        <div class="col-lg-3 col-md-6">
-            <div class="panel panel-primary">
+        <div class="col-lg-6 col-md-6">
+            <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-3">
@@ -25,7 +25,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="#">
+                <a href="{{ action('ModulesController@index') }}">
                     <div class="panel-footer">
                         <span class="pull-left">Manage modules</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -35,7 +35,7 @@
             </div>
         </div>
 
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-6 col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="row">
@@ -48,7 +48,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="#">
+                <a href="{{ action('ProfessorsController@index') }}">
                     <div class="panel-footer">
                         <span class="pull-left">Manage professors</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -58,7 +58,7 @@
             </div>
         </div>
 
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-6 col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="row">
@@ -81,7 +81,7 @@
             </div>
         </div>
 
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-6 col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="row">

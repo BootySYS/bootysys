@@ -7,7 +7,7 @@
         <p class="lead">
             Your students deserve a service like pazzam&reg; to manage their course enrollments. And so do you.
         </p>
-        <p><a class="btn btn-lg btn-success" href="{{ action('RegisterController@showRegister') }}" role="button">Sign up your university today</a></p>
+        <p><a class="btn btn-lg btn-success" href="{{ action('RegisterController@showRegister') }}" role="button">Sign up today</a></p>
     </div>
 
     <div class="row marketing">
