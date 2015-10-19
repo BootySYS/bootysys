@@ -7,17 +7,26 @@ use Illuminate\Database\Eloquent\Model;
 class Course extends Model
 {
     protected $fillable = [
-        'capacity',
         'type'
     ];
 
     /**
-     * A course belongs to and has many groups.
+     * A course has many groups.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function groups()
     {
-        return $this->belongsToMany('App\Group');
+        return $this->hasMany('App\Group');
+    }
+
+    /**
+     * A course belongs to a module.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function module()
+    {
+        return $this->belongsTo('App\Module');
     }
 }

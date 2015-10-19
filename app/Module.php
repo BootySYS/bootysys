@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Module extends Model
 {
+    protected $fillable = [
+        'name', 'short_name', 'description'
+    ];
+
     /**
      * A module belongs to a university.
      *
@@ -25,5 +29,15 @@ class Module extends Model
     public function professors()
     {
         return $this->belongsToMany('App\Professor');
+    }
+
+    /**
+     * A module has many courses.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function courses()
+    {
+        return $this->hasMany('App\Course');
     }
 }
