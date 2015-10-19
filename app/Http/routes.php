@@ -12,7 +12,11 @@
 */
 
 Route::get('/', 'StartController@index');
+Route::get('dashboard', 'DashboardController@dashboard');
 
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
+
+Route::get('register/university', 'RegisterController@showRegister');
+Route::post('register/university', 'RegisterController@register');
