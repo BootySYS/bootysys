@@ -12,8 +12,10 @@ class University extends Model
         'contact_first_name',
         'contact_last_name',
         'email',
-        'password',
-        'address'
+        'city',
+        'state',
+        'zip_code',
+        'street'
     ];
 
     /**
