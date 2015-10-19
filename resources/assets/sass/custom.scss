@@ -1,9 +1,37 @@
+$navbar-color: #404040;
+
+body.logged-in {
+  background-color: $navbar-color;
+}
 
 #page-wrapper {
   min-height: 100vh;
 }
 
-a.navbar-brand {
-  font-family: 'Lobster', cursive;;
-  font-size: 24px;
+.navbar-default {
+  background-color: $navbar-color;
+  border-color: lighten($navbar-color, 10);
+
+  .sidebar-nav {
+    background-color: $navbar-color;
+  }
+
+  a.navbar-brand {
+    color: white;
+    font-family: 'Paytone One', sans-serif;
+  }
+
+  ul.navbar-top-links {
+    li {
+      a {
+        color: white;
+
+        &:hover,
+        &:focus {
+          text-decoration: none;
+          background-color: lighten($navbar-color, 20);
+        }
+      }
+    }
+  }
 }

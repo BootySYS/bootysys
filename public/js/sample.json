@@ -1,0 +1,48 @@
+{
+  "module_name" : "GKA",
+  "course_title": "GKAP",
+  "course_id" : 1234,
+  "groups" : [
+    {
+      "group_title": "GKAP01",
+      "group_id": 12381092,
+      "events": [
+        {
+          "day": "12-10-2015",
+          "start_time": "10:00",
+          "end_time": "15:00"
+        },
+        {
+          "day": "12-10-2015",
+          "start_time": "10:00",
+          "end_time": "15:00"
+        },
+        {
+          "day": "12-10-2015",
+          "start_time": "10:00",
+          "end_time": "15:00"
+        }
+      ],
+      "applying_teams": [
+        {
+          "team_id" : 4561,
+          "member_count": 8,
+          "members": [
+            {
+              "name": "Marc Kirchner",
+              "member_id": 8192347
+            },
+            {
+              "name": "Niko Khaled",
+              "member_id": 749192
+            },
+            {
+              "name": "Finn Masurat",
+              "member_id": 4891723
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

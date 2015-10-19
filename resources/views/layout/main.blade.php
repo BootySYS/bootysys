@@ -6,22 +6,21 @@
 
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/sweetalert.css') }}">
-    <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Patua+One|Paytone+One' rel='stylesheet' type='text/css'>
 </head>
-<body>
+<body class="logged-in">
 
     @include('partials.header')
 
     <div id="page-wrapper">
+            <small class="text-muted pull-right" style="margin-top: 10px; position: absolute; right: 28px;"><i class="fa fa-quote-right"></i>
+                {{ Inspiring::quote() }}
+            </small>
+
             @include('flash.messages')
             @yield('content')
     </div>
 
     <script src="{{ asset('js/app.js') }}"></script>
-
-    <script>
-        angular.module("app").constant("CSRF_TOKEN", '{{ csrf_token() }}');
-    </script>
-
 </body>
 </html>

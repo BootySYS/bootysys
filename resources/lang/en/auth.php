@@ -18,6 +18,19 @@ return [
 
     'id' => 'ID',
     'password' => 'Password',
+    'confirm_password' => 'Confirm password',
     'login' => 'Log in',
-    'login-message' => 'Please log in'
+    'login-message' => 'Please log in',
+    'register' => 'Register',
+
+    'successfully_registered' => 'You\'ve registered successfully. Go ahead!',
+
+    'university' => 'University',
+    'firstname' => 'First name',
+    'lastname' => 'Last name',
+    'email' => 'Email Address',
+    'state' => 'State',
+    'city' => 'City',
+    'zip_code' => 'ZIP code',
+    'street' => 'Street',
 ];
