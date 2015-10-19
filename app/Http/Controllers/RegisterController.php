@@ -28,9 +28,7 @@ class RegisterController extends Controller
     {
         $university = University::create($request->all());
         $user = $this->createAuthenticableUserAndLogin($request, 'university', $university->contact_first_name . ' ' . $university->contact_last_name);
-
-        if (Auth::attempt($user)) {
-            return redirect('dashboard');
-        }
+        Auth::login($user);
+        return redirect('dashboard');
     }
 }
