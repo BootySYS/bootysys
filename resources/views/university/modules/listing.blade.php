@@ -28,17 +28,20 @@
         @else
             <div class="col-lg-12">
                 <table class="table table-striped table-bordered table-hover">
-                    <tr>
-                        <th>Short name</th>
-                        <th>Module name</th>
-                        <th>Description</th>
-                        <th>Professor(s)</th>
-                        <th>Courses</th>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>Short name</th>
+                            <th>Module name</th>
+                            <th>Description</th>
+                            <th>Professor(s)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
                     @foreach($modules as $module)
                         <tr>
                             <td>{{ $module->short_name }}</td>
-                            <td>{{ $module->name }}</td>
+                            <td><a href="{{ action('ModulesController@show', ['id' => $module->id]) }}">{{ $module->name }}</a></td>
                             <td>{{ str_limit($module->description, 50) }}</td>
                             <td>
                                 <ul class="list">
@@ -47,7 +50,9 @@
                                     @endforeach
                                 </ul>
                             </td>
-                            <td>{{ count($module->courses) }}</td>
+                            <td class="text-center">
+                                <a href="{{ action('ModulesController@edit', ['id' => $module->id]) }}" class="btn btn-default btn-sm"><i class="fa fa-edit"></i> Edit</a>
+                            </td>
                         </tr>
                     @endforeach
 

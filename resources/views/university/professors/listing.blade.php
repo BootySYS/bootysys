@@ -19,14 +19,17 @@
 
             <div class="col-lg-12">
                 <table class="table table-striped table-bordered table-hover">
-                    <tr>
-                        <th>ID</th>
-                        <th>Title</th>
-                        <th>First name</th>
-                        <th>Last name</th>
-                        <th>Courses</th>
-                        <th>Email</th>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>First name</th>
+                            <th>Last name</th>
+                            <th>Courses</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+
                     @foreach($university->professors as $professor)
                         <tr>
                             <td>{{ $professor->id }}</td>

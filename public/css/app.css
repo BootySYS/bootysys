@@ -7860,6 +7860,9 @@ table.dataTable thead .sorting:after {
 body.logged-in {
   background-color: #404040; }
 
+#page-wrapper {
+  height: 100vh; }
+
 .sidebar-nav {
   background-color: #404040; }
   .sidebar-nav ul li {
