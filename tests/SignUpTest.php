@@ -30,17 +30,4 @@ class SignUpTest extends TestCase
              ->press('Register')
              ->seePageIs('/dashboard');
     }
-
-    public function testLogoutAndLogin()
-    {
-        $this->visit('/auth/login')
-             ->type('enes.kaya@haw-hamburg.de', 'email')
-             ->type('1234', 'password')
-             ->press('Log in')
-             ->seePageIs('/dashboard');
-
-        $this->visit('/dashboard')
-             ->click('Log out')
-             ->seePageIs('/');
-    }
 }
