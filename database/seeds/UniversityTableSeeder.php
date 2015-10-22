@@ -13,7 +13,7 @@ class UniversityTableSeeder extends Seeder
      */
     public function run()
     {
-        University::create([
+        $university = University::create([
             'name' => 'HAW Hamburg',
             'contact_first_name' => 'Enes',
             'contact_last_name' => 'Kaya',

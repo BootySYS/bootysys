@@ -7857,25 +7857,63 @@ table.dataTable thead .sorting:after {
 .fa-meanpath:before {
   content: "\f20c"; }
 
+body {
+  font-family: 'Open Sans', sans-serif; }
+
 body.logged-in {
-  background-color: #404040; }
+  background-color: #23292f; }
+
+.btn {
+  font-family: 'Open Sans', sans-serif; }
 
 #page-wrapper {
   min-height: 100vh; }
 
+.page-header h1, .page-header h2, .page-header h3, .page-header h4 {
+  font-family: 'Patua One', cursive;
+  color: #23292f; }
+
+.sidebar-nav {
+  background-color: #23292f; }
+  .sidebar-nav ul li {
+    border-bottom: 1px solid #39424c; }
+    .sidebar-nav ul li a {
+      color: #7f8f9f; }
+      .sidebar-nav ul li a:hover {
+        background-color: #0d0f12; }
+      .sidebar-nav ul li a i {
+        width: 20px; }
+
 .navbar-default {
-  background-color: #404040;
-  border-color: #5a5a5a; }
-  .navbar-default .sidebar-nav {
-    background-color: #404040; }
+  background-color: #23292f;
+  border-color: #39424c; }
   .navbar-default a.navbar-brand {
-    color: white;
-    font-family: 'Paytone One', sans-serif; }
+    color: #9eeeff;
+    font-family: 'Paytone One', sans-serif;
+    margin-left: 23px; }
+    .navbar-default a.navbar-brand:hover {
+      color: #d1f7ff; }
   .navbar-default ul.navbar-top-links li a {
     color: white; }
     .navbar-default ul.navbar-top-links li a:hover,
     .navbar-default ul.navbar-top-links li a:focus {
       text-decoration: none;
-      background-color: #737373; }
+      background-color: #4f5c69; }
+
+table ul.list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none; }
+
+/****************** SEARCH *********************/
+.sidebar-search i {
+  color: #7f8f9f; }
+
+.sidebar-search input {
+  outline: none;
+  border: none;
+  background: transparent;
+  color: whitesmoke;
+  padding: 10px 10px 10px 8px; }
 
 /*# sourceMappingURL=app.css.map */
