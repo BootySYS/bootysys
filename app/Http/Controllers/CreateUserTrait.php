@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 trait CreateUserTrait
@@ -10,15 +11,14 @@ trait CreateUserTrait
     /**
      * Create a user and login.
      *
-     * @param $request
+     * @param Request $request
      * @param $role
-     * @param $name
      * @return \Illuminate\Http\RedirectResponse
      */
-    private function createAuthenticableUserAndLogin($request, $role, $name)
+    private function createAuthenticableUser(Request $request, $role)
     {
         return User::create([
-            'name'      => $name,
+            'name'      => $request->input('contact_first_name') . ' ' . $request->input('contact_last_name'),
             'email'     => $request->input('email'),
             'password'  => bcrypt($request->input('password')),
             'role'      => $role

@@ -35,4 +35,14 @@ class Student extends Model
         return $this->belongsToMany('App\Teams')
                     ->withPivot('role');
     }
+
+    /**
+     * Get the user instance of the student.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

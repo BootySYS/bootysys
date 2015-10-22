@@ -47,4 +47,14 @@ class University extends Model
     {
         return $this->hasMany('App\Module');
     }
+
+    /**
+     * Get the user instance of the university.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
