@@ -18,5 +18,16 @@ Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
 
+
 Route::get('register/university', 'RegisterController@showRegister');
 Route::post('register/university', 'RegisterController@register');
+
+Route::get('university', function() {
+    return view('university.index');
+});
+
+Route::get('student', function() {
+    return view('student.index');
+});
+
+
