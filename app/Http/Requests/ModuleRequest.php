@@ -13,7 +13,7 @@ class ModuleRequest extends Request
      */
     public function authorize()
     {
-        return auth()->check();
+        return auth()->check() && auth()->user()->role == 'university';
     }
 
     /**
@@ -24,8 +24,8 @@ class ModuleRequest extends Request
     public function rules()
     {
         return [
-            'name'          => 'required',
-            'short_name'    => 'required',
+            'name'          => 'required|unique:modules',
+            'short_name'    => 'required|unique:modules',
             'description'   => 'required',
             'professors'    => 'required|array'
         ];

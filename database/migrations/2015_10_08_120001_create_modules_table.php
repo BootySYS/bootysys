@@ -16,7 +16,7 @@ class CreateModulesTable extends Migration
             $table->increments('id');
 
             $table->string('name')->unique();
-            $table->string('short_name');
+            $table->string('short_name')->unique();
             $table->text('description');
 
             $table->integer('university_id')->unsigned();

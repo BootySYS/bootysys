@@ -8,16 +8,20 @@ use App\University;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 
 class ModulesController extends Controller
 {
     protected $university;
+    protected $gate;
 
-    public function __construct()
+    public function __construct(Gate $gate)
     {
         $this->middleware('auth');
         $this->university = University::where('email', auth()->user()->email)->firstOrFail();
+
+        $this->gate = $gate;
     }
 
     /**
@@ -63,7 +67,8 @@ class ModulesController extends Controller
      */
     public function show($id)
     {
-        //
+        $module = Module::find($id);
+        return view('university.modules.show')->with(compact('module'));
     }
 
     /**
@@ -74,19 +79,27 @@ class ModulesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $module = Module::find($id);
+        return view('university.modules.edit')->with(compact('module'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param ModuleRequest|Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ModuleRequest $request, $id)
     {
-        //
+        $module = Module::find($id);
+        $module->name = $request->input('name');
+        $module->short_name = $request->input('short_name');
+        $module->description = $request->input('description');
+        $module->professors()->detach();
+        $module->professors()->attach($request->input('professors'));
+        Session::flash('success', 'The module was updated');
+        return redirect()->action('ModulesController@index');
     }
 
     /**
@@ -97,6 +110,10 @@ class ModulesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $module = Module::find($id);
+        $module->professors()->detach();
+        $module->delete();
+        Session::flash('success', 'The module was deleted');
+        return redirect()->action('ModulesController@index');
     }
 }
