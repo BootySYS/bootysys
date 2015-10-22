@@ -1,6 +1,22 @@
 $dark-color: #23292f;
 $brand-color: #9eeeff;
 
+::-webkit-input-placeholder {
+  color: lighten($dark-color, 20);
+}
+
+:-moz-placeholder { /* Firefox 18- */
+  color: lighten($dark-color, 20);
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+  color: lighten($dark-color, 20);
+}
+
+:-ms-input-placeholder {
+  color: lighten($dark-color, 20);
+}
+
 body {
   font-family: 'Open Sans', sans-serif;
 }

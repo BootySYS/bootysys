@@ -7857,6 +7857,20 @@ table.dataTable thead .sorting:after {
 .fa-meanpath:before {
   content: "\f20c"; }
 
+::-webkit-input-placeholder {
+  color: #4f5c69; }
+
+:-moz-placeholder {
+  /* Firefox 18- */
+  color: #4f5c69; }
+
+::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #4f5c69; }
+
+:-ms-input-placeholder {
+  color: #4f5c69; }
+
 body {
   font-family: 'Open Sans', sans-serif; }
 
