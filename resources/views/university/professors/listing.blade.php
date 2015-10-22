@@ -22,10 +22,7 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Title</th>
-                            <th>First name</th>
-                            <th>Last name</th>
-                            <th>Courses</th>
+                            <th>Name</th>
                             <th>Email</th>
                         </tr>
                     </thead>
@@ -33,27 +30,24 @@
                     @foreach($university->professors as $professor)
                         <tr>
                             <td>{{ $professor->id }}</td>
-                            <td>{{ $professor->title }}</td>
-                            <td>{{ $professor->first_name }}</td>
-                            <td>{{ $professor->last_name }}</td>
-                            <td>
-                                @if($professor->modules->isEmpty())
-                                    <span class="text-danger">No courses</span>
-                                @endif
-                                @foreach($professor->modules as $module)
-                                    {{ $module->name }}<br>
-                                @endforeach
-                            </td>
-                            <td>
-                                {{ $professor->email }}
-                            </td>
+                            <td>{{ $professor->title }} {{ $professor->first_name }} {{ $professor->last_name }}</td>
+                            <td>{{ $professor->email }}</td>
                         </tr>
                     @endforeach
                 </table>
             </div>
 
         @else
-
+            <div class="col-lg-12">
+                <div class="well well-lg">
+                    <h4><i class="fa fa-exclamation-circle"></i> You have no professors yet.</h4>
+                    <p>
+                        A professor can see and manage their courses. After you enter a professor or lecturer the person will receive an email with a password. <br>
+                        You can either create <a href="{{ action('ProfessorsController@create') }}">a professor manually here</a>,
+                        or go ahead and try our <a href="file">file importer</a>.
+                    </p>
+                </div>
+            </div>
         @endif
 
     </div>

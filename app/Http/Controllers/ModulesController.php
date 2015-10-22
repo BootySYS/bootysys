@@ -8,16 +8,20 @@ use App\University;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 
 class ModulesController extends Controller
 {
     protected $university;
+    protected $gate;
 
-    public function __construct()
+    public function __construct(Gate $gate)
     {
         $this->middleware('auth');
         $this->university = University::where('email', auth()->user()->email)->firstOrFail();
+
+        $this->gate = $gate;
     }
 
     /**

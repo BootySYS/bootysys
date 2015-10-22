@@ -15,9 +15,10 @@ class CreateProfessorsTable extends Migration
         Schema::create('professors', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->enum('title', ['Dr.', 'Prof. Dr.']);
+            $table->enum('title', ['Dr.', 'Prof. Dr.'])->nullable();
             $table->string('first_name');
             $table->string('last_name');
+            $table->string('shorthand')->unique()->nullable();
             $table->string('email')->unique();
 
             $table->integer('university_id')->unsigned();

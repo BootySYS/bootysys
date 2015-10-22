@@ -32,7 +32,6 @@
                         <tr>
                             <th>Short name</th>
                             <th>Module name</th>
-                            <th>Description</th>
                             <th>Professor(s)</th>
                             <th></th>
                         </tr>
@@ -42,7 +41,6 @@
                         <tr>
                             <td>{{ $module->short_name }}</td>
                             <td><a href="{{ action('ModulesController@show', ['id' => $module->id]) }}">{{ $module->name }}</a></td>
-                            <td>{{ str_limit($module->description, 50) }}</td>
                             <td>
                                 <ul class="list">
                                     @foreach($module->professors as $professor)

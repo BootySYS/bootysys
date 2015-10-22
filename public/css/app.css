@@ -7863,11 +7863,15 @@ body {
 body.logged-in {
   background-color: #23292f; }
 
+.btn {
+  font-family: 'Open Sans', sans-serif; }
+
 #page-wrapper {
   min-height: 100vh; }
 
-.page-header {
-  font-family: 'Patua One', sans-serif; }
+.page-header h1, .page-header h2, .page-header h3, .page-header h4 {
+  font-family: 'Patua One', cursive;
+  color: #23292f; }
 
 .sidebar-nav {
   background-color: #23292f; }
@@ -7884,10 +7888,11 @@ body.logged-in {
   background-color: #23292f;
   border-color: #39424c; }
   .navbar-default a.navbar-brand {
-    color: white;
-    font-family: 'Paytone One', sans-serif; }
+    color: #9eeeff;
+    font-family: 'Paytone One', sans-serif;
+    margin-left: 23px; }
     .navbar-default a.navbar-brand:hover {
-      color: #39424c; }
+      color: #d1f7ff; }
   .navbar-default ul.navbar-top-links li a {
     color: white; }
     .navbar-default ul.navbar-top-links li a:hover,
@@ -7899,5 +7904,16 @@ table ul.list {
   margin: 0;
   padding: 0;
   list-style-type: none; }
+
+/****************** SEARCH *********************/
+.sidebar-search i {
+  color: #7f8f9f; }
+
+.sidebar-search input {
+  outline: none;
+  border: none;
+  background: transparent;
+  color: whitesmoke;
+  padding: 10px 10px 10px 8px; }
 
 /*# sourceMappingURL=app.css.map */

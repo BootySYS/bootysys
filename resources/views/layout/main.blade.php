@@ -13,10 +13,6 @@
     @include('partials.header')
 
     <div id="page-wrapper">
-            <small class="text-muted pull-right" style="margin-top: 10px; position: absolute; right: 28px;"><i class="fa fa-quote-right"></i>
-                {{ Inspiring::quote() }}
-            </small>
-
             @include('flash.messages')
             @yield('content')
     </div>

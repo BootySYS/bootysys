@@ -17,6 +17,11 @@
             <div class="sidebar-nav">
                 <ul class="nav in">
 
+                    <li class="sidebar-search">
+                        <i class="fa fa-search"></i>
+                        <input type="text" class="" placeholder="Search...">
+                    </li>
+
                     @if(auth()->user()->role == 'university')
                         <li>
                             <a href="{{ url('/dashboard') }}"><i class="fa fa-tachometer"></i> Dashboard</a>
