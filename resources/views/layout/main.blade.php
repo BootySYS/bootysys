@@ -6,7 +6,7 @@
 
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/sweetalert.css') }}">
-    <link href='https://fonts.googleapis.com/css?family=Patua+One|Paytone+One' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Patua+One|Paytone+One|Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
 </head>
 <body class="logged-in">
 

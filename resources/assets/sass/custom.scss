@@ -1,11 +1,19 @@
-$navbar-color: #404040;
+$navbar-color: #23292f;
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
 
 body.logged-in {
   background-color: $navbar-color;
 }
 
 #page-wrapper {
-  height: 100vh;
+  min-height: 100vh;
+}
+
+.page-header {
+  font-family: 'Patua One', sans-serif;
 }
 
 .sidebar-nav {
