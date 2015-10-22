@@ -13,7 +13,7 @@ class UniversityTableSeeder extends Seeder
      */
     public function run()
     {
-        University::create([
+        $university = University::create([
             'name' => 'HAW Hamburg',
             'contact_first_name' => 'Enes',
             'contact_last_name' => 'Kaya',
@@ -30,5 +30,10 @@ class UniversityTableSeeder extends Seeder
             'password' => bcrypt('1234'),
             'role' => 'university'
         ]);
+
+        for ($i = 0; $i < 10; $i++) {
+            $university->professors()->save(factory(\App\Professor::class)->make());
+        }
+
     }
 }

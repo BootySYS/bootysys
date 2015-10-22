@@ -14,9 +14,11 @@ class CreateCoursesTable extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('capacity');
 
             $table->enum('type', ['lecture', 'practical_cours']);
+
+            $table->integer('module_id')->unsigned();
+            $table->foreign('module_id')->references('id')->on('modules')->onDelete('cascade');
 
             $table->timestamps();
         });

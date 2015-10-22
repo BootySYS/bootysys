@@ -12,3 +12,6 @@ before_script:
 
 before_install:
   - mysql -e 'create database staging;'
+
+after_success:
+  - curl https://forge.laravel.com/servers/49181/sites/103236/deploy/http?token=osUWms1fEU5pwOs5hG4jxle7FOGstksTzTjbu4zk

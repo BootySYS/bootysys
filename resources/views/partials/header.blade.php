@@ -1,7 +1,7 @@
 <header>
     <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0;">
         <div class="navbar-header">
-            <a href="{{ url('/') }}" class="navbar-brand">pazzam<i class="fa fa-asterisk"></i></a>
+            <a href="{{ url('dashboard') }}" class="navbar-brand">pazzam<i class="fa fa-asterisk"></i></a>
         </div>
 
         <ul class="nav navbar-top-links navbar-right">
@@ -16,7 +16,31 @@
         <div class="navbar-default sidebar" role="navigation">
             <div class="sidebar-nav">
                 <ul class="nav in">
-                    </li>
+
+                    @if(auth()->user()->role == 'university')
+                        <li>
+                            <a href="{{ url('/dashboard') }}"><i class="fa fa-tachometer"></i> Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="{{ action('ModulesController@index') }}"><i class="fa fa-book"></i> Modules</a>
+                        </li>
+                        <li>
+                            <a href="{{ action('ProfessorsController@index') }}"><i class="fa fa-user"></i> Professors</a>
+                        </li>
+                        <li>
+                            <a href="{{ action('StudentsController@index') }}"><i class="fa fa-graduation-cap"></i> Students</a>
+                        </li>
+                        <li>
+                            <a href="{{ action('StudentTeamsController@index') }}"><i class="fa fa-users"></i> Student Teams</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-download"></i> File Import</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-upload"></i> Export Data</a>
+                        </li>
+                    @endif
+
                 </ul>
             </div>
         </div>

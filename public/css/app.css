@@ -7860,22 +7860,35 @@ table.dataTable thead .sorting:after {
 body.logged-in {
   background-color: #404040; }
 
-#page-wrapper {
-  min-height: 100vh; }
+.sidebar-nav {
+  background-color: #404040; }
+  .sidebar-nav ul li {
+    border-bottom: 1px solid #5a5a5a; }
+    .sidebar-nav ul li a {
+      color: #a6a6a6; }
+      .sidebar-nav ul li a:hover {
+        background-color: #272727; }
+      .sidebar-nav ul li a i {
+        width: 20px; }
 
 .navbar-default {
   background-color: #404040;
   border-color: #5a5a5a; }
-  .navbar-default .sidebar-nav {
-    background-color: #404040; }
   .navbar-default a.navbar-brand {
     color: white;
     font-family: 'Paytone One', sans-serif; }
+    .navbar-default a.navbar-brand:hover {
+      color: #5a5a5a; }
   .navbar-default ul.navbar-top-links li a {
     color: white; }
     .navbar-default ul.navbar-top-links li a:hover,
     .navbar-default ul.navbar-top-links li a:focus {
       text-decoration: none;
       background-color: #737373; }
+
+table ul.list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none; }
 
 /*# sourceMappingURL=app.css.map */

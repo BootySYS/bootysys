@@ -1,7 +1,7 @@
-[![Stories in Ready](https://badge.waffle.io/BootySYS/bootysys.png?label=ready&title=Ready)](https://waffle.io/BootySYS/bootysys)
 ## BootySYS
 
 [![Build Status](https://travis-ci.org/BootySYS/bootysys.svg?branch=develop)](https://travis-ci.org/BootySYS/bootysys)
+[![Stories in Ready](https://badge.waffle.io/BootySYS/bootysys.png?label=ready&title=Ready)](https://waffle.io/BootySYS/bootysys)
 
 Install:
 

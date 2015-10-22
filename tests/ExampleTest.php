@@ -10,6 +10,6 @@ class ExampleTest extends TestCase
 
     public function testRegisteringPossible()
     {
-        $this->visit('register/university')->see('Register your university');
+        $this->visit('register/university')->see('Register now!');
     }
 }
