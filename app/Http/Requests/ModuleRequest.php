@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Gate;
 
 class ModuleRequest extends Request
 {
@@ -13,7 +14,7 @@ class ModuleRequest extends Request
      */
     public function authorize()
     {
-        return auth()->check() && auth()->user()->role == 'university';
+        return Gate::allows('create-module');
     }
 
     /**

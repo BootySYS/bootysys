@@ -64,7 +64,7 @@ class ModulesController extends Controller
      */
     public function show($id)
     {
-        $module = Module::find($id);
+        $module = $this->university->modules->find($id);
         return view('university.modules.show')->with(compact('module'));
     }
 

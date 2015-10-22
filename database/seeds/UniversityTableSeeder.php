@@ -30,5 +30,7 @@ class UniversityTableSeeder extends Seeder
             'password' => bcrypt('1234'),
             'role' => 'university'
         ]);
+
+        $university->professors()->save(factory(\App\Professor::class)->make());
     }
 }

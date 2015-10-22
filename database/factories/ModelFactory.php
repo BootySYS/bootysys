@@ -24,7 +24,6 @@ $factory->define(App\Professor::class, function (Faker\Generator $faker) {
     return [
         'first_name' => $faker->firstName,
         'last_name' => $faker->lastName,
-        'email' => $faker->email,
-        'user_id' => 1
+        'email' => $faker->email
     ];
 });

@@ -21,6 +21,8 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');
 Route::get('register/university', 'RegisterController@showRegister');
 Route::post('register/university', 'RegisterController@register');
 
+Route::get('user/profile', 'UsersController@show');
+
 Route::group(['prefix' => 'modules'], function() {
     Route::get('/', 'ModulesController@index');
     Route::get('create', 'ModulesController@create');
