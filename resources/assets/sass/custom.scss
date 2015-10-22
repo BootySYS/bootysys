@@ -23,6 +23,17 @@ body {
 
 body.logged-in {
   background-color: $dark-color;
+
+  .alert {
+    -moz-border-radius-bottomright: 4px;
+    -moz-border-radius-bottomleft: 4px;
+    -webkit-border-radius: 0px 0px 4px 4px;
+    -moz-border-radius-topright: 0px;
+    -moz-border-radius-topright: 0px;
+    border-radius: 0px 0px 4px 4px;
+
+    border-top: none;
+  }
 }
 
 .btn {
