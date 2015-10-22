@@ -20,3 +20,9 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');
 
 Route::get('register/university', 'RegisterController@showRegister');
 Route::post('register/university', 'RegisterController@register');
+
+Route::group(['prefix' => 'api'], function() {
+    post('test', function(\Illuminate\Http\Request $request) {
+        return $request->all();
+    });
+});
