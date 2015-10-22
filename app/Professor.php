@@ -12,6 +12,19 @@ class Professor extends Model
         'email'
     ];
 
+    protected static function boot()
+    {
+        // TODO send email with randomly generated password
+        Professor::created(function($professor) {
+            $professor->university->user()->create([
+                'name' => $professor->first_name . ' ' . $professor->last_name,
+                'email' => $professor->email,
+                'password' => bcrypt('1234'),
+                'role' => 'professor'
+            ]);
+        });
+    }
+
     /**
      * A professor works at an university.
      *

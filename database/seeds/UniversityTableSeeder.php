@@ -21,14 +21,16 @@ class UniversityTableSeeder extends Seeder
             'city' => 'Hamburg',
             'state' => 'Hamburg',
             'zip_code' => '20095',
-            'street' => 'Berliner Tor 5'
+            'street' => 'Berliner Tor 5',
         ]);
 
-        User::create([
+        $university->user()->create([
             'name' => 'Enes Kaya',
             'email' => 'enes.kaya@haw-hamburg.de',
             'password' => bcrypt('1234'),
             'role' => 'university'
         ]);
+
+        $university->professors()->save(factory(\App\Professor::class)->make());
     }
 }

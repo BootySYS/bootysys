@@ -27,7 +27,7 @@ class RegisterController extends Controller
     public function register(UniversityRegisterRequest $request)
     {
         $university = University::create($request->all());
-        $user = $this->createAuthenticableUserAndLogin($request, 'university', $university->contact_first_name . ' ' . $university->contact_last_name);
+        $user = $this->createAuthenticableUser($university, $request->input('password'));
         Auth::login($user);
         return redirect('dashboard');
     }

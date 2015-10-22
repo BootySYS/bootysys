@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\University;
 use App\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 trait CreateUserTrait
@@ -10,18 +12,17 @@ trait CreateUserTrait
     /**
      * Create a user and login.
      *
-     * @param $request
-     * @param $role
-     * @param $name
+     * @param University $university
+     * @param $password
      * @return \Illuminate\Http\RedirectResponse
      */
-    private function createAuthenticableUserAndLogin($request, $role, $name)
+    private function createAuthenticableUser(University $university, $password)
     {
-        return User::create([
-            'name'      => $name,
-            'email'     => $request->input('email'),
-            'password'  => bcrypt($request->input('password')),
-            'role'      => $role
+        return $university->user()->create([
+            'name'      => $university->contact_first_name . ' ' . $university->contact_last_name,
+            'email'     => $university->email,
+            'password'  => bcrypt($password),
+            'role'      => 'university'
         ]);
     }
 }

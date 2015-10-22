@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ModuleRequest;
 use App\Module;
-use App\University;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -14,14 +13,11 @@ use Illuminate\Support\Facades\Session;
 class ModulesController extends Controller
 {
     protected $university;
-    protected $gate;
 
-    public function __construct(Gate $gate)
+    public function __construct()
     {
         $this->middleware('auth');
-        $this->university = University::where('email', auth()->user()->email)->firstOrFail();
-
-        $this->gate = $gate;
+        $this->university = auth()->user()->university;
     }
 
     /**
@@ -42,6 +38,7 @@ class ModulesController extends Controller
      */
     public function create()
     {
+        if (Gate::denies('create-module')) return abort('403', 'You are not allowed to see this!');
         return view('university.modules.create')->with('university', $this->university);
     }
 
@@ -67,7 +64,7 @@ class ModulesController extends Controller
      */
     public function show($id)
     {
-        $module = Module::find($id);
+        $module = $this->university->modules->find($id);
         return view('university.modules.show')->with(compact('module'));
     }
 

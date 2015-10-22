@@ -6,7 +6,7 @@
 
         <ul class="nav navbar-top-links navbar-right">
             <li>
-                <a href="">{{ auth()->user()->name }}</a>
+                <a href="{{ action('UsersController@show') }}">{{ auth()->user()->name }}</a>
             </li>
             <li>
                 <a href="{{ action('Auth\AuthController@getLogout') }}"><i class="fa fa-sign-out"></i> {{ trans('messages.logout') }}</a>
@@ -22,7 +22,6 @@
                         <input type="text" class="" placeholder="Search...">
                     </li>
 
-                    @if(auth()->user()->role == 'university')
                         <li>
                             <a href="{{ url('/dashboard') }}"><i class="fa fa-tachometer"></i> Dashboard</a>
                         </li>
@@ -38,13 +37,15 @@
                         <li>
                             <a href="{{ action('StudentTeamsController@index') }}"><i class="fa fa-users"></i> Student Teams</a>
                         </li>
-                        <li>
-                            <a href="#"><i class="fa fa-download"></i> File Import</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-upload"></i> Export Data</a>
-                        </li>
-                    @endif
+
+                        @can('manage-university')
+                            <li>
+                                <a href="#"><i class="fa fa-download"></i> File Import</a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-upload"></i> Export Data</a>
+                            </li>
+                        @endcan
 
                 </ul>
             </div>
