@@ -9,6 +9,12 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
      */
     protected $baseUrl = 'http://localhost';
 
+    public function setUp()
+    {
+        parent::setUp();
+        $this->prepareForTests();
+    }
+
     /**
      * Creates the application.
      *
@@ -22,4 +28,12 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
 
         return $app;
     }
+
+    private function prepareForTests()
+    {
+        Artisan::call('migrate:rollback');
+        Artisan::call('migrate');
+        Mail::pretend(true);
+    }
+
 }
