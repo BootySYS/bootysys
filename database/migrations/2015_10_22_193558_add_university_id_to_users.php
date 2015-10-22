@@ -13,7 +13,7 @@ class AddUniversityIdToUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('university_id')->unsigned()->nullable();
+            $table->integer('university_id')->unsigned();
             $table->foreign('university_id')->references('id')->on('universities')->onDelete('cascade');
         });
     }
