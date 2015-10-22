@@ -32,14 +32,4 @@ class Professor extends Model
     {
         return $this->belongsToMany('App\Module');
     }
-
-    /**
-     * Get the user instance of the professor.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 }

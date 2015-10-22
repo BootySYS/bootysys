@@ -13,14 +13,7 @@ class UniversityTableSeeder extends Seeder
      */
     public function run()
     {
-        $user = User::create([
-            'name' => 'Enes Kaya',
-            'email' => 'enes.kaya@haw-hamburg.de',
-            'password' => bcrypt('1234'),
-            'role' => 'university'
-        ]);
-
-        $user->university()->create([
+        $university = University::create([
             'name' => 'HAW Hamburg',
             'contact_first_name' => 'Enes',
             'contact_last_name' => 'Kaya',
@@ -29,6 +22,13 @@ class UniversityTableSeeder extends Seeder
             'state' => 'Hamburg',
             'zip_code' => '20095',
             'street' => 'Berliner Tor 5',
+        ]);
+
+        $university->user()->create([
+            'name' => 'Enes Kaya',
+            'email' => 'enes.kaya@haw-hamburg.de',
+            'password' => bcrypt('1234'),
+            'role' => 'university'
         ]);
     }
 }

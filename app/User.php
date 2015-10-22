@@ -38,32 +38,12 @@ class User extends Model implements AuthenticatableContract,
     protected $hidden = ['password', 'remember_token'];
 
     /**
-     * The users university instance.
+     * A user belongs to an university.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function university()
     {
-        return $this->hasOne(University::class);
-    }
-
-    /**
-     * The users professor instance.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function professor()
-    {
-        return $this->hasOne(Professor::class);
-    }
-
-    /**
-     * The users student instance.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function student()
-    {
-        return $this->hasOne(Student::class);
+        return $this->belongsTo(University::class);
     }
 }
