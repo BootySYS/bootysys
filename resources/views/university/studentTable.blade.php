@@ -9,7 +9,7 @@
     </tr>
     <tr>
         <td>abl934</td>
-        <td>Ementaler</td>
+        <td>Emmentaler</td>
         <td>Halffat</td>
         <td>EmHF@Aol.com</td>
         <td>Angewandte Informatik</td>

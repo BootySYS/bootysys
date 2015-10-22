@@ -20,3 +20,8 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');
 Route::get('university', function() {
     return view('university.index');
 });
+
+Route::get('student', function() {
+    return view('student.index');
+});
+
