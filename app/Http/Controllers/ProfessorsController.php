@@ -13,7 +13,7 @@ class ProfessorsController extends Controller
 
     public function __construct()
     {
-        $this->university = University::where('email', auth()->user()->email)->firstOrFail();
+        $this->university = auth()->user()->university;
     }
 
     /**

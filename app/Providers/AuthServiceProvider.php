@@ -30,8 +30,12 @@ class AuthServiceProvider extends ServiceProvider
             return ($user->role === 'university');
         });
 
-        $gate->define('change-module', function($user, $module) {
-            return ($user->role === 'university') && $module->university->id === $user->university_id;
+        $gate->define('edit-or-delete-module', function($user, $module) {
+            return ($user->role === 'university') && ($module->university->id === $user->university->id);
+        });
+
+        $gate->define('manage-university', function($user) {
+            return $user->role === 'university';
         });
     }
 }

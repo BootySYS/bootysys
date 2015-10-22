@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\University;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class DashboardController extends Controller
+class UsersController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-    public function dashboard()
+    public function show()
     {
-        return view('university.dashboard')->with('university', auth()->user()->university);
+        return view('auth.user')->with('user', auth()->user());
     }
 }

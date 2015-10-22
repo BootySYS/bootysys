@@ -12,6 +12,19 @@ class Professor extends Model
         'email'
     ];
 
+    protected static function boot()
+    {
+        // TODO send email with randomly generated password
+        Professor::created(function($professor) {
+            $professor->university->user()->create([
+                'name' => $professor->first_name . ' ' . $professor->last_name,
+                'email' => $professor->email,
+                'password' => bcrypt('1234'),
+                'role' => 'professor'
+            ]);
+        });
+    }
+
     /**
      * A professor works at an university.
      *
@@ -31,15 +44,5 @@ class Professor extends Model
     public function modules()
     {
         return $this->belongsToMany('App\Module');
-    }
-
-    /**
-     * Get the user instance of the professor.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function user()
-    {
-        return $this->belongsTo(User::class);
     }
 }

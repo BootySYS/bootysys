@@ -15,6 +15,19 @@ class Student extends Model
         'semester'
     ];
 
+    protected static function boot()
+    {
+        // TODO send email with randomly generated password
+        Student::created(function($student) {
+            $student->university->user()->create([
+                'name' => $student->first_name . ' ' . $student->last_name,
+                'email' => $student->email,
+                'password' => bcrypt('1234'),
+                'role' => 'professor'
+            ]);
+        });
+    }
+
     /**
      * A student is enrolled in an university.
      *
@@ -45,4 +58,6 @@ class Student extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+
 }

@@ -24,9 +24,6 @@ class CreateProfessorsTable extends Migration
             $table->integer('university_id')->unsigned();
             $table->foreign('university_id')->references('id')->on('universities')->onDelete('cascade');
 
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-
             $table->timestamps();
         });
     }

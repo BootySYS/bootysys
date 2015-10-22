@@ -7,7 +7,9 @@
             <div class="page-header">
                 <h3>
                     Modules
-                    <a href="{{ action('ModulesController@create') }}" class="btn btn-primary btn-sm pull-right"><i class="fa fa-plus"></i> Add module</a>
+                    @can('create-module')
+                        <a href="{{ action('ModulesController@create') }}" class="btn btn-primary btn-sm pull-right"><i class="fa fa-plus"></i> Add module</a>
+                    @endcan
                 </h3>
             </div>
         </div>
@@ -17,7 +19,7 @@
         @if(count($modules) == 0)
             <div class="col-lg-12">
                 <div class="well well-lg">
-                    <h4><i class="fa fa-exclamation-circle"></i> You have no modules yet</h4>
+                    <h4><i class="fa fa-exclamation-circle"></i> There are no modules yet</h4>
                     <p>
                         A module can contain courses and lectures with their respective groups. <br>
                         You can either create <a href="{{ action('ModulesController@create') }}">a module manually here</a>,
@@ -49,7 +51,13 @@
                                 </ul>
                             </td>
                             <td class="text-center">
-                                <a href="{{ action('ModulesController@edit', ['id' => $module->id]) }}" class="btn btn-default btn-sm"><i class="fa fa-edit"></i> Edit</a>
+                                @can('edit-or-delete-module', $module)
+                                     <a href="{{ action('ModulesController@edit', ['id' => $module->id]) }}"
+                                        class="btn btn-default btn-sm">
+                                         <i class="fa fa-edit"></i> Edit
+                                     </a>
+                                @endcan
+
                             </td>
                         </tr>
                     @endforeach
