@@ -107,46 +107,37 @@
         }
     </style>
 
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
-
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <link href='https://fonts.googleapis.com/css?family=Patua+One|Paytone+One' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Patua+One|Paytone+One|Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
 </head>
 
 <body>
+    <div class="container">
+        <div class="header clearfix">
+            <nav>
+                <ul class="nav nav-pills pull-right">
+                    <li role="presentation"><a href="{{ url('/') }}">Home</a></li>
+                    <li role="presentation"><a href="{{ action('Auth\AuthController@getLogin') }}">Log in</a></li>
+                    <li role="presentation" class="active"><a href="{{ action('RegisterController@showRegister') }}">Sign up</a></li>
 
-<div class="container">
-    <div class="header clearfix">
-        <nav>
-            <ul class="nav nav-pills pull-right">
-                <li role="presentation"><a href="{{ url('/') }}">Home</a></li>
-                <li role="presentation"><a href="{{ action('Auth\AuthController@getLogin') }}">Log in</a></li>
-                <li role="presentation" class="active"><a href="{{ action('RegisterController@showRegister') }}">Sign up</a></li>
+                </ul>
+            </nav>
+            <h3 class="text-muted">pazzam<i class="fa fa-asterisk"></i></h3>
+        </div>
 
-            </ul>
-        </nav>
-        <h3 class="text-muted">pazzam<i class="fa fa-asterisk"></i></h3>
-    </div>
+        @include('flash.messages')
 
-    @include('flash.messages')
+        @yield('content')
 
-    @yield('content')
+        <footer class="footer text-center">
+            <p> All rights reserved &copy; pazzam 2015</p>
+        </footer>
 
-    <footer class="footer text-center">
-        <p> All rights reserved &copy; pazzam 2015</p>
-    </footer>
-
-</div> <!-- /container -->
-
-
-<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+    </div> <!-- /container -->
 </body>
 </html>

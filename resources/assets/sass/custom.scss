@@ -1,5 +1,6 @@
 $dark-color: #23292f;
 $brand-color: #9eeeff;
+$danger-color: #d9534f;
 
 ::-webkit-input-placeholder {
   color: lighten($dark-color, 20);
@@ -48,6 +49,12 @@ body.logged-in {
   h1, h2, h3, h4 {
     font-family: 'Patua One', cursive;
     color: $dark-color;
+  }
+
+  &.danger {
+    h1, h2, h3, h4 {
+      color: $danger-color;
+    }
   }
 }
 

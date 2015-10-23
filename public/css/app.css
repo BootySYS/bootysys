@@ -7895,6 +7895,9 @@ body.logged-in {
   font-family: 'Patua One', cursive;
   color: #23292f; }
 
+.page-header.danger h1, .page-header.danger h2, .page-header.danger h3, .page-header.danger h4 {
+  color: #d9534f; }
+
 .sidebar-nav {
   background-color: #23292f; }
   .sidebar-nav ul li {

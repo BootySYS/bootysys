@@ -1,7 +1,9 @@
 {
   "private": true,
   "devDependencies": {
-    "gulp": "^3.8.8"
+    "gulp": "^3.8.8",
+    "vue": "^1.0.0-rc.2",
+    "vue-resource": "^0.1.16"
   },
   "dependencies": {
     "angular": "^1.4.7",
