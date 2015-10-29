@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ModuleRequest;
+use App\Http\Requests\ModuleUpdateRequest;
 use App\Module;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -83,11 +84,11 @@ class ModulesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param ModuleRequest|Request $request
+     * @param ModuleUpdateRequest $request
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ModuleRequest $request, $id)
+    public function update(ModuleUpdateRequest $request, $id)
     {
         $module = Module::find($id);
         $module->name = $request->input('name');
@@ -95,6 +96,7 @@ class ModulesController extends Controller
         $module->description = $request->input('description');
         $module->professors()->detach();
         $module->professors()->attach($request->input('professors'));
+        $module->save();
         Session::flash('success', 'The module was updated');
         return redirect()->action('ModulesController@index');
     }

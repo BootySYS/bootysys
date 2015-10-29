@@ -7930,6 +7930,9 @@ table ul.list {
   padding: 0;
   list-style-type: none; }
 
+table.module-table tr td:first-child {
+  width: 20%; }
+
 /****************** SEARCH *********************/
 .sidebar-search i {
   color: #7f8f9f; }

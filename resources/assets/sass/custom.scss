@@ -122,6 +122,14 @@ table {
   }
 }
 
+table.module-table {
+  tr {
+    td:first-child {
+      width: 20%;
+    }
+  }
+}
+
 /****************** SEARCH *********************/
 
 .sidebar-search {
