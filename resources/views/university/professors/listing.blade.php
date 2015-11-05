@@ -30,7 +30,7 @@
                     @foreach($university->professors as $professor)
                         <tr>
                             <td>{{ $professor->id }}</td>
-                            <td>{{ $professor->title }} {{ $professor->first_name }} {{ $professor->last_name }}</td>
+                            <td>{{ $professor->name }}</td>
                             <td>{{ $professor->email }}</td>
                         </tr>
                     @endforeach

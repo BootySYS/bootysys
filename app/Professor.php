@@ -45,4 +45,14 @@ class Professor extends Model
     {
         return $this->belongsToMany('App\Module');
     }
+
+    /**
+     * Get the professors title and full name.
+     *
+     * @return string
+     */
+    public function getNameAttribute()
+    {
+        return $this->title . ' ' . $this->first_name . ' ' . $this->last_name;
+    }
 }

@@ -31,6 +31,11 @@ class UniversityTableSeeder extends Seeder
             'role' => 'university'
         ]);
 
-        $university->professors()->save(factory(\App\Professor::class)->make());
+        $professors = factory(\App\Professor::class, 20)->make();
+
+        foreach ($professors as $professor)
+        {
+            $university->professors()->save($professor);
+        }
     }
 }
