@@ -22,9 +22,14 @@ Route::get('register/university', 'RegisterController@showRegister');
 Route::post('register/university', 'RegisterController@register');
 
 Route::get('user/profile', 'UsersController@show');
+Route::get('user/get/profile', 'UsersController@profile');
 
 Route::group(['prefix' => 'modules'], function() {
     Route::get('/', 'ModulesController@index');
+    Route::get('all', 'ModulesController@all');
+
+    Route::post('store', 'ModulesController@store');
+
     Route::get('create', 'ModulesController@create');
     Route::post('create', 'ModulesController@store');
     Route::get('show/{id}', 'ModulesController@show');

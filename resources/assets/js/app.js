@@ -1,6 +1,4 @@
-var Vue = require('vue');
-Vue.use(require('vue-resource'));
+var angular = require('angular');
 
-var vm = new Vue({
-
-});
+angular.module('app', [])
+        .controller('ModulesController', require('./controllers/ModulesController'));

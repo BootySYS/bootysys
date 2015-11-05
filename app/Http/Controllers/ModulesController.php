@@ -32,6 +32,11 @@ class ModulesController extends Controller
         return view('university.modules.listing')->with(compact('modules'));
     }
 
+    public function all()
+    {
+        return $this->university->modules;
+    }
+
     /**
      * Show the form for creating a new resource.
      *
