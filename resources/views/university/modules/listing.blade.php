@@ -3,33 +3,24 @@
 @section('content')
 
 
-    <div ng-app="app" ng-controller="ModulesController">
-
+    <div ng-controller="ModulesController">
+        <loader ng-show="loading"></loader>
         <div class="row">
             <div class="col-lg-12">
                 <div class="page-header">
                     <h3>
-                        Modules
-                        <a ng-if="state === 'all'" ng-click="addModule()" class="btn btn-primary btn-sm pull-right"><i class="fa fa-plus"></i> Add module</a>
-                        <a ng-if="state === 'add'" ng-click="cancel()" class="btn btn-danger btn-sm pull-right">Cancel</a>
+                        <span ng-show="state == 'all'">@{{ modules.length }} Modules</span>
+                        <span ng-show="state == 'add'">
+                            @{{ newModule.name ? newModule.name : 'Create a new module' }}
+                        </span>
+                        <a ng-if="state === 'all'" ng-click="addModule()" class="btn btn-primary btn-sm pull-right" ng-cloak><i class="fa fa-plus"></i> Add module</a>
+                        <a ng-if="state === 'add'" ng-click="cancel()" class="btn btn-danger btn-sm pull-right" ng-cloak>Cancel</a>
                     </h3>
                 </div>
             </div>
         </div>
 
         <div ng-show="state === 'all'" ng-cloak>
-            <div ng-if="modules.length == 0">
-                <div class="col-lg-12">
-                    <div class="well well-lg">
-                        <h4><i class="fa fa-exclamation-circle"></i> There are no modules yet</h4>
-                        <p>
-                            A module can contain courses and lectures with their respective groups. <br>
-                            You can either create <a href="{{ action('ModulesController@create') }}">a module manually here</a>,
-                            or go ahead and try our <a href="file">file importer</a>.
-                        </p>
-                    </div>
-                </div>
-            </div>
 
             <div ng-show="modules.length > 0">
                 <div class="col-lg-12">
@@ -39,55 +30,87 @@
                             <th>Short name</th>
                             <th>Module name</th>
                             <th>Professor(s)</th>
-                            <th></th>
                         </tr>
                         </thead>
+
+                        <tbody>
+
+                            <tr ng-repeat="module in modules">
+                                <td>@{{ module.short_name }}</td>
+                                <td>@{{ module.name }}</td>
+                                <td>
+                                    <ul>
+                                        <li ng-repeat="professor in module.professors">
+                                            @{{ professor.first_name }} @{{ professor.last_name }}
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+
+                        </tbody>
                     </table>
+                </div>
+            </div>
+
+            <div ng-show="modules.length == 0" ng-cloak>
+                <div class="col-lg-12">
+                    <div class="well well-lg">
+                        <h4><i class="fa fa-exclamation-circle"></i> There are no modules yet</h4>
+                        <p>
+                            A module can contain courses and lectures with their respective groups. <br>
+                            You can either create <a ng-click="addModule()">a module manually here</a>,
+                            or go ahead and try our <a href="file">file importer</a>.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div ng-show="state === 'add'" ng-cloak>
             <div class="col-lg-8">
+                <uib-alert ng-repeat="alert in alerts" type="@{{alert.type}}" close="closeAlert($index)">
+                    <p>
+                        <strong>Whoops!</strong> There were some errors:
+                    </p>
+                    <ul>
+                        <li ng-repeat="message in alert.msg">
+                            @{{ message }}
+                        </li>
+                    </ul>
+                </uib-alert>
 
-                <form ng-submit="submitNewModule()">
-                    <div class="form-group">
-                        <label>Name</label>
-                        <input ng-model="newModule.name" name="name" class="form-control" value="" placeholder="The module name">
-                    </div>
+                <form name="moduleForm" ng-submit="submitNewModule()" novalidate>
+                    <fieldset ng-disabled="loading">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input ng-model="newModule.name" name="name" class="form-control" placeholder="The module name" required>
+                        </div>
 
-                    <div class="form-group">
-                        <label>Short Name</label>
-                        <input ng-model="newModule.short_name" name="short_name" class="form-control" value="" placeholder="A short name for the module">
-                    </div>
+                        <div class="form-group">
+                            <label>Short Name</label>
+                            <input ng-model="newModule.short_name" name="short_name" class="form-control" placeholder="A short name for the module" required>
+                        </div>
 
-                    <div class="form-group">
-                        <label>Description</label>
-                        <textarea ng-model="newModule.description" rows="8" name="description" class="form-control" value="" placeholder="Describe the module"></textarea>
-                    </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea ng-model="newModule.description" rows="8" name="description" class="form-control" placeholder="Describe the module" required></textarea>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-primary" value="Save '@{{ newModule.name }}'" />
+                            <a ng-if="state === 'add'" ng-click="cancel()" class="btn btn-danger " ng-cloak>Cancel</a>
 
-                    <label>Professor(s)</label>
+                        </div>
 
-
-                    <small class="text-muted">
-                        You can select multiple professors, which are responsible for this course.
-                    </small>
-                    <br>
-                    <br>
-                    <input type="submit" class="btn btn-primary" value="Save" />
+                    </fieldset>
                 </form>
 
             </div>
 
             <div class="col-lg-4">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        Information
-                    </div>
-                    <div class="panel-body">
-                        <p>When you've created the module, you can add courses and lectures to it later.</p>
-                    </div>
-                </div>
+
+                <professors-list professors="professors" on-select="addProfessor(professor)" de-select="removeProfessor(professor)"></professors-list>
+
             </div>
 
         </div>

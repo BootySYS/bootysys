@@ -34,7 +34,7 @@ class ModulesController extends Controller
 
     public function all()
     {
-        return $this->university->modules;
+        return $this->university->modules->load('professors');
     }
 
     /**
@@ -58,8 +58,7 @@ class ModulesController extends Controller
     {
         $module = $this->university->modules()->create($request->all());
         $module->professors()->attach($request->input('professors'));
-        Session::flash('success', "The module {$module->name} was created successfully.");
-        return redirect('modules');
+        return $module->load('professors');
     }
 
     /**
