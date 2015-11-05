@@ -7,6 +7,18 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 class SignUpTest extends TestCase
 {
     use DatabaseTransactions;
+    use DatabaseMigrations;
+
+//    public function setUp()
+//    {
+//        parent::setUp();
+//        University::create([
+//            'name' => 'Niko Khaled',
+//            'email' => 'schursch@haw-hamburg.de',
+//            'password' => bcrypt('6789'),
+//            'student' => 'student'
+//        ]);
+//    }
 
     /**
      * Test the sign up page.
