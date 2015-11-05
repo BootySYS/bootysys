@@ -8,10 +8,9 @@
     <link rel="stylesheet" href="{{ asset('vendor/sweetalert.css') }}">
     <link href='https://fonts.googleapis.com/css?family=Patua+One|Paytone+One|Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
 </head>
-<body class="logged-in">
+<body class="logged-in" ng-app="app">
 
     @include('partials.header')
-
     <div id="page-wrapper">
             @include('flash.messages')
             @yield('content')

@@ -1,0 +1,16 @@
+<div>
+    <label>Professor(s)</label>
+
+    <small class="text-muted">
+        You can select multiple professors here.
+    </small>
+
+    <ul class="professors-list">
+        <li ng-repeat="professor in professors" ng-class="{ selected: selected(professor) }">
+            <a ng-click="handleSelection(professor)">
+                {{ professor.title }} {{ professor.first_name }} {{ professor.first_name }}
+            </a>
+        </li>
+    </ul>
+
+</div>
