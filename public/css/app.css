@@ -7736,7 +7736,10 @@ ul.professors-list {
   margin: 0;
   padding: 0;
   list-style-type: none; }
-  ul.professors-list li.selected {
-    background: blue; }
+  ul.professors-list li a {
+    padding: 4px; }
+  ul.professors-list li.selected a {
+    background: #23292f;
+    color: white; }
 
 /*# sourceMappingURL=app.css.map */

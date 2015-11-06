@@ -193,7 +193,17 @@ ul.professors-list {
   padding: 0;
   list-style-type: none;
 
-  li.selected {
-    background: blue;
+  li {
+    a {
+      padding: 4px;
+    }
+
+    &.selected {
+      a {
+        background: $dark-color;
+        color: white;
+      }
+    }
   }
+
 }
