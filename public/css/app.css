@@ -7718,15 +7718,8 @@ div.loader {
 .progress-bar, .progress {
   border-radius: 0; }
 
-.loader.ng-hide-add, .loader.ng-hide-remove {
-  /* this is required as of 1.3x to properly
-     apply all styling in a show/hide animation */
-  transition: 1s linear all; }
-
-.loader.ng-hide-add-active,
-.loader.ng-hide-remove-active {
-  /* the transition is defined in the active class */
-  transition: 1s linear all; }
+.progress-bar {
+  background-color: #488c66; }
 
 .items .active {
   background-color: #C44741;
@@ -7743,10 +7736,39 @@ ul.professors-list {
     color: white; }
 
 .no-professors {
-  font-size: 18px;
-  color: grey;
+  color: #9ca9b5; }
+  .no-professors h4 {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    margin: 30px; }
+
+.alert {
+  border: none;
+  border-radius: 0; }
+  .alert.alert-danger {
+    background: #a53935;
+    color: white; }
+
+.form-control {
+  border-radius: 0;
+  box-shadow: none;
+  padding: 25px; }
+  .form-control:focus {
+    box-shadow: none;
+    border: 1px solid #23292f; }
+
+.btn {
+  border-radius: 0;
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  text-transform: uppercase;
   font-weight: bold;
-  text-align: center;
-  margin: 30px; }
+  padding: 10px 30px;
+  border: none; }
+  .btn.btn-primary {
+    background-color: #39424c; }
+    .btn.btn-primary:active:focus, .btn.btn-primary:focus {
+      outline: none;
+      background: #4f5c69; }
 
 /*# sourceMappingURL=app.css.map */

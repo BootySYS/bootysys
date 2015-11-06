@@ -2,20 +2,27 @@
     <label>Professor(s)</label>
 
     <small class="text-muted">
-        You can select multiple professors here.
+        You can select multiple professors.
     </small>
 
     <ul class="professors-list">
-        <li ng-repeat="professor in professors" ng-class="{ selected: selected(professor) }">
+        <li ng-repeat="professor in professors | orderBy: 'last_name'" ng-class="{ selected: selected(professor) }">
             <a ng-click="handleSelection(professor)">
-                {{ professor.title }} {{ professor.first_name }} {{ professor.first_name }}
+                {{ professor.title }} {{ professor.last_name }}, {{ professor.first_name }}
             </a>
         </li>
     </ul>
 
-    <div ng-if="professors.length == 0" class="no-professors">
-        <i class="fa fa-exclamation fa-4x"></i><br>
-        You haven't created any professors yet.
+    <div ng-if="professors.length == 0" class="no-professors text-center panel panel-default">
+        <div class="panel-body">
+            <h4>
+                <i class="fa fa-exclamation fa-2x"></i><br>
+                You haven't created any professors yet.
+            </h4>
+
+            <a href="" class="btn btn-default">Create one here</a>
+
+        </div>
     </div>
 
 </div>

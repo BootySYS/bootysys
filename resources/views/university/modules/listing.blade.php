@@ -55,7 +55,7 @@
             <div ng-show="modules.length == 0" ng-cloak>
                 <div class="col-lg-12">
                     <div class="well well-lg">
-                        <h4><i class="fa fa-exclamation-circle"></i> There are no modules yet</h4>
+                        <h4>There are no modules yet</h4>
                         <p>
                             A module can contain courses and lectures with their respective groups. <br>
                             You can either create <a ng-click="addModule()">a module manually here</a>,
@@ -97,7 +97,7 @@
                         </div>
                         <hr>
                         <div class="form-group">
-                            <input type="submit" class="btn btn-primary" value="Save '@{{ newModule.name }}'" />
+                            <input type="submit" class="btn btn-primary" value="Save" />
                             <a ng-if="state === 'add'" ng-click="cancel()" class="btn btn-danger " ng-cloak>Cancel</a>
 
                         </div>
