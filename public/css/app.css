@@ -7671,7 +7671,7 @@ body.logged-in {
   background-color: #23292f;
   border-color: #39424c; }
   .navbar-default a.navbar-brand {
-    color: #9eeeff;
+    color: white;
     font-family: 'Paytone One', sans-serif;
     margin-left: 23px; }
     .navbar-default a.navbar-brand:hover {
@@ -7741,5 +7741,12 @@ ul.professors-list {
   ul.professors-list li.selected a {
     background: #23292f;
     color: white; }
+
+.no-professors {
+  font-size: 18px;
+  color: grey;
+  font-weight: bold;
+  text-align: center;
+  margin: 30px; }
 
 /*# sourceMappingURL=app.css.map */
