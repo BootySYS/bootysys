@@ -11,7 +11,6 @@
 <body class="logged-in">
 
     @include('partials.header')
-
     <div id="page-wrapper">
             @include('flash.messages')
             @yield('content')
