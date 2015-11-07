@@ -5,7 +5,7 @@ module.exports = function($scope, $http) {
     $scope.state = 'all';
 
     $scope.newModule = {
-        name: 'Test Module',
+        name: '',
         short_name: '',
         description: '',
         professors: ''

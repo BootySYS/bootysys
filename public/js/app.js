@@ -28912,9 +28912,9 @@ module.exports = angular;
 
 var angular = require('angular');
 
-angular.module('app', []).controller('ModulesController', require('./controllers/ModulesController'));
+angular.module('app', []).controller('ModulesController', require('./controllers/ModulesController')).controller('ProfessorsController', require('./controllers/ProfessorsController'));
 
-},{"./controllers/ModulesController":4,"angular":2}],4:[function(require,module,exports){
+},{"./controllers/ModulesController":4,"./controllers/ProfessorsController":5,"angular":2}],4:[function(require,module,exports){
 'use strict';
 
 module.exports = function ($scope, $http) {
@@ -28924,7 +28924,7 @@ module.exports = function ($scope, $http) {
     $scope.state = 'all';
 
     $scope.newModule = {
-        name: 'Test Module',
+        name: '',
         short_name: '',
         description: '',
         professors: ''
@@ -28948,6 +28948,45 @@ module.exports = function ($scope, $http) {
 
     $scope.submitNewModule = function () {
         $http.post('/modules/store', $scope.newModule).then(function (result) {
+            console.log(result);
+        });
+    };
+};
+
+},{}],5:[function(require,module,exports){
+'use strict';
+
+module.exports = function ($scope, $http) {
+
+    $scope.professors = [];
+
+    $scope.state = 'all';
+
+    $scope.newProfessor = {
+        first_name: '',
+        last_name: '',
+        email: ''
+
+    };
+
+    function init() {
+        $http.get('/professors/all').then(function (result) {
+            $scope.professors = result.data;
+        });
+    }
+
+    init();
+
+    $scope.addProfessor = function () {
+        $scope.state = 'add';
+    };
+
+    $scope.cancel = function () {
+        $scope.state = 'all';
+    };
+
+    $scope.submitNewProfessor = function () {
+        $http.post('/professors/store', $scope.newProfessor).then(function (result) {
             console.log(result);
         });
     };

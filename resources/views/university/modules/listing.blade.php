@@ -10,8 +10,8 @@
                 <div class="page-header">
                     <h3>
                         Modules
-                        <a ng-if="state === 'all'" ng-click="addModule()" class="btn btn-primary btn-sm pull-right"><i class="fa fa-plus"></i> Add module</a>
-                        <a ng-if="state === 'add'" ng-click="cancel()" class="btn btn-danger btn-sm pull-right">Cancel</a>
+                        <a ng-show="state === 'all'" ng-click="addModule()" class="btn btn-primary btn-sm pull-right"><i class="fa fa-plus"></i> Add module</a>
+                        <a ng-show="state === 'add'" ng-click="cancel()" class="btn btn-danger btn-sm pull-right">Cancel</a>
                     </h3>
                 </div>
             </div>
@@ -91,6 +91,7 @@
             </div>
 
         </div>
+
     </div>
 
 @stop
