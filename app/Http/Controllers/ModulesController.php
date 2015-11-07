@@ -34,7 +34,7 @@ class ModulesController extends Controller
 
     public function all()
     {
-        return $this->university->modules->load('professors');
+        return $this->university->modules->load('professors', 'courses');
     }
 
     /**

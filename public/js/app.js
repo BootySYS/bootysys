@@ -37503,6 +37503,10 @@ module.exports = function ($scope, $http, $window) {
     $scope.closeAlert = function (index) {
         $scope.alerts.splice(index, 1);
     };
+
+    $scope.showModule = function (id) {
+        console.log(id);
+    };
 };
 
 },{}],6:[function(require,module,exports){
@@ -37553,5 +37557,5 @@ module.exports = function () {
 },{"../templates/professorsList.html":9}],8:[function(require,module,exports){
 module.exports = '<div class="loader">\n    <div class="progress">\n        <div class="progress-bar progress-bar-primary progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">\n            <span class="sr-only">40% Complete (success)</span>\n        </div>\n    </div>\n</div>\n';
 },{}],9:[function(require,module,exports){
-module.exports = '<div>\n    <label>Professor(s)</label>\n\n    <small class="text-muted">\n        You can select multiple professors here.\n    </small>\n\n    <ul class="professors-list">\n        <li ng-repeat="professor in professors" ng-class="{ selected: selected(professor) }">\n            <a ng-click="handleSelection(professor)">\n                {{ professor.title }} {{ professor.first_name }} {{ professor.first_name }}\n            </a>\n        </li>\n    </ul>\n\n</div>';
+module.exports = '<div>\n    <label>Professor(s)</label>\n\n    <small class="text-muted">\n        You can select multiple professors.\n    </small>\n\n    <ul class="professors-list">\n        <li ng-repeat="professor in professors | orderBy: \'last_name\'" ng-class="{ selected: selected(professor) }">\n            <a ng-click="handleSelection(professor)">\n                {{ professor.title }} {{ professor.last_name }}, {{ professor.first_name }}\n            </a>\n        </li>\n    </ul>\n\n    <div ng-if="professors.length == 0" class="no-professors text-center panel panel-default">\n        <div class="panel-body">\n            <h4>\n                <i class="fa fa-exclamation fa-2x"></i><br>\n                You haven\'t created any professors yet.\n            </h4>\n\n            <a href="" class="btn btn-default">Create one here</a>\n\n        </div>\n    </div>\n\n</div>';
 },{}]},{},[4]);

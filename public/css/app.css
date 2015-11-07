@@ -7671,7 +7671,7 @@ body.logged-in {
   background-color: #23292f;
   border-color: #39424c; }
   .navbar-default a.navbar-brand {
-    color: #9eeeff;
+    color: white;
     font-family: 'Paytone One', sans-serif;
     margin-left: 23px; }
     .navbar-default a.navbar-brand:hover {
@@ -7718,15 +7718,8 @@ div.loader {
 .progress-bar, .progress {
   border-radius: 0; }
 
-.loader.ng-hide-add, .loader.ng-hide-remove {
-  /* this is required as of 1.3x to properly
-     apply all styling in a show/hide animation */
-  transition: 1s linear all; }
-
-.loader.ng-hide-add-active,
-.loader.ng-hide-remove-active {
-  /* the transition is defined in the active class */
-  transition: 1s linear all; }
+.progress-bar {
+  background-color: #488c66; }
 
 .items .active {
   background-color: #C44741;
@@ -7736,7 +7729,46 @@ ul.professors-list {
   margin: 0;
   padding: 0;
   list-style-type: none; }
-  ul.professors-list li.selected {
-    background: blue; }
+  ul.professors-list li a {
+    padding: 4px; }
+  ul.professors-list li.selected a {
+    background: #23292f;
+    color: white; }
+
+.no-professors {
+  color: #9ca9b5; }
+  .no-professors h4 {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    margin: 30px; }
+
+.alert {
+  border: none;
+  border-radius: 0; }
+  .alert.alert-danger {
+    background: #a53935;
+    color: white; }
+
+.form-control {
+  border-radius: 0;
+  box-shadow: none;
+  padding: 25px; }
+  .form-control:focus {
+    box-shadow: none;
+    border: 1px solid #23292f; }
+
+.btn {
+  border-radius: 0;
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  text-transform: uppercase;
+  font-weight: bold;
+  padding: 10px 30px;
+  border: none; }
+  .btn.btn-primary {
+    background-color: #39424c; }
+    .btn.btn-primary:active:focus, .btn.btn-primary:focus {
+      outline: none;
+      background: #4f5c69; }
 
 /*# sourceMappingURL=app.css.map */

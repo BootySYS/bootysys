@@ -80,7 +80,7 @@ body.logged-in {
   border-color: lighten($dark-color, 10);
 
   a.navbar-brand {
-    color: $brand-color;
+    color: white;
     font-family: 'Paytone One', sans-serif;
     margin-left: 23px;
 
@@ -164,23 +164,9 @@ div.loader {
   border-radius:0;
 }
 
-.loader.ng-hide-add, .loader.ng-hide-remove {
-  /* this is required as of 1.3x to properly
-     apply all styling in a show/hide animation */
-  transition: 1s linear all;
+.progress-bar {
+  background-color: #488c66;
 }
-
-.loader.ng-hide-add-active,
-.loader.ng-hide-remove-active {
-  /* the transition is defined in the active class */
-  transition: 1s linear all;
-}
-
-.loader.ng-hide-add { }
-.loader.ng-hide-add.ng-hide-add-active { }
-.loader.ng-hide-remove { }
-.loader.ng-hide-remove.ng-hide-remove-active { }
-
 .items {
   .active {
     background-color: #C44741;
@@ -193,7 +179,70 @@ ul.professors-list {
   padding: 0;
   list-style-type: none;
 
-  li.selected {
-    background: blue;
+  li {
+    a {
+      padding: 4px;
+    }
+
+    &.selected {
+      a {
+        background: $dark-color;
+        color: white;
+      }
+    }
+  }
+}
+
+.no-professors {
+
+  color: lighten($dark-color, 50);
+
+  h4 {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    margin: 30px;
+  }
+
+}
+
+.alert {
+
+  border: none;
+  border-radius: 0;
+
+  &.alert-danger {
+    background: #a53935;
+    color: white;
+  }
+}
+
+.form-control {
+  border-radius: 0;
+  box-shadow: none;
+  padding: 25px;
+
+  &:focus {
+    box-shadow: none;
+    border: 1px solid $dark-color;
+  }
+}
+
+.btn {
+  border-radius: 0;
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  text-transform: uppercase;
+  font-weight: bold;
+  padding: 10px 30px;
+  border: none;
+
+  &.btn-primary {
+    background-color: lighten($dark-color, 10);
+
+    &:active:focus,
+    &:focus {
+      outline: none;
+      background: lighten($dark-color, 20);
+    }
   }
 }

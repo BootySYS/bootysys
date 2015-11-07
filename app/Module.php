@@ -10,6 +10,10 @@ class Module extends Model
         'name', 'short_name', 'description'
     ];
 
+    protected $visible = [
+        'id', 'name', 'short_name', 'description', 'professors', 'courses'
+    ];
+
     /**
      * A module belongs to a university.
      *
