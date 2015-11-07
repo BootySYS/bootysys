@@ -83,4 +83,8 @@ module.exports = function($scope, $http, $window) {
         $scope.alerts.splice(index, 1);
     };
 
+    $scope.showModule = function (id) {
+      console.log(id);
+    };
+
 };

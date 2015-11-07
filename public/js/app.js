@@ -37503,6 +37503,10 @@ module.exports = function ($scope, $http, $window) {
     $scope.closeAlert = function (index) {
         $scope.alerts.splice(index, 1);
     };
+
+    $scope.showModule = function (id) {
+        console.log(id);
+    };
 };
 
 },{}],6:[function(require,module,exports){
