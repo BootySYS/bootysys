@@ -16,6 +16,7 @@ Route::get('user/get/profile', 'UsersController@profile');
 Route::group(['prefix' => 'modules'], function() {
     Route::get('/', 'ModulesController@index');
     Route::get('all', 'ModulesController@all');
+
     Route::post('store', 'ModulesController@store');
     Route::get('show/{id}', 'ModulesController@show');
     Route::post('update/{id}', 'ModulesController@update');
@@ -25,6 +26,7 @@ Route::group(['prefix' => 'modules'], function() {
 Route::group(['prefix' => 'professors'], function() {
     Route::get('/', 'ProfessorsController@index');
     Route::get('all', 'ProfessorsController@all');
+
     Route::get('create', 'ProfessorsController@create');
     Route::post('create', 'ProfessorsController@store');
 });

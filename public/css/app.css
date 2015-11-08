@@ -7623,24 +7623,24 @@ table.dataTable thead .sorting:after {
   outline: 0; }
 
 ::-webkit-input-placeholder {
-  color: #4f5c69; }
+  color: #677078; }
 
 :-moz-placeholder {
   /* Firefox 18- */
-  color: #4f5c69; }
+  color: #677078; }
 
 ::-moz-placeholder {
   /* Firefox 19+ */
-  color: #4f5c69; }
+  color: #677078; }
 
 :-ms-input-placeholder {
-  color: #4f5c69; }
+  color: #677078; }
 
 body {
   font-family: 'Open Sans', sans-serif; }
 
 body.logged-in {
-  background-color: #23292f; }
+  background-color: #383d41; }
 
 .btn {
   font-family: 'Open Sans', sans-serif; }
@@ -7651,36 +7651,36 @@ body.logged-in {
 
 .page-header h1, .page-header h2, .page-header h3, .page-header h4 {
   font-family: 'Patua One', cursive;
-  color: #23292f; }
+  color: #383d41; }
 
 .page-header.danger h1, .page-header.danger h2, .page-header.danger h3, .page-header.danger h4 {
   color: #d9534f; }
 
 .sidebar-nav {
-  background-color: #23292f; }
+  background-color: #383d41; }
   .sidebar-nav ul li {
-    border-bottom: 1px solid #39424c; }
+    border-bottom: 1px solid #50575c; }
     .sidebar-nav ul li a {
-      color: #7f8f9f; }
+      color: #9ca3a9; }
       .sidebar-nav ul li a:hover {
-        background-color: #0d0f12; }
+        background-color: #202326; }
       .sidebar-nav ul li a i {
         width: 20px; }
 
 .navbar-default {
-  background-color: #23292f;
-  border-color: #39424c; }
+  background-color: #383d41;
+  border-color: #50575c; }
   .navbar-default a.navbar-brand {
     color: white;
     font-family: 'Paytone One', sans-serif;
     margin-left: 23px; }
     .navbar-default a.navbar-brand:hover {
-      color: #d1f7ff; }
+      color: rgba(43, 115, 205, 0.68); }
   .navbar-default ul.navbar-top-links li a {
     color: white; }
     .navbar-default ul.navbar-top-links li a:hover, .navbar-default ul.navbar-top-links li a:focus {
       text-decoration: none;
-      background-color: #4f5c69; }
+      background-color: #677078; }
 
 table ul.list {
   margin: 0;
@@ -7692,7 +7692,7 @@ table.module-table tr td:first-child {
 
 /****************** SEARCH *********************/
 .sidebar-search i {
-  color: #7f8f9f; }
+  color: #9ca3a9; }
 
 .sidebar-search input {
   outline: none;
@@ -7719,7 +7719,7 @@ div.loader {
   border-radius: 0; }
 
 .progress-bar {
-  background-color: #488c66; }
+  background-color: rgba(34, 91, 163, 0.68); }
 
 .items .active {
   background-color: #C44741;
@@ -7732,11 +7732,11 @@ ul.professors-list {
   ul.professors-list li a {
     padding: 4px; }
   ul.professors-list li.selected a {
-    background: #23292f;
+    background: #383d41;
     color: white; }
 
 .no-professors {
-  color: #9ca9b5; }
+  color: #b7bdc1; }
   .no-professors h4 {
     font-size: 18px;
     font-weight: bold;
@@ -7756,7 +7756,7 @@ ul.professors-list {
   padding: 25px; }
   .form-control:focus {
     box-shadow: none;
-    border: 1px solid #23292f; }
+    border: 1px solid #383d41; }
 
 .btn {
   border-radius: 0;
@@ -7766,9 +7766,19 @@ ul.professors-list {
   padding: 10px 30px;
   border: none; }
   .btn.btn-primary {
-    background-color: #39424c; }
+    background-color: #50575c; }
     .btn.btn-primary:active:focus, .btn.btn-primary:focus {
       outline: none;
-      background: #4f5c69; }
+      background: #677078; }
+
+.modal-content {
+  box-shadow: none;
+  border-radius: 0;
+  border: none; }
+  .modal-content .modal-header {
+    background: #383d41;
+    color: white; }
+    .modal-content .modal-header .modal-title {
+      font-family: 'Patua One', cursive; }
 
 /*# sourceMappingURL=app.css.map */

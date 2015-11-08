@@ -1,4 +1,4 @@
-module.exports = function($scope, $http, $window) {
+module.exports = function($scope, $http, $window, $uibModal, $log) {
 
     $scope.modules = [];
     $scope.professors = [];
@@ -83,8 +83,25 @@ module.exports = function($scope, $http, $window) {
         $scope.alerts.splice(index, 1);
     };
 
-    $scope.showModule = function (id) {
-      console.log(id);
-    };
+    $scope.showModule = function (module) {
 
+        var modalInstance = $uibModal.open({
+            animation: true,
+            template: require('../templates/modals/module.html'),
+            controller: 'ModulesModalController',
+            size: 'lg',
+            resolve: {
+                module: function () {
+                    return module;
+                }
+            }
+        });
+
+        modalInstance.result.then(function (selectedItem) {
+            $scope.selected = selectedItem;
+        }, function () {
+            $log.info('Modal dismissed at: ' + new Date());
+        });
+
+    };
 };

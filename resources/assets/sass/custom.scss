@@ -1,5 +1,5 @@
-$dark-color: #23292f;
-$brand-color: #9eeeff;
+$brand-color: rgba(34, 91, 163, 0.68);
+$dark-color: #383d41;
 $danger-color: #d9534f;
 
 .btn, a, button {
@@ -165,8 +165,9 @@ div.loader {
 }
 
 .progress-bar {
-  background-color: #488c66;
+  background-color: $brand-color;
 }
+
 .items {
   .active {
     background-color: #C44741;
@@ -243,6 +244,21 @@ ul.professors-list {
     &:focus {
       outline: none;
       background: lighten($dark-color, 20);
+    }
+  }
+}
+
+.modal-content {
+  box-shadow: none;
+  border-radius: 0;
+  border: none;
+
+  .modal-header {
+    background: $dark-color;
+    color: white;
+
+    .modal-title {
+      font-family: 'Patua One', cursive;
     }
   }
 }

@@ -3,18 +3,17 @@
 @section('content')
 
 
-    <div ng-controller="ModulesController">
+    <div ng-controller="ModulesController" ng-cloak>
         <loader ng-show="loading"></loader>
         <div class="row">
             <div class="col-lg-12">
                 <div class="page-header">
-                    <h3>
+                    <h3 ng-cloak>
                         <span ng-show="state == 'all'">@{{ modules.length }} Module(s)</span>
                         <span ng-show="state == 'add'">
                             @{{ newModule.name ? newModule.name : 'Create a new module' }}
                         </span>
                         <a ng-if="state === 'all'" ng-click="addModule()" class="btn btn-primary btn-sm pull-right" ng-cloak><i class="fa fa-plus"></i> Add module</a>
-                        <a ng-if="state === 'add'" ng-click="cancel()" class="btn btn-danger btn-sm pull-right" ng-cloak>Cancel</a>
                     </h3>
                 </div>
             </div>
@@ -37,7 +36,7 @@
 
                                 <tr ng-repeat="module in modules">
                                     <td>@{{ module.short_name }}</td>
-                                    <td><a ng-click="showModule(module.id)">@{{ module.name }}</a></td>
+                                    <td><a ng-click="showModule(module)">@{{ module.name }}</a></td>
                                     <td>
                                         <ul>
                                             <li ng-repeat="professor in module.professors">

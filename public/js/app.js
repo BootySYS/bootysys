@@ -37417,12 +37417,17 @@ module.exports = angular;
 var angular = require('angular');
 require('angular-bootstrap-npm');
 
-angular.module('app', ['ui.bootstrap']).directive('loader', require('./directives/loader')).directive('professorsList', require('./directives/professorsList')).controller('ModulesController', require('./controllers/ModulesController'));
+(function () {
 
-},{"./controllers/ModulesController":5,"./directives/loader":6,"./directives/professorsList":7,"angular":3,"angular-bootstrap-npm":1}],5:[function(require,module,exports){
+    angular.module('app', ['ui.bootstrap', 'app.modal']).directive('loader', require('./directives/loader')).directive('professorsList', require('./directives/professorsList')).controller('ModulesController', require('./controllers/ModulesController')).controller('ProfessorsController', require('./controllers/ProfessorsController'));
+
+    angular.module('app.modal', ['ui.bootstrap']).controller('ModulesModalController', require('./controllers/ModulesModalController'));
+})();
+
+},{"./controllers/ModulesController":5,"./controllers/ModulesModalController":6,"./controllers/ProfessorsController":7,"./directives/loader":8,"./directives/professorsList":9,"angular":3,"angular-bootstrap-npm":1}],5:[function(require,module,exports){
 'use strict';
 
-module.exports = function ($scope, $http, $window) {
+module.exports = function ($scope, $http, $window, $uibModal, $log) {
 
     $scope.modules = [];
     $scope.professors = [];
@@ -37504,12 +37509,94 @@ module.exports = function ($scope, $http, $window) {
         $scope.alerts.splice(index, 1);
     };
 
-    $scope.showModule = function (id) {
-        console.log(id);
+    $scope.showModule = function (module) {
+
+        var modalInstance = $uibModal.open({
+            animation: true,
+            template: require('../templates/modals/module.html'),
+            controller: 'ModulesModalController',
+            size: 'lg',
+            resolve: {
+                module: (function (_module2) {
+                    function module() {
+                        return _module2.apply(this, arguments);
+                    }
+
+                    module.toString = function () {
+                        return _module2.toString();
+                    };
+
+                    return module;
+                })(function () {
+                    return module;
+                })
+            }
+        });
+
+        modalInstance.result.then(function (selectedItem) {
+            $scope.selected = selectedItem;
+        }, function () {
+            $log.info('Modal dismissed at: ' + new Date());
+        });
     };
 };
 
-},{}],6:[function(require,module,exports){
+},{"../templates/modals/module.html":11}],6:[function(require,module,exports){
+'use strict';
+
+module.exports = function ($scope, $uibModalInstance, module) {
+
+    $scope.module = module;
+
+    $scope.ok = function () {
+        $uibModalInstance.close();
+    };
+
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
+};
+
+},{}],7:[function(require,module,exports){
+'use strict';
+
+module.exports = function ($scope, $http) {
+
+    $scope.professors = [];
+
+    $scope.state = 'all';
+
+    $scope.newProfessor = {
+        first_name: '',
+        last_name: '',
+        email: ''
+
+    };
+
+    function init() {
+        $http.get('/professors/all').then(function (result) {
+            $scope.professors = result.data;
+        });
+    }
+
+    init();
+
+    $scope.addProfessor = function () {
+        $scope.state = 'add';
+    };
+
+    $scope.cancel = function () {
+        $scope.state = 'all';
+    };
+
+    $scope.submitNewProfessor = function () {
+        $http.post('/professors/store', $scope.newProfessor).then(function (result) {
+            console.log(result);
+        });
+    };
+};
+
+},{}],8:[function(require,module,exports){
 'use strict';
 
 module.exports = ['$http', function ($http) {
@@ -37521,7 +37608,7 @@ module.exports = ['$http', function ($http) {
     };
 }];
 
-},{"../templates/loader.html":8}],7:[function(require,module,exports){
+},{"../templates/loader.html":10}],9:[function(require,module,exports){
 'use strict';
 
 module.exports = function () {
@@ -37554,8 +37641,10 @@ module.exports = function () {
     };
 };
 
-},{"../templates/professorsList.html":9}],8:[function(require,module,exports){
+},{"../templates/professorsList.html":12}],10:[function(require,module,exports){
 module.exports = '<div class="loader">\n    <div class="progress">\n        <div class="progress-bar progress-bar-primary progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">\n            <span class="sr-only">40% Complete (success)</span>\n        </div>\n    </div>\n</div>\n';
-},{}],9:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
+module.exports = '<div class="modal-header">\n    <h3 class="modal-title"><i class="fa fa-book"></i> {{ module.name }}</h3>\n</div>\n<div class="modal-body">\n   <table class="table module-table">\n       <tr>\n           <td><strong>Short Name</strong></td>\n           <td>{{ module.short_name }}</td>\n       </tr>\n       <tr>\n           <td><strong>Description</strong></td>\n           <td>{{ module.description }}</td>\n       </tr>\n       <tr>\n           <td><strong>Responsible Professors</strong></td>\n           <td>\n              <ul>\n                  <li ng-repeat="professor in module.professors">\n                      {{ professor.last_name }}, {{ professor.first_name }}\n                  </li>\n              </ul>\n           </td>\n       </tr>\n       <tr>\n           <td><strong>Groups</strong></td>\n           <td>\n               <professor-list></professor-list>\n           </td>\n       </tr>\n   </table>\n</div>\n<div class="modal-footer">\n    <button class="btn btn-primary" type="button" ng-click="ok()">Close</button>\n</div>';
+},{}],12:[function(require,module,exports){
 module.exports = '<div>\n    <label>Professor(s)</label>\n\n    <small class="text-muted">\n        You can select multiple professors.\n    </small>\n\n    <ul class="professors-list">\n        <li ng-repeat="professor in professors | orderBy: \'last_name\'" ng-class="{ selected: selected(professor) }">\n            <a ng-click="handleSelection(professor)">\n                {{ professor.title }} {{ professor.last_name }}, {{ professor.first_name }}\n            </a>\n        </li>\n    </ul>\n\n    <div ng-if="professors.length == 0" class="no-professors text-center panel panel-default">\n        <div class="panel-body">\n            <h4>\n                <i class="fa fa-exclamation fa-2x"></i><br>\n                You haven\'t created any professors yet.\n            </h4>\n\n            <a href="" class="btn btn-default">Create one here</a>\n\n        </div>\n    </div>\n\n</div>';
 },{}]},{},[4]);
