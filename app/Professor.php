@@ -12,6 +12,10 @@ class Professor extends Model
         'email'
     ];
 
+    protected $visible = [
+        'id', 'first_name', 'last_name', 'email'
+    ];
+
     protected static function boot()
     {
         // TODO send email with randomly generated password
@@ -44,5 +48,15 @@ class Professor extends Model
     public function modules()
     {
         return $this->belongsToMany('App\Module');
+    }
+
+    /**
+     * Get the professors title and full name.
+     *
+     * @return string
+     */
+    public function getNameAttribute()
+    {
+        return $this->title . ' ' . $this->first_name . ' ' . $this->last_name;
     }
 }

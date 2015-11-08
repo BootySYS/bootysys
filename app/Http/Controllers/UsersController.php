@@ -17,4 +17,9 @@ class UsersController extends Controller
     {
         return view('auth.user')->with('user', auth()->user());
     }
+
+    public function profile()
+    {
+        return auth()->user();
+    }
 }

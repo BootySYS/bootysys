@@ -3,7 +3,7 @@ var gulp = require('gulp');
 
 var config = {
  bowerDir: './bower_components'
-}
+};
 
 gulp.task('icons', function() {
  return gulp.src(config.bowerDir + '/font-awesome/fonts/**.*')
@@ -11,6 +11,7 @@ gulp.task('icons', function() {
 });
 
 elixir.extend('sourcemaps', true);
+
 /*
  |--------------------------------------------------------------------------
  | Elixir Asset Management

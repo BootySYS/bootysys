@@ -1,5 +1,10 @@
-$dark-color: #23292f;
-$brand-color: #9eeeff;
+$brand-color: rgba(34, 91, 163, 0.68);
+$dark-color: #383d41;
+$danger-color: #d9534f;
+
+.btn, a, button {
+  outline: 0;
+}
 
 ::-webkit-input-placeholder {
   color: lighten($dark-color, 20);
@@ -23,17 +28,6 @@ body {
 
 body.logged-in {
   background-color: $dark-color;
-
-  .alert {
-    -moz-border-radius-bottomright: 4px;
-    -moz-border-radius-bottomleft: 4px;
-    -webkit-border-radius: 0px 0px 4px 4px;
-    -moz-border-radius-topright: 0px;
-    -moz-border-radius-topright: 0px;
-    border-radius: 0px 0px 4px 4px;
-
-    border-top: none;
-  }
 }
 
 .btn {
@@ -42,12 +36,19 @@ body.logged-in {
 
 #page-wrapper {
   min-height: 100vh;
+  overflow: scroll;
 }
 
 .page-header {
   h1, h2, h3, h4 {
     font-family: 'Patua One', cursive;
     color: $dark-color;
+  }
+
+  &.danger {
+    h1, h2, h3, h4 {
+      color: $danger-color;
+    }
   }
 }
 
@@ -79,7 +80,7 @@ body.logged-in {
   border-color: lighten($dark-color, 10);
 
   a.navbar-brand {
-    color: $brand-color;
+    color: white;
     font-family: 'Paytone One', sans-serif;
     margin-left: 23px;
 
@@ -115,6 +116,14 @@ table {
   }
 }
 
+table.module-table {
+  tr {
+    td:first-child {
+      width: 20%;
+    }
+  }
+}
+
 /****************** SEARCH *********************/
 
 .sidebar-search {
@@ -131,5 +140,125 @@ table {
     color: whitesmoke;
     padding: 10px 10px 10px 8px;
   }
+}
 
+.nav, .pagination, .carousel, .panel-title a, a { cursor: pointer; }
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
+.ng-invalid.ng-dirty, .ng-touched.ng-invalid {
+  border-color: #e6827f;
+}
+
+div.loader {
+  width: 100%;
+  position: absolute;
+  left: 0;
+}
+
+.progress-bar, .progress {
+  -webkit-border-radius:0;
+  -moz-border-radius:0;
+  border-radius:0;
+}
+
+.progress-bar {
+  background-color: $brand-color;
+}
+
+.items {
+  .active {
+    background-color: #C44741;
+    color: #f2f2f2;
+  }
+}
+
+ul.professors-list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+
+  li {
+    a {
+      padding: 4px;
+    }
+
+    &.selected {
+      a {
+        background: $dark-color;
+        color: white;
+      }
+    }
+  }
+}
+
+.no-professors {
+
+  color: lighten($dark-color, 50);
+
+  h4 {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    margin: 30px;
+  }
+
+}
+
+.alert {
+
+  border: none;
+  border-radius: 0;
+
+  &.alert-danger {
+    background: #a53935;
+    color: white;
+  }
+}
+
+.form-control {
+  border-radius: 0;
+  box-shadow: none;
+  padding: 25px;
+
+  &:focus {
+    box-shadow: none;
+    border: 1px solid $dark-color;
+  }
+}
+
+.btn {
+  border-radius: 0;
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  text-transform: uppercase;
+  font-weight: bold;
+  padding: 10px 30px;
+  border: none;
+
+  &.btn-primary {
+    background-color: lighten($dark-color, 10);
+
+    &:active:focus,
+    &:focus {
+      outline: none;
+      background: lighten($dark-color, 20);
+    }
+  }
+}
+
+.modal-content {
+  box-shadow: none;
+  border-radius: 0;
+  border: none;
+
+  .modal-header {
+    background: $dark-color;
+    color: white;
+
+    .modal-title {
+      font-family: 'Patua One', cursive;
+    }
+  }
 }
