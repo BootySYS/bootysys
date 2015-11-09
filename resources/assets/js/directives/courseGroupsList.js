@@ -8,6 +8,10 @@ module.exports = function() {
         },
         link: function (scope) {
 
+            scope.setActiveCourse = function (course) {
+                scope.activeCourse = course;
+            };
+
         },
         template: require('../templates/courseGroupsList.html')
     };

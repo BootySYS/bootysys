@@ -299,3 +299,13 @@ ul.professors-list {
     }
   }
 }
+
+.modal {
+  background: rgba($dark-color, 0.4);
+}
+
+.modal-dialog {
+  -webkit-box-shadow: 10px 10px 0px -6px rgba($dark-color, 0.52);
+  -moz-box-shadow: 10px 10px 0px -6px rgba($dark-color, 0.52);
+  box-shadow: 10px 10px 0px -6px rgba($dark-color, 0.52);
+}

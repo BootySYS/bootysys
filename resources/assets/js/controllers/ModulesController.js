@@ -39,7 +39,6 @@ module.exports = function($scope, $http, $window, $uibModal, $log, moduleService
     $scope.submitNewModule = function() {
 
         $scope.loading = true;
-
         $scope.alerts = [];
 
         $http.post('/modules/store', $scope.newModule)
@@ -85,8 +84,8 @@ module.exports = function($scope, $http, $window, $uibModal, $log, moduleService
 
     $scope.showModule = function (module) {
 
-        var modalInstance = $uibModal.open({
-            animation: true,
+        $uibModal.open({
+            animation: false,
             template: require('../templates/modals/module.html'),
             controller: 'ModulesModalController',
             size: 'lg',
@@ -96,12 +95,5 @@ module.exports = function($scope, $http, $window, $uibModal, $log, moduleService
                 }
             }
         });
-
-        modalInstance.result.then(function (selectedItem) {
-            $scope.selected = selectedItem;
-        }, function () {
-            $log.info('Modal dismissed at: ' + new Date());
-        });
-
     };
 };
