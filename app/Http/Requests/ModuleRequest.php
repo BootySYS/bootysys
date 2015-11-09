@@ -24,8 +24,6 @@ class ModuleRequest extends Request
      */
     public function rules()
     {
-
-        sleep(4);
         return [
             'name'          => 'required|unique:modules',
             'short_name'    => 'required|unique:modules',

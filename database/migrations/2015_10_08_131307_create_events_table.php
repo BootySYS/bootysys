@@ -20,8 +20,8 @@ class CreateEventsTable extends Migration
             $table->time('start_time');
             $table->time('end_time');
 
-            $table->integer('course_id')->unsigned();
-            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
+            $table->integer('group_id')->unsigned();
+            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
 
             $table->timestamps();
 

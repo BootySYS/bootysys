@@ -1,4 +1,4 @@
-module.exports = function($scope, $http, $window, $uibModal, $log) {
+module.exports = function($scope, $http, $window, $uibModal, $log, moduleService) {
 
     $scope.modules = [];
     $scope.professors = [];
@@ -17,8 +17,8 @@ module.exports = function($scope, $http, $window, $uibModal, $log) {
     $scope.loading = false;
 
     function init() {
-        $http.get('/modules/all').then(function (result) {
-            $scope.modules = result.data;
+        moduleService.getModules().then(function (response) {
+            $scope.modules = response.data;
         });
 
         $http.get('/professors/all').then(function(result) {

@@ -18,9 +18,12 @@ Route::group(['prefix' => 'modules'], function() {
     Route::get('all', 'ModulesController@all');
 
     Route::post('store', 'ModulesController@store');
-    Route::get('show/{id}', 'ModulesController@show');
+    Route::post('course', 'ModulesController@storeCourse');
+    Route::delete('course', 'ModulesController@deleteCourse');
+
     Route::post('update/{id}', 'ModulesController@update');
     Route::get('delete/{id}', 'ModulesController@destroy');
+
 });
 
 Route::group(['prefix' => 'professors'], function() {

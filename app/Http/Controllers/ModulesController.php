@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Course;
 use App\Http\Requests\ModuleRequest;
 use App\Http\Requests\ModuleUpdateRequest;
 use App\Module;
@@ -18,6 +19,7 @@ class ModulesController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+
         $this->university = auth()->user()->university;
     }
 
@@ -32,9 +34,19 @@ class ModulesController extends Controller
         return view('university.modules.listing')->with(compact('modules'));
     }
 
+    /**
+     * Get all modules for current university.
+     *
+     * @return mixed
+     */
     public function all()
     {
         return $this->university->modules->load('professors', 'courses');
+    }
+
+    public function coursesForModule($id)
+    {
+        return Module::find($id)->courses->load('groups');
     }
 
     /**
@@ -61,28 +73,32 @@ class ModulesController extends Controller
         return $module->load('professors');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function storeCourse(Request $request)
     {
-        $module = $this->university->modules->find($id);
-        return view('university.modules.show')->with(compact('module'));
+        $this->validate($request, [
+            'module_id' => 'required|exists:modules,id',
+            'course_type' => 'required|in:lecture,practical_course',
+            'course_name' => 'required'
+        ]);
+
+        $module = Module::find($request->input('module_id'));
+        $course = $module->courses()->create([
+            'type' => $request->input('course_type'),
+            'name' => $request->input('course_name')
+        ]);
+
+        return $course;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $module = Module::find($id);
-        return view('university.modules.edit')->with(compact('module'));
+    public function deleteCourse(Request $request) {
+        $this->validate($request, [
+            'module_id' => 'required|exists:modules,id',
+            'course_id' => 'required'
+        ]);
+
+        Course::find($request->input('course_id'))->delete();
+
+        return response('Deleted course', 200);
     }
 
     /**
@@ -115,6 +131,7 @@ class ModulesController extends Controller
     {
         $module = Module::find($id);
         $module->professors()->detach();
+        $module->courses()->detach();
         $module->delete();
         Session::flash('success', 'The module was deleted');
         return redirect()->action('ModulesController@index');
