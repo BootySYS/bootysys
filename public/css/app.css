@@ -7810,4 +7810,10 @@ ul.professors-list {
       text-transform: uppercase;
       color: #677078; }
 
+.modal {
+  background: rgba(56, 61, 65, 0.4); }
+
+.modal-dialog {
+  box-shadow: 10px 10px 0px -6px rgba(56, 61, 65, 0.52); }
+
 /*# sourceMappingURL=app.css.map */

@@ -20,25 +20,17 @@ class ModulesController extends Controller
     {
         $this->middleware('auth');
 
-        $this->university = auth()->user()->university;
+        if (auth()->check()) {
+            $this->university = auth()->user()->university;
+        }
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $modules = $this->university->modules;
         return view('university.modules.listing')->with(compact('modules'));
     }
 
-    /**
-     * Get all modules for current university.
-     *
-     * @return mixed
-     */
     public function all()
     {
         return $this->university->modules->load('professors', 'courses');
@@ -49,23 +41,6 @@ class ModulesController extends Controller
         return Module::find($id)->courses->load('groups');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        if (Gate::denies('create-module')) return abort('403', 'You are not allowed to see this!');
-        return view('university.modules.create')->with('university', $this->university);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param ModuleRequest|Request $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(ModuleRequest $request)
     {
         $module = $this->university->modules()->create($request->all());
@@ -101,13 +76,6 @@ class ModulesController extends Controller
         return response('Deleted course', 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param ModuleUpdateRequest $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(ModuleUpdateRequest $request, $id)
     {
         $module = Module::find($id);
@@ -121,12 +89,6 @@ class ModulesController extends Controller
         return redirect()->action('ModulesController@index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $module = Module::find($id);

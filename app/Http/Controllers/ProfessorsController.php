@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreProfessorRequest;
+use App\Professor;
 use App\University;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -13,14 +15,13 @@ class ProfessorsController extends Controller
 
     public function __construct()
     {
-        $this->university = auth()->user()->university;
+        $this->middleware('auth');
+
+        if (auth()->check()) {
+            $this->university = auth()->user()->university;
+        }
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         return view('university.professors.listing')->with('university', $this->university);
@@ -31,59 +32,19 @@ class ProfessorsController extends Controller
         return $this->university->professors;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(StoreProfessorRequest $request)
     {
-        //
+        return $this->university->professors()->create($request->all());
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        Professor::findOrFail($request->input('id'))->delete();
+        return response('Deleted professor.', 200);
     }
 }
