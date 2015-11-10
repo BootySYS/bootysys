@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Course;
 use App\Http\Requests\ModuleRequest;
 use App\Http\Requests\ModuleUpdateRequest;
 use App\Module;
@@ -18,14 +19,12 @@ class ModulesController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->university = auth()->user()->university;
+
+        if (auth()->check()) {
+            $this->university = auth()->user()->university;
+        }
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $modules = $this->university->modules;
@@ -37,23 +36,11 @@ class ModulesController extends Controller
         return $this->university->modules->load('professors', 'courses');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function coursesForModule($id)
     {
-        if (Gate::denies('create-module')) return abort('403', 'You are not allowed to see this!');
-        return view('university.modules.create')->with('university', $this->university);
+        return Module::find($id)->courses->load('groups');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param ModuleRequest|Request $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(ModuleRequest $request)
     {
         $module = $this->university->modules()->create($request->all());
@@ -61,37 +48,34 @@ class ModulesController extends Controller
         return $module->load('professors');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function storeCourse(Request $request)
     {
-        $module = $this->university->modules->find($id);
-        return view('university.modules.show')->with(compact('module'));
+        $this->validate($request, [
+            'module_id' => 'required|exists:modules,id',
+            'course_type' => 'required|in:lecture,practical_course',
+            'course_name' => 'required'
+        ]);
+
+        $module = Module::find($request->input('module_id'));
+        $course = $module->courses()->create([
+            'type' => $request->input('course_type'),
+            'name' => $request->input('course_name')
+        ]);
+
+        return $course;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $module = Module::find($id);
-        return view('university.modules.edit')->with(compact('module'));
+    public function deleteCourse(Request $request) {
+        $this->validate($request, [
+            'module_id' => 'required|exists:modules,id',
+            'course_id' => 'required'
+        ]);
+
+        Course::find($request->input('course_id'))->delete();
+
+        return response('Deleted course', 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param ModuleUpdateRequest $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(ModuleUpdateRequest $request, $id)
     {
         $module = Module::find($id);
@@ -105,16 +89,11 @@ class ModulesController extends Controller
         return redirect()->action('ModulesController@index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $module = Module::find($id);
         $module->professors()->detach();
+        $module->courses()->detach();
         $module->delete();
         Session::flash('success', 'The module was deleted');
         return redirect()->action('ModulesController@index');

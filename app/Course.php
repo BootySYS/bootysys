@@ -7,8 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Course extends Model
 {
     protected $fillable = [
-        'type'
+        'type', 'name'
     ];
+
+    public function getTypeAttribute($value)
+    {
+        return studly_case($value);
+    }
 
     /**
      * A course has many groups.

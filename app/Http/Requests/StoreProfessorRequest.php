@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Http\Requests\Request;
 use Illuminate\Support\Facades\Gate;
 
-class ModuleRequest extends Request
+class StoreProfessorRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +14,7 @@ class ModuleRequest extends Request
      */
     public function authorize()
     {
-        return Gate::allows('create-module');
+        return Gate::allows('manage-university');
     }
 
     /**
@@ -25,10 +25,9 @@ class ModuleRequest extends Request
     public function rules()
     {
         return [
-            'name'          => 'required|unique:modules',
-            'short_name'    => 'required|unique:modules',
-            'description'   => 'required',
-            'professors'    => 'required|array'
+            'first_name'    => 'required',
+            'last_name'     => 'required',
+            'email'         => 'required|email|unique:users'
         ];
     }
 }

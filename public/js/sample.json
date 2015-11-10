@@ -1,44 +1,293 @@
 {
-  "module_name" : "GKA",
-  "course_title": "GKAP",
-  "course_id" : 1234,
-  "groups" : [
+  "modules": [
     {
-      "group_title": "GKAP01",
-      "group_id": 12381092,
-      "events": [
+      "module_name": "GKA",
+      "courses": [
         {
-          "day": "12-10-2015",
-          "start_time": "10:00",
-          "end_time": "15:00"
+          "course_title": "GKA",
+          "course_id": 1234,
+          "groups": [
+            {
+              "group_title": "GKAV",
+              "group_id": 4321,
+              "max_group_size": 100,
+              "events": [
+                {
+                  "day": "12-10-2015",
+                  "start_time": "10:00",
+                  "end_time": "15:00"
+                },
+                {
+                  "day": "13-10-2015",
+                  "start_time": "11:00",
+                  "end_time": "16:00"
+                }
+              ],
+              "applying_teams": [
+                {
+                  "team_id": 1322,
+                  "member_count": 3,
+                  "members": [
+                    {
+                      "name": "Simon Kretschmer",
+                      "member_id": 465489
+                    },
+                    {
+                      "name": "Anne Frank",
+                      "member_id": 546216
+                    },
+                    {
+                      "name": "Professer Birk",
+                      "member_id": 1338
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         },
         {
-          "day": "12-10-2015",
-          "start_time": "10:00",
-          "end_time": "15:00"
-        },
-        {
-          "day": "12-10-2015",
-          "start_time": "10:00",
-          "end_time": "15:00"
+          "course_title": "GKAP",
+          "course_id": 2341,
+          "groups": [
+            {
+              "group_title": "GKAP01",
+              "group_id": 3412,
+              "max_group_size": 14,
+              "events": [
+                {
+                  "day": "15-10-2015",
+                  "start_time": "10:00",
+                  "end_time": "15:00"
+                },
+                {
+                  "day": "16-10-2015",
+                  "start_time": "10:00",
+                  "end_time": "15:00"
+                }
+              ],
+              "applying_teams": [
+                {
+                  "team_id": 4561,
+                  "member_count": 8,
+                  "members": [
+                    {
+                      "name": "Marc Kirchner",
+                      "member_id": 8192347
+                    },
+                    {
+                      "name": "Niko Khaled",
+                      "member_id": 749192
+                    },
+                    {
+                      "name": "Finn Masurat",
+                      "member_id": 4891723
+                    }
+                  ]
+                },
+                {
+                  "team_id": 1322,
+                  "member_count": 3,
+                  "members": [
+                    {
+                      "name": "Max Mustermann",
+                      "member_id": 465489
+                    },
+                    {
+                      "name": "Baerbel Beispiel",
+                      "member_id": 546216
+                    },
+                    {
+                      "name": "Professer Eich",
+                      "member_id": 1337
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "group_title": "GKAP02",
+              "group_id": 4123,
+              "max_group_size": 16,
+              "events": [
+                {
+                  "day": "17-10-2015",
+                  "start_time": "10:00",
+                  "end_time": "15:00"
+                },
+                {
+                  "day": "18-10-2015",
+                  "start_time": "10:00",
+                  "end_time": "15:00"
+                },
+                {
+                  "day": "19-10-2015",
+                  "start_time": "10:00",
+                  "end_time": "15:00"
+                }
+              ],
+              "applying_teams": []
+            }
+          ]
         }
-      ],
-      "applying_teams": [
+      ]
+    },
+    {
+      "module_name": "RMP",
+      "courses": [
         {
-          "team_id" : 4561,
-          "member_count": 8,
-          "members": [
+          "course_title": "RMP",
+          "course_id": 5678,
+          "groups": [
             {
-              "name": "Marc Kirchner",
-              "member_id": 8192347
+              "group_title": "RMPV",
+              "group_id": 6785,
+              "max_group_size": 100,
+              "events": [
+                {
+                  "day": "12-10-20125",
+                  "start_time": "10:020",
+                  "end_time": "15:20"
+                },
+                {
+                  "day": "12-10-20125",
+                  "start_time": "10:020",
+                  "end_time": "15:200"
+                },
+                {
+                  "day": "12-10-2015",
+                  "start_time": "10:00",
+                  "end_time": "15:00"
+                }
+              ],
+              "applying_teams": [
+                {
+                  "team_id": 4561,
+                  "member_count": 8,
+                  "members": [
+                    {
+                      "name": "Marc Kirchner",
+                      "member_id": 8192347
+                    },
+                    {
+                      "name": "Niko Khaled",
+                      "member_id": 749192
+                    },
+                    {
+                      "name": "Finn Masurat",
+                      "member_id": 4891723
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "course_title": "RMPP",
+          "course_id": 5678,
+          "groups": [
+            {
+              "group_title": "RMPP01",
+              "group_id": 6785,
+              "max_group_size": 20,
+              "events": [
+                {
+                  "day": "12-10-20125",
+                  "start_time": "10:020",
+                  "end_time": "15:20"
+                },
+                {
+                  "day": "12-10-20125",
+                  "start_time": "10:020",
+                  "end_time": "15:200"
+                },
+                {
+                  "day": "12-10-2015",
+                  "start_time": "10:00",
+                  "end_time": "15:00"
+                }
+              ],
+              "applying_teams": [
+                {
+                  "team_id": 9632,
+                  "member_count": 3,
+                  "members": [
+                    {
+                      "name": "Test Test",
+                      "member_id": 8192347
+                    },
+                    {
+                      "name": "Vorname Nachname",
+                      "member_id": 749192
+                    },
+                    {
+                      "name": "Team Name",
+                      "member_id": 4891723
+                    }
+                  ]
+                },
+                {
+                  "team_id": 9632,
+                  "member_count": 3,
+                  "members": [
+                    {
+                      "name": "Was Ne",
+                      "member_id": 8192347
+                    },
+                    {
+                      "name": "Sample Der",
+                      "member_id": 749192
+                    },
+                    {
+                      "name": "Hammer Oder",
+                      "member_id": 4891723
+                    }
+                  ]
+                }
+              ]
             },
             {
-              "name": "Niko Khaled",
-              "member_id": 749192
-            },
-            {
-              "name": "Finn Masurat",
-              "member_id": 4891723
+              "group_title": "RMPP02",
+              "group_id": 9716,
+              "max_group_size": 20,
+              "events": [
+                {
+                  "day": "12-10-20125",
+                  "start_time": "10:020",
+                  "end_time": "15:20"
+                },
+                {
+                  "day": "12-10-20125",
+                  "start_time": "10:020",
+                  "end_time": "15:200"
+                },
+                {
+                  "day": "12-10-2015",
+                  "start_time": "10:00",
+                  "end_time": "15:00"
+                }
+              ],
+              "applying_teams": [
+                {
+                  "team_id": 9632,
+                  "member_count": 3,
+                  "members": [
+                    {
+                      "name": "Test Test",
+                      "member_id": 8192347
+                    },
+                    {
+                      "name": "Vorname Nachname",
+                      "member_id": 749192
+                    },
+                    {
+                      "name": "Team Name",
+                      "member_id": 4891723
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }

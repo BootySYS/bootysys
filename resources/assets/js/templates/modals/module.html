@@ -1,34 +1,52 @@
 <div class="modal-header">
-    <h3 class="modal-title"><i class="fa fa-book"></i> {{ module.name }}</h3>
+    <h3 class="modal-title">{{ module.name }}</h3>
 </div>
+
 <div class="modal-body">
-   <table class="table module-table">
-       <tr>
-           <td><strong>Short Name</strong></td>
-           <td>{{ module.short_name }}</td>
-       </tr>
-       <tr>
-           <td><strong>Description</strong></td>
-           <td>{{ module.description }}</td>
-       </tr>
-       <tr>
-           <td><strong>Responsible Professors</strong></td>
-           <td>
-              <ul>
-                  <li ng-repeat="professor in module.professors">
-                      {{ professor.last_name }}, {{ professor.first_name }}
-                  </li>
-              </ul>
-           </td>
-       </tr>
-       <tr>
-           <td><strong>Groups</strong></td>
-           <td>
-               <professor-list></professor-list>
-           </td>
-       </tr>
-   </table>
+    <uib-tabset vertical="true" type="pills" class="modules-nav">
+        <uib-tab heading="General">
+            <p class="tab-title">
+                <strong>General</strong>
+            </p>
+
+            <table class="table module-table">
+                <tr>
+                    <td><strong>Short Name</strong></td>
+                    <td>{{ module.short_name }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Description</strong></td>
+                    <td>{{ module.description }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Responsible Professors</strong></td>
+                    <td>
+                        <ul class="list-unstyled">
+                            <li ng-repeat="professor in module.professors">
+                                {{ professor.last_name }}, {{ professor.first_name }}
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </uib-tab>
+        <uib-tab heading="Courses">
+            <p class="tab-title">
+                <strong>Courses</strong>
+            </p>
+
+            <courses-list module="module"></courses-list>
+        </uib-tab>
+        <uib-tab heading="Course groups">
+            <p class="tab-title">
+                <strong>Course groups & events</strong>
+            </p>
+
+            <course-groups-list courses="module.courses"></course-groups-list>
+        </uib-tab>
+    </uib-tabset>
 </div>
+
 <div class="modal-footer">
     <button class="btn btn-primary" type="button" ng-click="ok()">Close</button>
 </div>

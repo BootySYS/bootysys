@@ -1,0 +1,64 @@
+<div class="courses-list">
+
+    <div ng-if="module.courses.length == 0">
+        <p class="text-muted">No courses available.</p>
+    </div>
+
+    <table class="table-bordered table" ng-if="module.courses.length > 0">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tr ng-repeat="course in module.courses">
+            <td>
+                {{ course.name }}
+            </td>
+            <td>
+                {{ course.type }}
+            </td>
+            <td>
+                <a ng-click="removeCourse($index)">Delete course</a>
+            </td>
+        </tr>
+    </table>
+
+    <a ng-click="addCourse()"><i class="fa fa-plus"></i> Add a new course </a>
+
+    <div ng-if="addCourseActive">
+        <div class="row">
+            <hr>
+            <div class="col-lg-12">
+                <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">
+                    <p>
+                        <strong>Whoops!</strong> There were some errors:
+                    </p>
+                    <ul>
+                        <li ng-repeat="message in alert.msg">
+                            {{ message }}
+                        </li>
+                    </ul>
+                </uib-alert>
+
+                <form name="addCourseForm" ng-submit="saveCourse()">
+                    <div class="form-group">
+                        <label for="course_type">Type</label>
+                        <select name="course_type" id="course_type" class="form-control" ng-model="course.course_type">
+                            <option value="lecture">Lecture</option>
+                            <option value="practical_course">Practical course</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="course_name">Name</label>
+                        <input type="text" ng-model="course.course_name" class="form-control" name="course_name" id="course_name">
+                    </div>
+
+                    <input type="submit" class="btn btn-primary" value="Save">
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

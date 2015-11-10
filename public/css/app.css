@@ -7778,7 +7778,42 @@ ul.professors-list {
   .modal-content .modal-header {
     background: #383d41;
     color: white; }
-    .modal-content .modal-header .modal-title {
-      font-family: 'Patua One', cursive; }
+
+@media (min-width: 992px) {
+  .modal-lg {
+    width: 80%; } }
+
+.nav-pills > li > a {
+  border-radius: 0;
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  text-transform: uppercase;
+  font-weight: bold; }
+
+.nav-pills > li.active > a,
+.nav-pills > li.active > a:hover,
+.nav-pills > li.active > a:active,
+.nav-pills > li.active > a:focus {
+  background-color: #50575c; }
+
+.modules-nav {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex; }
+  .modules-nav .nav {
+    width: 20%; }
+  .modules-nav .tab-content {
+    width: 75%;
+    margin-left: 15px;
+    padding: 10px 0px 10px 15px;
+    border-left: 1px solid #d2d6d9; }
+    .modules-nav .tab-content .tab-title {
+      text-transform: uppercase;
+      color: #677078; }
+
+.modal {
+  background: rgba(56, 61, 65, 0.4); }
+
+.modal-dialog {
+  box-shadow: 10px 10px 0px -6px rgba(56, 61, 65, 0.52); }
 
 /*# sourceMappingURL=app.css.map */

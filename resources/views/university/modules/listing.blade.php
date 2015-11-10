@@ -23,7 +23,7 @@
             <div ng-show="state === 'all'" ng-cloak>
                 <div ng-show="modules.length > 0">
                     <div class="col-lg-12">
-                        <table class="table table-striped table-bordered table-hover">
+                        <table class="table table-striped table-bordered table-hover modules-table">
                             <thead>
                             <tr>
                                 <th>Short name</th>
@@ -38,7 +38,7 @@
                                     <td>@{{ module.short_name }}</td>
                                     <td><a ng-click="showModule(module)">@{{ module.name }}</a></td>
                                     <td>
-                                        <ul>
+                                        <ul class="list-unstyled">
                                             <li ng-repeat="professor in module.professors">
                                                 @{{ professor.first_name }} @{{ professor.last_name }}
                                             </li>
@@ -98,7 +98,6 @@
                             <div class="form-group">
                                 <input type="submit" class="btn btn-primary" value="Save" />
                                 <a ng-if="state === 'add'" ng-click="cancel()" class="btn btn-danger " ng-cloak>Cancel</a>
-
                             </div>
 
                         </fieldset>

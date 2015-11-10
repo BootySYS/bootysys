@@ -37419,15 +37419,19 @@ require('angular-bootstrap-npm');
 
 (function () {
 
-    angular.module('app', ['ui.bootstrap', 'app.modal']).directive('loader', require('./directives/loader')).directive('professorsList', require('./directives/professorsList')).controller('ModulesController', require('./controllers/ModulesController')).controller('ProfessorsController', require('./controllers/ProfessorsController'));
+    angular.module('app', ['ui.bootstrap', 'app.modals', 'app.directives', 'app.services']).controller('ModulesController', require('./controllers/ModulesController')).controller('ProfessorsController', require('./controllers/ProfessorsController'));
 
-    angular.module('app.modal', ['ui.bootstrap']).controller('ModulesModalController', require('./controllers/ModulesModalController'));
+    angular.module('app.directives', []).directive('loader', require('./directives/loader')).directive('professorsList', require('./directives/professorsList')).directive('coursesList', require('./directives/coursesList')).directive('courseGroupsList', require('./directives/courseGroupsList'));
+
+    angular.module('app.modals', []).controller('ModulesModalController', require('./controllers/ModulesModalController'));
+
+    angular.module('app.services', []).service('moduleService', require('./services/moduleService'));
 })();
 
-},{"./controllers/ModulesController":5,"./controllers/ModulesModalController":6,"./controllers/ProfessorsController":7,"./directives/loader":8,"./directives/professorsList":9,"angular":3,"angular-bootstrap-npm":1}],5:[function(require,module,exports){
+},{"./controllers/ModulesController":5,"./controllers/ModulesModalController":6,"./controllers/ProfessorsController":7,"./directives/courseGroupsList":8,"./directives/coursesList":9,"./directives/loader":10,"./directives/professorsList":11,"./services/moduleService":12,"angular":3,"angular-bootstrap-npm":1}],5:[function(require,module,exports){
 'use strict';
 
-module.exports = function ($scope, $http, $window, $uibModal, $log) {
+module.exports = function ($scope, $http, $window, $uibModal, $log, moduleService) {
 
     $scope.modules = [];
     $scope.professors = [];
@@ -37446,8 +37450,8 @@ module.exports = function ($scope, $http, $window, $uibModal, $log) {
     $scope.loading = false;
 
     function init() {
-        $http.get('/modules/all').then(function (result) {
-            $scope.modules = result.data;
+        moduleService.getModules().then(function (response) {
+            $scope.modules = response.data;
         });
 
         $http.get('/professors/all').then(function (result) {
@@ -37468,7 +37472,6 @@ module.exports = function ($scope, $http, $window, $uibModal, $log) {
     $scope.submitNewModule = function () {
 
         $scope.loading = true;
-
         $scope.alerts = [];
 
         $http.post('/modules/store', $scope.newModule).then(function (result) {
@@ -37511,8 +37514,8 @@ module.exports = function ($scope, $http, $window, $uibModal, $log) {
 
     $scope.showModule = function (module) {
 
-        var modalInstance = $uibModal.open({
-            animation: true,
+        $uibModal.open({
+            animation: false,
             template: require('../templates/modals/module.html'),
             controller: 'ModulesModalController',
             size: 'lg',
@@ -37532,16 +37535,10 @@ module.exports = function ($scope, $http, $window, $uibModal, $log) {
                 })
             }
         });
-
-        modalInstance.result.then(function (selectedItem) {
-            $scope.selected = selectedItem;
-        }, function () {
-            $log.info('Modal dismissed at: ' + new Date());
-        });
     };
 };
 
-},{"../templates/modals/module.html":11}],6:[function(require,module,exports){
+},{"../templates/modals/module.html":16}],6:[function(require,module,exports){
 'use strict';
 
 module.exports = function ($scope, $uibModalInstance, module) {
@@ -37560,17 +37557,18 @@ module.exports = function ($scope, $uibModalInstance, module) {
 },{}],7:[function(require,module,exports){
 'use strict';
 
-module.exports = function ($scope, $http) {
+module.exports = function ($scope, $http, $window) {
 
     $scope.professors = [];
 
     $scope.state = 'all';
 
+    $scope.alerts = [];
+
     $scope.newProfessor = {
         first_name: '',
         last_name: '',
         email: ''
-
     };
 
     function init() {
@@ -37590,13 +37588,135 @@ module.exports = function ($scope, $http) {
     };
 
     $scope.submitNewProfessor = function () {
+
+        $scope.loading = true;
+        $scope.alerts = [];
+
         $http.post('/professors/store', $scope.newProfessor).then(function (result) {
-            console.log(result);
+
+            $scope.professors.push(result.data);
+            $window.location.reload();
+        }, function (response) {
+            var alerts = [];
+
+            angular.forEach(response.data, function (errors, field) {
+
+                for (var i in errors) {
+                    alerts.push(errors[i]);
+                }
+            });
+
+            $scope.alerts.push({
+                type: 'danger',
+                msg: alerts
+            });
+
+            $scope.loading = false;
+        });
+    };
+
+    $scope.closeAlert = function (index) {
+        $scope.alerts.splice(index, 1);
+    };
+
+    $scope['delete'] = function (professor) {
+
+        $scope.loading = true;
+
+        $http['delete']('/professors/delete', { params: { id: professor.id } }).then(function (result) {
+            if (result.status == 200) {
+                $window.location.reload();
+            }
         });
     };
 };
 
 },{}],8:[function(require,module,exports){
+'use strict';
+
+module.exports = function () {
+
+    return {
+        restrict: 'E',
+        replace: true,
+        scope: {
+            courses: '='
+        },
+        link: function link(scope) {
+
+            scope.setActiveCourse = function (course) {
+                scope.activeCourse = course;
+            };
+        },
+        template: require('../templates/courseGroupsList.html')
+    };
+};
+
+},{"../templates/courseGroupsList.html":13}],9:[function(require,module,exports){
+'use strict';
+
+module.exports = function ($http) {
+    return {
+        restrict: 'E',
+        relplace: true,
+        scope: {
+            module: '=',
+            onClick: '&'
+        },
+        link: function link(scope) {
+            scope.addCourseActive = false;
+            scope.alerts = [];
+
+            scope.course = {};
+
+            scope.addCourse = function () {
+                scope.addCourseActive = !scope.addCourseActive;
+                scope.alerts = [];
+                scope.course = {};
+            };
+
+            scope.saveCourse = function () {
+
+                scope.course.module_id = scope.module.id;
+
+                $http.post('/modules/course', scope.course).then(function (response) {
+                    scope.module.courses.push(response.data);
+                    scope.course = {};
+                    scope.addCourseActive = false;
+                }, function (response) {
+                    var alerts = [];
+
+                    angular.forEach(response.data, function (errors, field) {
+
+                        for (var i in errors) {
+                            alerts.push(errors[i]);
+                        }
+                    });
+
+                    scope.alerts.push({
+                        type: 'danger',
+                        msg: alerts
+                    });
+                });
+            };
+
+            scope.closeAlert = function (index) {
+                scope.alerts.splice(index, 1);
+            };
+
+            scope.removeCourse = function (index) {
+                $http['delete']('/modules/course', { params: { module_id: scope.module.id, course_id: scope.module.courses[index].id } }).then(function (response) {
+                    if (response.status == 200) {
+                        scope.module.courses.splice(index, 1);
+                    }
+                });
+            };
+        },
+        template: require('../templates/coursesList.html')
+    };
+};
+
+},{"../templates/coursesList.html":14}],10:[function(require,module,exports){
 'use strict';
 
 module.exports = ['$http', function ($http) {
@@ -37608,7 +37728,7 @@ module.exports = ['$http', function ($http) {
     };
 }];
 
-},{"../templates/loader.html":10}],9:[function(require,module,exports){
+},{"../templates/loader.html":15}],11:[function(require,module,exports){
 'use strict';
 
 module.exports = function () {
@@ -37641,10 +37761,33 @@ module.exports = function () {
     };
 };
 
-},{"../templates/professorsList.html":12}],10:[function(require,module,exports){
+},{"../templates/professorsList.html":17}],12:[function(require,module,exports){
+'use strict';
+
+module.exports = function ($http, $q) {
+
+    var deferred = $q.defer();
+
+    var modules = [];
+
+    $http.get('/modules/all').then(function (response) {
+        deferred.resolve(response);
+        modules = response.data;
+    });
+
+    this.getModules = function () {
+        return deferred.promise;
+    };
+};
+
+},{}],13:[function(require,module,exports){
+module.exports = '<div>\n    <div class="row">\n        <div class="col-lg-4">\n            <ul class="list-group">\n                <li class="list-group-item" ng-repeat="course in courses">\n                    <a ng-click="setActiveCourse(course)">{{ course.name }}</a>\n                </li>\n            </ul>\n        </div>\n        <div class="col-lg-8">\n            {{ activeCourse.name }}\n        </div>\n    </div>\n</div>';
+},{}],14:[function(require,module,exports){
+module.exports = '<div class="courses-list">\n\n    <div ng-if="module.courses.length == 0">\n        <p class="text-muted">No courses available.</p>\n    </div>\n\n    <table class="table-bordered table" ng-if="module.courses.length > 0">\n        <thead>\n            <tr>\n                <th>Name</th>\n                <th>Type</th>\n                <th>Actions</th>\n            </tr>\n        </thead>\n        <tr ng-repeat="course in module.courses">\n            <td>\n                {{ course.name }}\n            </td>\n            <td>\n                {{ course.type }}\n            </td>\n            <td>\n                <a ng-click="removeCourse($index)">Delete course</a>\n            </td>\n        </tr>\n    </table>\n\n    <a ng-click="addCourse()"><i class="fa fa-plus"></i> Add a new course </a>\n\n    <div ng-if="addCourseActive">\n        <div class="row">\n            <hr>\n            <div class="col-lg-12">\n                <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">\n                    <p>\n                        <strong>Whoops!</strong> There were some errors:\n                    </p>\n                    <ul>\n                        <li ng-repeat="message in alert.msg">\n                            {{ message }}\n                        </li>\n                    </ul>\n                </uib-alert>\n\n                <form name="addCourseForm" ng-submit="saveCourse()">\n                    <div class="form-group">\n                        <label for="course_type">Type</label>\n                        <select name="course_type" id="course_type" class="form-control" ng-model="course.course_type">\n                            <option value="lecture">Lecture</option>\n                            <option value="practical_course">Practical course</option>\n                        </select>\n                    </div>\n                    <div class="form-group">\n                        <label for="course_name">Name</label>\n                        <input type="text" ng-model="course.course_name" class="form-control" name="course_name" id="course_name">\n                    </div>\n\n                    <input type="submit" class="btn btn-primary" value="Save">\n                </form>\n            </div>\n        </div>\n    </div>\n\n</div>';
+},{}],15:[function(require,module,exports){
 module.exports = '<div class="loader">\n    <div class="progress">\n        <div class="progress-bar progress-bar-primary progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">\n            <span class="sr-only">40% Complete (success)</span>\n        </div>\n    </div>\n</div>\n';
-},{}],11:[function(require,module,exports){
-module.exports = '<div class="modal-header">\n    <h3 class="modal-title"><i class="fa fa-book"></i> {{ module.name }}</h3>\n</div>\n<div class="modal-body">\n   <table class="table module-table">\n       <tr>\n           <td><strong>Short Name</strong></td>\n           <td>{{ module.short_name }}</td>\n       </tr>\n       <tr>\n           <td><strong>Description</strong></td>\n           <td>{{ module.description }}</td>\n       </tr>\n       <tr>\n           <td><strong>Responsible Professors</strong></td>\n           <td>\n              <ul>\n                  <li ng-repeat="professor in module.professors">\n                      {{ professor.last_name }}, {{ professor.first_name }}\n                  </li>\n              </ul>\n           </td>\n       </tr>\n       <tr>\n           <td><strong>Groups</strong></td>\n           <td>\n               <professor-list></professor-list>\n           </td>\n       </tr>\n   </table>\n</div>\n<div class="modal-footer">\n    <button class="btn btn-primary" type="button" ng-click="ok()">Close</button>\n</div>';
-},{}],12:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
+module.exports = '<div class="modal-header">\n    <h3 class="modal-title">{{ module.name }}</h3>\n</div>\n\n<div class="modal-body">\n    <uib-tabset vertical="true" type="pills" class="modules-nav">\n        <uib-tab heading="General">\n            <p class="tab-title">\n                <strong>General</strong>\n            </p>\n\n            <table class="table module-table">\n                <tr>\n                    <td><strong>Short Name</strong></td>\n                    <td>{{ module.short_name }}</td>\n                </tr>\n                <tr>\n                    <td><strong>Description</strong></td>\n                    <td>{{ module.description }}</td>\n                </tr>\n                <tr>\n                    <td><strong>Responsible Professors</strong></td>\n                    <td>\n                        <ul class="list-unstyled">\n                            <li ng-repeat="professor in module.professors">\n                                {{ professor.last_name }}, {{ professor.first_name }}\n                            </li>\n                        </ul>\n                    </td>\n                </tr>\n            </table>\n        </uib-tab>\n        <uib-tab heading="Courses">\n            <p class="tab-title">\n                <strong>Courses</strong>\n            </p>\n\n            <courses-list module="module"></courses-list>\n        </uib-tab>\n        <uib-tab heading="Course groups">\n            <p class="tab-title">\n                <strong>Course groups & events</strong>\n            </p>\n\n            <course-groups-list courses="module.courses"></course-groups-list>\n        </uib-tab>\n    </uib-tabset>\n</div>\n\n<div class="modal-footer">\n    <button class="btn btn-primary" type="button" ng-click="ok()">Close</button>\n</div>';
+},{}],17:[function(require,module,exports){
 module.exports = '<div>\n    <label>Professor(s)</label>\n\n    <small class="text-muted">\n        You can select multiple professors.\n    </small>\n\n    <ul class="professors-list">\n        <li ng-repeat="professor in professors | orderBy: \'last_name\'" ng-class="{ selected: selected(professor) }">\n            <a ng-click="handleSelection(professor)">\n                {{ professor.title }} {{ professor.last_name }}, {{ professor.first_name }}\n            </a>\n        </li>\n    </ul>\n\n    <div ng-if="professors.length == 0" class="no-professors text-center panel panel-default">\n        <div class="panel-body">\n            <h4>\n                <i class="fa fa-exclamation fa-2x"></i><br>\n                You haven\'t created any professors yet.\n            </h4>\n\n            <a href="" class="btn btn-default">Create one here</a>\n\n        </div>\n    </div>\n\n</div>';
 },{}]},{},[4]);

@@ -1,4 +1,4 @@
-module.exports = function($scope, $http, $window, $uibModal, $log) {
+module.exports = function($scope, $http, $window, $uibModal, $log, moduleService) {
 
     $scope.modules = [];
     $scope.professors = [];
@@ -17,8 +17,8 @@ module.exports = function($scope, $http, $window, $uibModal, $log) {
     $scope.loading = false;
 
     function init() {
-        $http.get('/modules/all').then(function (result) {
-            $scope.modules = result.data;
+        moduleService.getModules().then(function (response) {
+            $scope.modules = response.data;
         });
 
         $http.get('/professors/all').then(function(result) {
@@ -39,7 +39,6 @@ module.exports = function($scope, $http, $window, $uibModal, $log) {
     $scope.submitNewModule = function() {
 
         $scope.loading = true;
-
         $scope.alerts = [];
 
         $http.post('/modules/store', $scope.newModule)
@@ -85,8 +84,8 @@ module.exports = function($scope, $http, $window, $uibModal, $log) {
 
     $scope.showModule = function (module) {
 
-        var modalInstance = $uibModal.open({
-            animation: true,
+        $uibModal.open({
+            animation: false,
             template: require('../templates/modals/module.html'),
             controller: 'ModulesModalController',
             size: 'lg',
@@ -96,12 +95,5 @@ module.exports = function($scope, $http, $window, $uibModal, $log) {
                 }
             }
         });
-
-        modalInstance.result.then(function (selectedItem) {
-            $scope.selected = selectedItem;
-        }, function () {
-            $log.info('Modal dismissed at: ' + new Date());
-        });
-
     };
 };
