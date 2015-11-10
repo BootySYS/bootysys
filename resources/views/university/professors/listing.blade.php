@@ -81,7 +81,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Short Name</label>
+                            <label>Last Name</label>
                             <input ng-model="newProfessor.last_name" name="last_name" class="form-control" value="" placeholder="Last Name">
                         </div>
 
