@@ -36,6 +36,7 @@ Route::group(['prefix' => 'students'], function() {
     Route::get('all', 'StudentsController@all');
     Route::post('store', 'StudentsController@store');
     Route::delete('delete', 'StudentsController@destroy');
+    Route::put('update','StudentsController@update');
 });
 
 Route::group(['prefix' => 'teams'], function() {

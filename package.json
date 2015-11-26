@@ -8,6 +8,7 @@
     "vueify": "^5.0.2"
   },
   "dependencies": {
+    "angular-bootstrap-npm": "^0.14.3",
     "bootstrap-sass": "^3.0.0",
     "laravel-elixir": "^3.0.0"
   }
