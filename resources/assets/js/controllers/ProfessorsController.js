@@ -73,4 +73,41 @@ module.exports = function($scope, $http, $window) {
                 }
             });
     };
+
+    $scope.updateProfessor = function (professor) {
+
+        $scope.state = 'update';
+        $scope.professorToUpdate = professor;
+    };
+
+    $scope.updateOldProfessor = function(professor) {
+        $scope.loading = true;
+        $scope.alerts = [];
+        console.log(professor);
+        $http.put('/professors/update',professor)
+            .then(function (result) {
+
+                $scope.professors.push(result.data);
+                $window.location.reload();
+
+            }, function (response) {
+                var alerts = [];
+
+                angular.forEach(response.data, function(errors, field) {
+
+                    for (var i in errors) {
+                        alerts.push(errors[i]);
+                    }
+                });
+
+                $scope.alerts.push({
+                    type: 'danger',
+                    msg: alerts
+                });
+
+                $scope.loading = false;
+            });
+
+    };
+
 };

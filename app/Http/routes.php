@@ -29,6 +29,7 @@ Route::group(['prefix' => 'professors'], function() {
     Route::get('all', 'ProfessorsController@all');
     Route::post('store', 'ProfessorsController@store');
     Route::delete('delete', 'ProfessorsController@destroy');
+    Route::put('update','ProfessorsController@update');
 });
 
 Route::group(['prefix' => 'students'], function() {
