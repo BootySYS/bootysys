@@ -41,7 +41,10 @@ Route::group(['prefix' => 'students'], function() {
 });
 
 Route::group(['prefix' => 'teams'], function() {
-    Route::get('/', 'StudentTeamsController@index');
-    Route::get('create', 'StudentTeamsController@create');
-    Route::post('create', 'StudentTeamsController@store');
+    Route::get('/', 'TeamsController@index');
+    Route::get('all', 'TeamsController@all');
+    Route::post('store', 'TeamsController@store');
+    Route::delete('delete', 'TeamsController@destroy');
+    Route::put('update', 'TeamsController@update');
+
 });

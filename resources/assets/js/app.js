@@ -6,7 +6,8 @@ require('angular-bootstrap-npm');
     angular.module('app', ['ui.bootstrap', 'app.modals', 'app.directives', 'app.services'])
         .controller('ModulesController', require('./controllers/ModulesController'))
         .controller('ProfessorsController', require('./controllers/ProfessorsController'))
-        .controller('StudentsController', require('./controllers/StudentsController'));
+        .controller('StudentsController', require('./controllers/StudentsController'))
+        .controller('TeamsController', require('./controllers/TeamsController'));
 
     angular.module('app.directives', [])
         .directive('loader', require('./directives/loader'))
@@ -15,7 +16,9 @@ require('angular-bootstrap-npm');
         .directive('courseGroupsList', require('./directives/courseGroupsList'));
 
     angular.module('app.modals', [])
-        .controller('ModulesModalController', require('./controllers/ModulesModalController'));
+        .controller('ModulesModalController', require('./controllers/ModulesModalController'))
+        .controller('StudentsModalController', require('./controllers/StudentsModalController'))
+        .controller('TeamsModalController', require('./controllers/TeamsModalController'));
 
     angular.module('app.services', [])
         .service('moduleService', require('./services/moduleService'));

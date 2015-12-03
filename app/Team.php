@@ -10,6 +10,7 @@ class Team extends Model
         'name'
     ];
 
+
     /**
      * A team has members, which are students.
      *

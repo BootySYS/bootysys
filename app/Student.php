@@ -15,6 +15,17 @@ class Student extends Model
         'semester'
     ];
 
+    protected $visible = [
+        'id',
+        'first_name',
+        'last_name',
+        'email',
+        'password',
+        'major',
+        'semester',
+        'teams'
+    ];
+
     protected static function boot()
     {
         // TODO send email with randomly generated password
@@ -45,7 +56,7 @@ class Student extends Model
      */
     public function teams()
     {
-        return $this->belongsToMany('App\Teams')
+        return $this->belongsToMany('App\Team')
                     ->withPivot('role');
     }
 

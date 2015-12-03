@@ -25,10 +25,10 @@ class StoreStudentRequest extends Request
     public function rules()
     {
         return [
-            'first_name'    => 'required',
-            'last_name'     => 'required',
-            'email'         => 'required|email|unique:users',
-            'major'         => 'required',
-            'semester'      => 'between:1,14|required|integer'];
+            'first_name'                => 'required',
+            'last_name'                 => 'required',
+            'email'                     => 'required|email|unique:users',
+            'major'                     => 'required',
+            'semester'                  => 'between:1,14|required|integer'];
     }
 }

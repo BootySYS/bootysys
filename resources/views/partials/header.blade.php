@@ -34,9 +34,6 @@
                         <li>
                             <a href="{{ action('StudentsController@index') }}"><i class="fa fa-graduation-cap"></i> Students</a>
                         </li>
-                        <li>
-                            <a href="{{ action('StudentTeamsController@index') }}"><i class="fa fa-users"></i> Student Teams</a>
-                        </li>
 
                         @can('manage-university')
                             <li>
