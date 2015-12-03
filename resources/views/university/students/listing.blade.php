@@ -39,7 +39,7 @@
 
                         <tr ng-repeat="student in students">
                             <td>@{{ student.first_name }}</td>
-                            <td>@{{ student.last_name }}</td>
+                            <td><a ng-click="showStudent(student)">@{{ student.last_name }}</a></td>
                             <td>@{{ student.email }}</td>
                             <td>@{{ student.major }}</td>
                             <td>@{{ student.semester }}</td>

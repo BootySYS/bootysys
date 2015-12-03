@@ -55,6 +55,7 @@ class StudentsController extends Controller
     public function store(StoreStudentRequest $request)
     {
         return $this->university->students()->create($request->all());
+
     }
 
     /**
@@ -112,6 +113,6 @@ class StudentsController extends Controller
 
     public function all()
     {
-        return $this->university->students;
+        return $this->university->students->load('teams');
     }
 }

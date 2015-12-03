@@ -1,4 +1,4 @@
-module.exports = function($scope, $http, $window) {
+module.exports = function($scope, $http, $window, $uibModal, $log, moduleService) {
 
     $scope.students = [];
 
@@ -111,5 +111,20 @@ module.exports = function($scope, $http, $window) {
                 $scope.loading = false;
             });
 
+    };
+
+    $scope.showStudent = function (student) {
+
+        $uibModal.open({
+            animation: false,
+            template: require('../templates/modals/student.html'),
+            controller: 'StudentsModalController',
+            size: 'lg',
+            resolve: {
+                student: function () {
+                    return student;
+                }
+            }
+        });
     };
 };
