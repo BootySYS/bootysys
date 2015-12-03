@@ -1,6 +1,7 @@
 $brand-color: rgba(34, 91, 163, 0.68);
 $dark-color: #383d41;
 $danger-color: #d9534f;
+$green-color: #3b6b5f;
 
 .btn, a, button {
   outline: 0;
@@ -254,9 +255,8 @@ ul.professors-list {
   border: none;
 
   .modal-header {
-    background: $dark-color;
+    background-color: $green-color;
     color: white;
-
   }
 }
 
@@ -277,7 +277,7 @@ ul.professors-list {
 .nav-pills > li.active > a:hover,
 .nav-pills > li.active > a:active,
 .nav-pills > li.active > a:focus {
-  background-color: lighten($dark-color, 10);
+  background-color: $green-color;
 }
 
 .modules-nav {
