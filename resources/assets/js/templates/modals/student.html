@@ -35,12 +35,31 @@
             <p class="tab-title">
                 <strong>Teams</strong>
             </p>
+            <table class="table-bordered table">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Role in Team</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
 
-            <pre>
+                <tr ng-repeat="team in student.teams">
+                    <td>{{ team.name }}</td>
+                    <td>{{ team.pivot.role }}</td>
+                    <td>
+                        <a ng-click="deleteMember(student)">delete</a>
+                    </td>
+                    <td>
+                        <a ng-click="updateMember(student)">update</a>
+                    </td>
+                </tr>
 
+                </tbody>
+            </table>
 
-
-            </pre>
         </uib-tab>
         <uib-tab heading="Courses">
             <p class="tab-title">

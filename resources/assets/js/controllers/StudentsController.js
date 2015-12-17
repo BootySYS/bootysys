@@ -68,7 +68,7 @@ module.exports = function($scope, $http, $window, $uibModal, $log, moduleService
 
         $scope.loading = true;
 
-        $http.delete('/students/delete', {params: {id: student.id}})
+        $http.delete('/teams/delete', {params: {id: student.id}})
             .then(function (result) {
                 if (result.status == 200) {
                     $window.location.reload();
