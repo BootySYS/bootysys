@@ -48,3 +48,6 @@ Route::group(['prefix' => 'teams'], function() {
     Route::put('update', 'TeamsController@update');
 
 });
+
+Route::get('/', 'ProfessorsModulesController@index');
+Route::get('all', 'ProfessorsModulesController@all');

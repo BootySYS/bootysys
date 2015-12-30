@@ -8,6 +8,7 @@ use App\Student;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 
 class StudentsController extends Controller
 {
@@ -17,6 +18,10 @@ class StudentsController extends Controller
 
     public function __construct()
     {
+        if(!Gate::allows('manage-university')) {
+            abort(403);
+        }
+
         $this->middleware('auth');
 
         if (auth()->check()) {

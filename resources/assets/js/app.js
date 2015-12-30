@@ -7,7 +7,8 @@ require('angular-bootstrap-npm');
         .controller('ModulesController', require('./controllers/ModulesController'))
         .controller('ProfessorsController', require('./controllers/ProfessorsController'))
         .controller('StudentsController', require('./controllers/StudentsController'))
-        .controller('TeamsController', require('./controllers/TeamsController'));
+        .controller('TeamsController', require('./controllers/TeamsController'))
+        .controller('ProfessorsModulesController', require('./controllers/ProfessorsModulesController'));
 
     angular.module('app.directives', [])
         .directive('loader', require('./directives/loader'))

@@ -37419,7 +37419,7 @@ require('angular-bootstrap-npm');
 
 (function () {
 
-    angular.module('app', ['ui.bootstrap', 'app.modals', 'app.directives', 'app.services']).controller('ModulesController', require('./controllers/ModulesController')).controller('ProfessorsController', require('./controllers/ProfessorsController')).controller('StudentsController', require('./controllers/StudentsController')).controller('TeamsController', require('./controllers/TeamsController'));
+    angular.module('app', ['ui.bootstrap', 'app.modals', 'app.directives', 'app.services']).controller('ModulesController', require('./controllers/ModulesController')).controller('ProfessorsController', require('./controllers/ProfessorsController')).controller('StudentsController', require('./controllers/StudentsController')).controller('TeamsController', require('./controllers/TeamsController')).controller('ProfessorsModulesController', require('./controllers/ProfessorsModulesController'));
 
     angular.module('app.directives', []).directive('loader', require('./directives/loader')).directive('professorsList', require('./directives/professorsList')).directive('coursesList', require('./directives/coursesList')).directive('courseGroupsList', require('./directives/courseGroupsList'));
 
@@ -37428,7 +37428,7 @@ require('angular-bootstrap-npm');
     angular.module('app.services', []).service('moduleService', require('./services/moduleService'));
 })();
 
-},{"./controllers/ModulesController":5,"./controllers/ModulesModalController":6,"./controllers/ProfessorsController":7,"./controllers/StudentsController":8,"./controllers/StudentsModalController":9,"./controllers/TeamsController":10,"./controllers/TeamsModalController":11,"./directives/courseGroupsList":12,"./directives/coursesList":13,"./directives/loader":14,"./directives/professorsList":15,"./services/moduleService":16,"angular":3,"angular-bootstrap-npm":1}],5:[function(require,module,exports){
+},{"./controllers/ModulesController":5,"./controllers/ModulesModalController":6,"./controllers/ProfessorsController":7,"./controllers/ProfessorsModulesController":8,"./controllers/StudentsController":9,"./controllers/StudentsModalController":10,"./controllers/TeamsController":11,"./controllers/TeamsModalController":12,"./directives/courseGroupsList":13,"./directives/coursesList":14,"./directives/loader":15,"./directives/professorsList":16,"./services/moduleService":17,"angular":3,"angular-bootstrap-npm":1}],5:[function(require,module,exports){
 'use strict';
 
 module.exports = function ($scope, $http, $window, $uibModal, $log, moduleService) {
@@ -37538,7 +37538,7 @@ module.exports = function ($scope, $http, $window, $uibModal, $log, moduleServic
     };
 };
 
-},{"../templates/modals/module.html":20}],6:[function(require,module,exports){
+},{"../templates/modals/module.html":21}],6:[function(require,module,exports){
 'use strict';
 
 module.exports = function ($scope, $uibModalInstance, module) {
@@ -37669,6 +37669,63 @@ module.exports = function ($scope, $http, $window) {
 
 module.exports = function ($scope, $http, $window, $uibModal, $log, moduleService) {
 
+    $scope.state = 'all';
+
+    $scope.alerts = [];
+
+    $scope.loading = false;
+
+    function init() {
+        moduleService.getModules().then(function (response) {
+            $scope.modules = response.data;
+        });
+
+        $http.get('/professors/all').then(function (result) {
+            $scope.professors = result.data;
+        });
+    }
+
+    init();
+
+    $scope.cancel = function () {
+        $scope.state = 'all';
+    };
+
+    $scope.closeAlert = function (index) {
+        $scope.alerts.splice(index, 1);
+    };
+
+    $scope.showModule = function (module) {
+
+        $uibModal.open({
+            animation: false,
+            template: require('../templates/modals/module.html'),
+            controller: 'ModulesModalController',
+            size: 'lg',
+            resolve: {
+                module: (function (_module2) {
+                    function module() {
+                        return _module2.apply(this, arguments);
+                    }
+
+                    module.toString = function () {
+                        return _module2.toString();
+                    };
+
+                    return module;
+                })(function () {
+                    return module;
+                })
+            }
+        });
+    };
+};
+
+},{"../templates/modals/module.html":21}],9:[function(require,module,exports){
+'use strict';
+
+module.exports = function ($scope, $http, $window, $uibModal, $log, moduleService) {
+
     $scope.students = [];
 
     $scope.state = 'all';
@@ -37735,7 +37792,7 @@ module.exports = function ($scope, $http, $window, $uibModal, $log, moduleServic
 
         $scope.loading = true;
 
-        $http['delete']('/teams/delete', { params: { id: student.id } }).then(function (result) {
+        $http['delete']('/students/delete', { params: { id: student.id } }).then(function (result) {
             if (result.status == 200) {
                 $window.location.reload();
             }
@@ -37790,7 +37847,7 @@ module.exports = function ($scope, $http, $window, $uibModal, $log, moduleServic
     };
 };
 
-},{"../templates/modals/student.html":21}],9:[function(require,module,exports){
+},{"../templates/modals/student.html":22}],10:[function(require,module,exports){
 'use strict';
 
 module.exports = function ($scope, $uibModalInstance, $http, student) {
@@ -37834,7 +37891,7 @@ module.exports = function ($scope, $uibModalInstance, $http, student) {
     };
 };
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 'use strict';
 
 module.exports = function ($scope, $http, $window, $uibModal, $log, moduleService) {
@@ -37950,7 +38007,7 @@ module.exports = function ($scope, $http, $window, $uibModal, $log, moduleServic
     };
 };
 
-},{"../templates/modals/team.html":22}],11:[function(require,module,exports){
+},{"../templates/modals/team.html":23}],12:[function(require,module,exports){
 'use strict';
 
 module.exports = function ($scope, $uibModalInstance, team) {
@@ -37966,7 +38023,7 @@ module.exports = function ($scope, $uibModalInstance, team) {
     };
 };
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 'use strict';
 
 module.exports = function () {
@@ -37987,7 +38044,7 @@ module.exports = function () {
     };
 };
 
-},{"../templates/courseGroupsList.html":17}],13:[function(require,module,exports){
+},{"../templates/courseGroupsList.html":18}],14:[function(require,module,exports){
 'use strict';
 
 module.exports = function ($http) {
@@ -38051,7 +38108,7 @@ module.exports = function ($http) {
     };
 };
 
-},{"../templates/coursesList.html":18}],14:[function(require,module,exports){
+},{"../templates/coursesList.html":19}],15:[function(require,module,exports){
 'use strict';
 
 module.exports = ['$http', function ($http) {
@@ -38063,7 +38120,7 @@ module.exports = ['$http', function ($http) {
     };
 }];
 
-},{"../templates/loader.html":19}],15:[function(require,module,exports){
+},{"../templates/loader.html":20}],16:[function(require,module,exports){
 'use strict';
 
 module.exports = function () {
@@ -38096,7 +38153,7 @@ module.exports = function () {
     };
 };
 
-},{"../templates/professorsList.html":23}],16:[function(require,module,exports){
+},{"../templates/professorsList.html":24}],17:[function(require,module,exports){
 'use strict';
 
 module.exports = function ($http, $q) {
@@ -38115,18 +38172,18 @@ module.exports = function ($http, $q) {
     };
 };
 
-},{}],17:[function(require,module,exports){
-module.exports = '<div>\n    <div class="row">\n        <div class="col-lg-4">\n            <ul class="list-group">\n                <li class="list-group-item" ng-repeat="course in courses">\n                    <a ng-click="setActiveCourse(course)">{{ course.name }}</a>\n                </li>\n            </ul>\n        </div>\n        <div class="col-lg-8">\n            {{ activeCourse.name }}\n        </div>\n    </div>\n</div>';
 },{}],18:[function(require,module,exports){
-module.exports = '<div class="courses-list">\n\n    <div ng-if="module.courses.length == 0">\n        <p class="text-muted">No courses available.</p>\n    </div>\n\n    <table class="table-bordered table" ng-if="module.courses.length > 0">\n        <thead>\n            <tr>\n                <th>Name</th>\n                <th>Type</th>\n                <th>Actions</th>\n            </tr>\n        </thead>\n        <tr ng-repeat="course in module.courses">\n            <td>\n                {{ course.name }}\n            </td>\n            <td>\n                {{ course.type }}\n            </td>\n            <td>\n                <a ng-click="removeCourse($index)">Delete course</a>\n            </td>\n        </tr>\n    </table>\n\n    <a ng-click="addCourse()"><i class="fa fa-plus"></i> Add a new course </a>\n\n    <div ng-if="addCourseActive">\n        <div class="row">\n            <hr>\n            <div class="col-lg-12">\n                <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">\n                    <p>\n                        <strong>Whoops!</strong> There were some errors:\n                    </p>\n                    <ul>\n                        <li ng-repeat="message in alert.msg">\n                            {{ message }}\n                        </li>\n                    </ul>\n                </uib-alert>\n\n                <form name="addCourseForm" ng-submit="saveCourse()">\n                    <div class="form-group">\n                        <label for="course_type">Type</label>\n                        <select name="course_type" id="course_type" class="form-control" ng-model="course.course_type">\n                            <option value="lecture">Lecture</option>\n                            <option value="practical_course">Practical course</option>\n                        </select>\n                    </div>\n                    <div class="form-group">\n                        <label for="course_name">Name</label>\n                        <input type="text" ng-model="course.course_name" class="form-control" name="course_name" id="course_name">\n                    </div>\n\n                    <input type="submit" class="btn btn-primary" value="Save">\n                </form>\n            </div>\n        </div>\n    </div>\n\n</div>';
+module.exports = '<div>\n    <div class="row">\n        <div class="col-lg-4">\n            <ul class="list-group">\n                <li class="list-group-item" ng-repeat="course in courses">\n                    <a ng-click="setActiveCourse(course)">{{ course.name }}</a>\n                </li>\n            </ul>\n        </div>\n        <div class="col-lg-8">\n            {{ activeCourse.name }}\n        </div>\n    </div>\n</div>';
 },{}],19:[function(require,module,exports){
-module.exports = '<div class="loader">\n    <div class="progress">\n        <div class="progress-bar progress-bar-primary progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">\n            <span class="sr-only">40% Complete (success)</span>\n        </div>\n    </div>\n</div>\n';
+module.exports = '<div class="courses-list">\n\n    <div ng-if="module.courses.length == 0">\n        <p class="text-muted">No courses available.</p>\n    </div>\n\n    <table class="table-bordered table" ng-if="module.courses.length > 0">\n        <thead>\n            <tr>\n                <th>Name</th>\n                <th>Type</th>\n                <th>Actions</th>\n            </tr>\n        </thead>\n        <tr ng-repeat="course in module.courses">\n            <td>\n                {{ course.name }}\n            </td>\n            <td>\n                {{ course.type }}\n            </td>\n            <td>\n                <a ng-click="removeCourse($index)">Delete course</a>\n            </td>\n        </tr>\n    </table>\n\n    <a ng-click="addCourse()"><i class="fa fa-plus"></i> Add a new course </a>\n\n    <div ng-if="addCourseActive">\n        <div class="row">\n            <hr>\n            <div class="col-lg-12">\n                <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">\n                    <p>\n                        <strong>Whoops!</strong> There were some errors:\n                    </p>\n                    <ul>\n                        <li ng-repeat="message in alert.msg">\n                            {{ message }}\n                        </li>\n                    </ul>\n                </uib-alert>\n\n                <form name="addCourseForm" ng-submit="saveCourse()">\n                    <div class="form-group">\n                        <label for="course_type">Type</label>\n                        <select name="course_type" id="course_type" class="form-control" ng-model="course.course_type">\n                            <option value="lecture">Lecture</option>\n                            <option value="practical_course">Practical course</option>\n                        </select>\n                    </div>\n                    <div class="form-group">\n                        <label for="course_name">Name</label>\n                        <input type="text" ng-model="course.course_name" class="form-control" name="course_name" id="course_name">\n                    </div>\n\n                    <input type="submit" class="btn btn-primary" value="Save">\n                </form>\n            </div>\n        </div>\n    </div>\n\n</div>';
 },{}],20:[function(require,module,exports){
-module.exports = '<div class="modal-header">\n    <h3 class="modal-title">{{ module.name }}</h3>\n</div>\n\n<div class="modal-body">\n    <uib-tabset vertical="true" type="pills" class="modules-nav">\n        <uib-tab heading="General">\n            <p class="tab-title">\n                <strong>General</strong>\n            </p>\n\n            <table class="table module-table">\n                <tr>\n                    <td><strong>Short Name</strong></td>\n                    <td>{{ module.short_name }}</td>\n                </tr>\n                <tr>\n                    <td><strong>Description</strong></td>\n                    <td>{{ module.description }}</td>\n                </tr>\n                <tr>\n                    <td><strong>Responsible Professors</strong></td>\n                    <td>\n                        <ul class="list-unstyled">\n                            <li ng-repeat="professor in module.professors">\n                                {{ professor.last_name }}, {{ professor.first_name }}\n                            </li>\n                        </ul>\n                    </td>\n                </tr>\n            </table>\n        </uib-tab>\n        <uib-tab heading="Courses">\n            <p class="tab-title">\n                <strong>Courses</strong>\n            </p>\n\n            <courses-list module="module"></courses-list>\n        </uib-tab>\n        <uib-tab heading="Course groups">\n            <p class="tab-title">\n                <strong>Course groups & events</strong>\n            </p>\n\n            <course-groups-list courses="module.courses"></course-groups-list>\n        </uib-tab>\n    </uib-tabset>\n</div>\n\n<div class="modal-footer">\n    <button class="btn btn-primary" type="button" ng-click="ok()">Close</button>\n</div>';
+module.exports = '<div class="loader">\n    <div class="progress">\n        <div class="progress-bar progress-bar-primary progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">\n            <span class="sr-only">40% Complete (success)</span>\n        </div>\n    </div>\n</div>\n';
 },{}],21:[function(require,module,exports){
-module.exports = '<div class="modal-header">\n    <h3 class="modal-title">{{ student.name }}</h3>\n</div>\n\n<div class="modal-body">\n    <uib-tabset vertical="true" type="pills" class="modules-nav">\n        <uib-tab heading="General">\n            <p class="tab-title">\n                <strong>General</strong>\n            </p>\n\n            <table class="table module-table">\n                <tr>\n                    <td><strong>First Name</strong></td>\n                    <td>{{ student.first_name }}</td>\n                </tr>\n                <tr>\n                    <td><strong>Last Name</strong></td>\n                    <td>{{ student.last_name }}</td>\n                </tr>\n                <tr>\n                    <td><strong>Email</strong></td>\n                    <td>{{ student.email }}</td>\n                </tr>\n                <tr>\n                    <td><strong>Major</strong></td>\n                    <td>{{ student.major }}</td>\n                </tr>\n                <tr><td><strong>Semester</strong></td>\n                    <td>{{ student.semester }}</td>\n                </tr>\n            </table>\n        </uib-tab>\n        <uib-tab heading="Teams">\n            <p class="tab-title">\n                <strong>Teams</strong>\n            </p>\n            <table class="table-bordered table">\n                <thead>\n                <tr>\n                    <th>Name</th>\n                    <th>Role in Team</th>\n                    <th></th>\n                    <th></th>\n                </tr>\n                </thead>\n                <tbody>\n\n                <tr ng-repeat="team in student.teams">\n                    <td>{{ team.name }}</td>\n                    <td>{{ team.pivot.role }}</td>\n                    <td>\n                        <a ng-click="deleteMember(student)">delete</a>\n                    </td>\n                    <td>\n                        <a ng-click="updateMember(student)">update</a>\n                    </td>\n                </tr>\n\n                </tbody>\n            </table>\n\n        </uib-tab>\n        <uib-tab heading="Courses">\n            <p class="tab-title">\n                <strong>Courses</strong>\n            </p>\n\n            <pre>{{ student | json }}</pre>\n        </uib-tab>\n        <uib-tab heading="Grades">\n            <p class="tab-title">\n                <strong>Grades</strong>\n            </p>\n\n            <pre>{{ student | json }}</pre>\n        </uib-tab>\n\n    </uib-tabset>\n</div>\n\n<div class="modal-footer">\n    <button class="btn btn-primary" type="button" ng-click="ok()">Close</button>\n</div>';
+module.exports = '<div class="modal-header">\n    <h3 class="modal-title">{{ module.name }}</h3>\n</div>\n\n<div class="modal-body">\n    <uib-tabset vertical="true" type="pills" class="modules-nav">\n        <uib-tab heading="General">\n            <p class="tab-title">\n                <strong>General</strong>\n            </p>\n\n            <table class="table module-table">\n                <tr>\n                    <td><strong>Short Name</strong></td>\n                    <td>{{ module.short_name }}</td>\n                </tr>\n                <tr>\n                    <td><strong>Description</strong></td>\n                    <td>{{ module.description }}</td>\n                </tr>\n                <tr>\n                    <td><strong>Responsible Professors</strong></td>\n                    <td>\n                        <ul class="list-unstyled">\n                            <li ng-repeat="professor in module.professors">\n                                {{ professor.last_name }}, {{ professor.first_name }}\n                            </li>\n                        </ul>\n                    </td>\n                </tr>\n            </table>\n        </uib-tab>\n        <uib-tab heading="Courses">\n            <p class="tab-title">\n                <strong>Courses</strong>\n            </p>\n\n            <courses-list module="module"></courses-list>\n        </uib-tab>\n        <uib-tab heading="Course groups">\n            <p class="tab-title">\n                <strong>Course groups & events</strong>\n            </p>\n\n            <course-groups-list courses="module.courses"></course-groups-list>\n        </uib-tab>\n    </uib-tabset>\n</div>\n\n<div class="modal-footer">\n    <button class="btn btn-primary" type="button" ng-click="ok()">Close</button>\n</div>';
 },{}],22:[function(require,module,exports){
-module.exports = '';
+module.exports = '<div class="modal-header">\n    <h3 class="modal-title">{{ student.name }}</h3>\n</div>\n\n<div class="modal-body">\n    <uib-tabset vertical="true" type="pills" class="modules-nav">\n        <uib-tab heading="General">\n            <p class="tab-title">\n                <strong>General</strong>\n            </p>\n\n            <table class="table module-table">\n                <tr>\n                    <td><strong>First Name</strong></td>\n                    <td>{{ student.first_name }}</td>\n                </tr>\n                <tr>\n                    <td><strong>Last Name</strong></td>\n                    <td>{{ student.last_name }}</td>\n                </tr>\n                <tr>\n                    <td><strong>Email</strong></td>\n                    <td>{{ student.email }}</td>\n                </tr>\n                <tr>\n                    <td><strong>Major</strong></td>\n                    <td>{{ student.major }}</td>\n                </tr>\n                <tr><td><strong>Semester</strong></td>\n                    <td>{{ student.semester }}</td>\n                </tr>\n            </table>\n        </uib-tab>\n        <uib-tab heading="Teams">\n            <p class="tab-title">\n                <strong>Teams</strong>\n            </p>\n            <table class="table-bordered table">\n                <thead>\n                <tr>\n                    <th>Name</th>\n                    <th>Role in Team</th>\n                    <th></th>\n                    <th></th>\n                </tr>\n                </thead>\n                <tbody>\n\n                <tr ng-repeat="team in student.teams">\n                    <td>{{ team.name }}</td>\n                    <td>{{ team.pivot.role }}</td>\n                    <td>\n                        <a ng-click="deleteMember(student)">delete</a>\n                    </td>\n                    <td>\n                        <a ng-click="updateMember(student)">update</a>\n                    </td>\n                </tr>\n\n                </tbody>\n            </table>\n\n        </uib-tab>\n        <uib-tab heading="Courses">\n            <p class="tab-title">\n                <strong>Courses</strong>\n            </p>\n\n            <pre>{{ student | json }}</pre>\n        </uib-tab>\n        <uib-tab heading="Grades">\n            <p class="tab-title">\n                <strong>Grades</strong>\n            </p>\n\n            <pre>{{ student | json }}</pre>\n        </uib-tab>\n\n    </uib-tabset>\n</div>\n\n<div class="modal-footer">\n    <button class="btn btn-primary" type="button" ng-click="ok()">Close</button>\n</div>';
 },{}],23:[function(require,module,exports){
+module.exports = '';
+},{}],24:[function(require,module,exports){
 module.exports = '<div>\n    <label>Professor(s)</label>\n\n    <small class="text-muted">\n        You can select multiple professors.\n    </small>\n\n    <ul class="professors-list">\n        <li ng-repeat="professor in professors | orderBy: \'last_name\'" ng-class="{ selected: selected(professor) }">\n            <a ng-click="handleSelection(professor)">\n                {{ professor.title }} {{ professor.last_name }}, {{ professor.first_name }}\n            </a>\n        </li>\n    </ul>\n\n    <div ng-if="professors.length == 0" class="no-professors text-center panel panel-default">\n        <div class="panel-body">\n            <h4>\n                <i class="fa fa-exclamation fa-2x"></i><br>\n                You haven\'t created any professors yet.\n            </h4>\n\n            <a href="" class="btn btn-default">Create one here</a>\n\n        </div>\n    </div>\n\n</div>';
 },{}]},{},[4]);

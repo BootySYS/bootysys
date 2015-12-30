@@ -25,17 +25,18 @@
                         <li>
                             <a href="{{ url('/dashboard') }}"><i class="fa fa-tachometer"></i> Dashboard</a>
                         </li>
-                        <li>
-                            <a href="{{ action('ModulesController@index') }}"><i class="fa fa-book"></i> Modules</a>
-                        </li>
-                        <li>
-                            <a href="{{ action('ProfessorsController@index') }}"><i class="fa fa-user"></i> Professors</a>
-                        </li>
-                        <li>
-                            <a href="{{ action('StudentsController@index') }}"><i class="fa fa-graduation-cap"></i> Students</a>
-                        </li>
+                    @can('manage-university')
 
-                        @can('manage-university')
+                            <li>
+                                <a href="{{ action('ModulesController@index') }}"><i class="fa fa-book"></i> Modules</a>
+                            </li>
+                            <li>
+                                <a href="{{ action('ProfessorsController@index') }}"><i class="fa fa-user"></i> Professors</a>
+                            </li>
+                            <li>
+                                <a href="{{ action('StudentsController@index') }}"><i class="fa fa-graduation-cap"></i> Students</a>
+                            </li>
+
                             <li>
                                 <a href="#"><i class="fa fa-download"></i> File Import</a>
                             </li>
@@ -43,6 +44,32 @@
                                 <a href="#"><i class="fa fa-upload"></i> Export Data</a>
                             </li>
                         @endcan
+
+                        @can('is-professor')
+
+                            <li>
+                                <a href="{{ action('ProfessorsModulesController@index') }}"><i class="fa fa-book"></i> Modules</a>
+                            </li>
+                            <li>
+                                <a href="{{ action('ProfessorsController@index') }}"><i class="fa fa-user"></i> Professors</a>
+                            </li>
+                            <li>
+                                <a href="{{ action('StudentsController@index') }}"><i class="fa fa-graduation-cap"></i> Students</a>
+                            </li>
+
+                            <li>
+                                <a href="#"><i class="fa fa-download"></i> File Import</a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-upload"></i> Export Data</a>
+                            </li>
+                        @endcan
+
+
+
+
+
+
 
                 </ul>
             </div>
