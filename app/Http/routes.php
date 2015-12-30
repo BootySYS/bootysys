@@ -22,6 +22,8 @@ Route::group(['prefix' => 'modules'], function() {
     Route::delete('course', 'ModulesController@deleteCourse');
 
     Route::post('update/{id}', 'ModulesController@update');
+    Route::post('course/group', 'ModulesController@saveGroup');
+    Route::post('course/group/event', 'ModulesController@saveEvent');
 });
 
 Route::group(['prefix' => 'professors'], function() {

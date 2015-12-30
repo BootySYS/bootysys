@@ -6,6 +6,7 @@ use App\Course;
 use App\Http\Requests\ModuleRequest;
 use App\Http\Requests\ModuleUpdateRequest;
 use App\Module;
+use App\Professor;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -33,8 +34,8 @@ class ProfessorsModulesController extends Controller
 
     public function all()
     {
-        dd(auth()->user()->professor);
-        return $this->university->modules->load('professors', 'courses');
+        $professor = $this->university->professors()->where('id', auth()->user()->id);
+        return $professor->modules;
     }
 
     public function coursesForModule($id)

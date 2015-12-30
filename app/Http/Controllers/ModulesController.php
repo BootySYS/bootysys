@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Course;
+use App\Group;
 use App\Http\Requests\ModuleRequest;
 use App\Http\Requests\ModuleUpdateRequest;
 use App\Module;
@@ -33,7 +34,9 @@ class ModulesController extends Controller
 
     public function all()
     {
-        return $this->university->modules->load('professors', 'courses');
+        $modules = $this->university->modules->load('professors', 'courses', 'courses.groups');
+
+        return $modules;
     }
 
     public function coursesForModule($id)
@@ -65,7 +68,8 @@ class ModulesController extends Controller
         return $course;
     }
 
-    public function deleteCourse(Request $request) {
+    public function deleteCourse(Request $request)
+    {
         $this->validate($request, [
             'module_id' => 'required|exists:modules,id',
             'course_id' => 'required'
@@ -97,5 +101,31 @@ class ModulesController extends Controller
         $module->delete();
         Session::flash('success', 'The module was deleted');
         return redirect()->action('ModulesController@index');
+    }
+
+    public function saveGroup(Request $request)
+    {
+        $this->validate($request, [
+            'module_id' => 'required|exists:modules,id',
+            'course_id' => 'required|exists:courses,id',
+            'group'     => 'required|array'
+        ]);
+
+        $module = $this->university->modules()->find($request->input('module_id'));
+        $course = $module->courses()->find($request->input('course_id'));
+        $group = $course->groups()->create($request->input('group'));
+        return $group;
+    }
+
+    public function saveEvent(Request $request)
+    {
+        $this->validate($request, [
+            'group_id'     => 'required|exists:groups,id',
+            'event'        => 'required|array'
+        ]);
+
+        $group = Group::find($request->input('group_id'));
+        $event = $group->events()->create($request->input('event'));
+        return $event;
     }
 }

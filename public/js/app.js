@@ -38026,7 +38026,7 @@ module.exports = function ($scope, $uibModalInstance, team) {
 },{}],13:[function(require,module,exports){
 'use strict';
 
-module.exports = function () {
+module.exports = function ($http) {
 
     return {
         restrict: 'E',
@@ -38036,8 +38036,75 @@ module.exports = function () {
         },
         link: function link(scope) {
 
+            scope.event = {};
+            scope.group = {};
+
+            scope.addGroupActive = false;
+            scope.addEventActive = false;
+
             scope.setActiveCourse = function (course) {
                 scope.activeCourse = course;
+            };
+
+            scope.addGroup = function () {
+                scope.addGroupActive = !scope.addGroupActive;
+            };
+
+            scope.saveGroup = function () {
+                var request = {};
+                request.module_id = scope.activeCourse.module_id;
+                request.course_id = scope.activeCourse.id;
+
+                request.group = scope.group;
+
+                $http.post('/modules/course/group', request).then(function (result) {
+                    scope.addGroupActive = false;
+                }, function (result) {
+                    var alerts = [];
+
+                    angular.forEach(result.data, function (errors, field) {
+
+                        for (var i in errors) {
+                            alerts.push(errors[i]);
+                        }
+                    });
+
+                    scope.alerts.push({
+                        type: 'danger',
+                        msg: alerts
+                    });
+                });
+            };
+
+            scope.addEvent = function (group) {
+                scope.addEventActive = !scope.addEventActive;
+                scope.activeGroup = group;
+            };
+
+            scope.saveEvent = function () {
+
+                var request = {};
+                request.group_id = scope.activeGroup.id;
+
+                request.event = scope.event;
+
+                $http.post('/modules/course/group/event', request).then(function (result) {
+                    scope.addEventActive = false;
+                }, function (result) {
+                    var alerts = [];
+
+                    angular.forEach(result.data, function (errors, field) {
+
+                        for (var i in errors) {
+                            alerts.push(errors[i]);
+                        }
+                    });
+
+                    scope.alerts.push({
+                        type: 'danger',
+                        msg: alerts
+                    });
+                });
             };
         },
         template: require('../templates/courseGroupsList.html')
@@ -38173,7 +38240,7 @@ module.exports = function ($http, $q) {
 };
 
 },{}],18:[function(require,module,exports){
-module.exports = '<div>\n    <div class="row">\n        <div class="col-lg-4">\n            <ul class="list-group">\n                <li class="list-group-item" ng-repeat="course in courses">\n                    <a ng-click="setActiveCourse(course)">{{ course.name }}</a>\n                </li>\n            </ul>\n        </div>\n        <div class="col-lg-8">\n            {{ activeCourse.name }}\n        </div>\n    </div>\n</div>';
+module.exports = '<div>\n\n        <select name="course" id="course" class="form-control" ng-model="activeCourse" ng-options="course as course.name for course in courses track by course.id">\n        </select>\n\n        <div ng-if="activeCourse">\n\n            <a ng-click="addGroup()"><i class="fa fa-plus"></i> Add a new group </a>\n\n            <div ng-if="addGroupActive">\n                <form name="addGroupForm" ng-submit="saveGroup()">\n                    <div class="form-group">\n                        <label for="group_name">Group Name</label>\n                        <input type="text" ng-model="group.name" class="form-control" name="group_name" id="group_name">\n                    </div>\n\n                    <div class="form-group">\n                        <label for="group_capacity">Group Capacity</label>\n                        <input type="text" ng-model="group.capacity" class="form-control" name="group_capacity" id="group_capacity">\n                    </div>\n\n                    <input type="submit" class="btn btn-primary" value="Save">\n                </form>\n\n                <hr/>\n\n            </div>\n\n            <div>\n\n                <ul class="list-group">\n                    <li class="list-group-item" ng-repeat="group in activeCourse.groups" ng-click="addEvent(group)"> {{ group.name }}</li>\n                </ul>\n            </div>\n\n            <div ng-if="addEventActive">\n                <div class="row">\n                    <hr>\n                    <div class="col-lg-12">\n                        <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">\n                            <p>\n                                <strong>Whoops!</strong> There were some errors:\n                            </p>\n                            <ul>\n                                <li ng-repeat="message in alert.msg">\n                                    {{ message }}\n                                </li>\n                            </ul>\n                        </uib-alert>\n\n                        <form name="addEventForm" ng-submit="saveEvent()">\n                            <div class="form-group">\n                                <label for="event_day">Day</label>\n                                <input type="date" ng-model="event.day" class="form-control" name="event_day" id="event_day">\n                            </div>\n                            <div class="form-group">\n                                <label for="event_start">Start time</label>\n                                <input type="time" ng-model="event.start_time" class="form-control" name="event_start" id="event_start">\n                            </div>\n                            <div class="form-group">\n                                <label for="event_end">End time</label>\n                                <input type="time" ng-model="event.end_time" class="form-control" name="event_end" id="event_end">\n                            </div>\n\n                            <input type="submit" class="btn btn-primary" value="Save">\n                        </form>\n\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n';
 },{}],19:[function(require,module,exports){
 module.exports = '<div class="courses-list">\n\n    <div ng-if="module.courses.length == 0">\n        <p class="text-muted">No courses available.</p>\n    </div>\n\n    <table class="table-bordered table" ng-if="module.courses.length > 0">\n        <thead>\n            <tr>\n                <th>Name</th>\n                <th>Type</th>\n                <th>Actions</th>\n            </tr>\n        </thead>\n        <tr ng-repeat="course in module.courses">\n            <td>\n                {{ course.name }}\n            </td>\n            <td>\n                {{ course.type }}\n            </td>\n            <td>\n                <a ng-click="removeCourse($index)">Delete course</a>\n            </td>\n        </tr>\n    </table>\n\n    <a ng-click="addCourse()"><i class="fa fa-plus"></i> Add a new course </a>\n\n    <div ng-if="addCourseActive">\n        <div class="row">\n            <hr>\n            <div class="col-lg-12">\n                <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">\n                    <p>\n                        <strong>Whoops!</strong> There were some errors:\n                    </p>\n                    <ul>\n                        <li ng-repeat="message in alert.msg">\n                            {{ message }}\n                        </li>\n                    </ul>\n                </uib-alert>\n\n                <form name="addCourseForm" ng-submit="saveCourse()">\n                    <div class="form-group">\n                        <label for="course_type">Type</label>\n                        <select name="course_type" id="course_type" class="form-control" ng-model="course.course_type">\n                            <option value="lecture">Lecture</option>\n                            <option value="practical_course">Practical course</option>\n                        </select>\n                    </div>\n                    <div class="form-group">\n                        <label for="course_name">Name</label>\n                        <input type="text" ng-model="course.course_name" class="form-control" name="course_name" id="course_name">\n                    </div>\n\n                    <input type="submit" class="btn btn-primary" value="Save">\n                </form>\n            </div>\n        </div>\n    </div>\n\n</div>';
 },{}],20:[function(require,module,exports){
