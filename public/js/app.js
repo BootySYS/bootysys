@@ -37680,7 +37680,7 @@ module.exports = function ($scope, $http, $window, $uibModal, $log, moduleServic
             $scope.modules = response.data;
         });
 
-        $http.get('/professors/all').then(function (result) {
+        $http.get('/professors/your-modules/all').then(function (result) {
             $scope.professors = result.data;
         });
     }

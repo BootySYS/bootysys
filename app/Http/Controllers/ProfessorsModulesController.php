@@ -33,6 +33,7 @@ class ProfessorsModulesController extends Controller
 
     public function all()
     {
+        dd(auth()->user()->professor);
         return $this->university->modules->load('professors', 'courses');
     }
 
