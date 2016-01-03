@@ -9,7 +9,7 @@
             <div class="col-lg-12">
                 <div class="page-header">
                     <h3 ng-cloak>
-                        <span ng-show="state == 'all'">@{{ students.length }} Student(s)</span>
+                        <span ng-show="state == 'all'">Students</span>
                         <span ng-show="state == 'add'">
                             @{{ newStudent.name ? newStudent.name : 'Create a new Student' }}
                         </span>

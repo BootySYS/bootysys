@@ -1,5 +1,7 @@
 <?php
 
+use Carbon\Carbon;
+
 Route::get('/', 'StartController@index');
 Route::get('dashboard', 'DashboardController@dashboard');
 
@@ -52,9 +54,19 @@ Route::group(['prefix' => 'teams'], function() {
     Route::put('update', 'TeamsController@update');
 });
 
+Route::group(['prefix' => 'import'], function() {
+    Route::get('/', 'ImportExportController@index');
+    Route::post('start', 'ImportExportController@start');
+});
+
+
 Route::group(['prefix' => 'api'], function() {
 
     Route::get('/', 'DistributionServerController@time');
 
+});
+
+Route::get('test', function() {
+    dd(Carbon::createFromFormat('d-m-Y', '01-01-2016'));
 });
 

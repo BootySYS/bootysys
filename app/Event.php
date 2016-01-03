@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
@@ -18,5 +19,10 @@ class Event extends Model
     public function group()
     {
         return $this->belongsTo('App\Group');
+    }
+
+    public function getDayAttribute($value)
+    {
+        return Carbon::createFromFormat('dd-mm-YYYY', $value);
     }
 }

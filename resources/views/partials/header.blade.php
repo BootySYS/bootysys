@@ -38,7 +38,7 @@
                             </li>
 
                             <li>
-                                <a href="#"><i class="fa fa-download"></i> File Import</a>
+                                <a href="{{ action('ImportExportController@index') }}"><i class="fa fa-download"></i> File Import</a>
                             </li>
                             <li>
                                 <a href="#"><i class="fa fa-upload"></i> Export Data</a>
@@ -56,21 +56,7 @@
                             <li>
                                 <a href="{{ action('StudentsController@index') }}"><i class="fa fa-graduation-cap"></i> Students</a>
                             </li>
-
-                            <li>
-                                <a href="#"><i class="fa fa-download"></i> File Import</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-upload"></i> Export Data</a>
-                            </li>
                         @endcan
-
-
-
-
-
-
-
                 </ul>
             </div>
         </div>

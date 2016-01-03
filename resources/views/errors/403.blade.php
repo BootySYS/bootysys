@@ -11,6 +11,7 @@
 
     <div class="row">
         <div class="col-lg-6">
+            <p>You are not allowed to see this page.</p>
         </div>
     </div>
 @stop
