@@ -34,7 +34,7 @@ class Student extends Model
                 'name' => $student->first_name . ' ' . $student->last_name,
                 'email' => $student->email,
                 'password' => bcrypt('1234'),
-                'role' => 'professor'
+                'role' => 'student'
             ]);
         });
     }
@@ -69,6 +69,4 @@ class Student extends Model
     {
         return $this->belongsTo(User::class);
     }
-
-
 }
