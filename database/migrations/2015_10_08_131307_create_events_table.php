@@ -16,7 +16,7 @@ class CreateEventsTable extends Migration
 
             $table->increments('id');
 
-            $table->date('day');
+            $table->string('day');
             $table->time('start_time');
             $table->time('end_time');
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Professor;
+use App\Student;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -19,9 +20,9 @@ class DistributionServerController extends Controller
             'timeout' => 2.0
         ]);
 
-        $professor = Professor::all();
+        $professor = Student::all();
 
-        $req = $client->request('POST', '/time', [
+        $req = $client->request('POST', '/receive', [
             'json' => [
                 'professors' => $professor
             ]
