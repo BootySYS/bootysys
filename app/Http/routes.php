@@ -48,6 +48,11 @@ Route::group(['prefix' => 'teams'], function() {
     Route::post('store', 'TeamsController@store');
     Route::delete('delete', 'TeamsController@destroy');
     Route::put('update', 'TeamsController@update');
+});
+
+Route::group(['prefix' => 'api'], function() {
+
+    Route::get('/', 'DistributionServerController@time');
 
 });
 
