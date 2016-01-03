@@ -2,10 +2,15 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
 {
+    protected $fillable = [
+        'start_time', 'end_time', 'day'
+    ];
+
     /**
      * An event belongs to a group.
      *
@@ -14,5 +19,10 @@ class Event extends Model
     public function group()
     {
         return $this->belongsTo('App\Group');
+    }
+
+    public function getDayAttribute($value)
+    {
+        return Carbon::createFromFormat('dd-mm-YYYY', $value);
     }
 }

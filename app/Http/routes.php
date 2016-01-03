@@ -22,6 +22,8 @@ Route::group(['prefix' => 'modules'], function() {
     Route::delete('course', 'ModulesController@deleteCourse');
 
     Route::post('update/{id}', 'ModulesController@update');
+    Route::post('course/group', 'ModulesController@saveGroup');
+    Route::post('course/group/event', 'ModulesController@saveEvent');
 });
 
 Route::group(['prefix' => 'professors'], function() {
@@ -29,6 +31,9 @@ Route::group(['prefix' => 'professors'], function() {
     Route::get('all', 'ProfessorsController@all');
     Route::post('store', 'ProfessorsController@store');
     Route::delete('delete', 'ProfessorsController@destroy');
+    Route::put('update','ProfessorsController@update');
+    Route::get('your-modules', 'ProfessorsModulesController@index');
+    Route::get('your-modules/all', 'ProfessorsModulesController@all');
 });
 
 Route::group(['prefix' => 'students'], function() {
@@ -36,17 +41,18 @@ Route::group(['prefix' => 'students'], function() {
     Route::get('all', 'StudentsController@all');
     Route::post('store', 'StudentsController@store');
     Route::delete('delete', 'StudentsController@destroy');
+    Route::put('update','StudentsController@update');
+});
+
+Route::group(['prefix' => 'import'], function() {
+    Route::get('/', 'ImportExportController@index');
+    Route::post('start', 'ImportExportController@start');
 });
 
 Route::group(['prefix' => 'teams'], function() {
-    Route::get('/', 'StudentTeamsController@index');
-    Route::get('create', 'StudentTeamsController@create');
-    Route::post('create', 'StudentTeamsController@store');
-});
-
-
-Route::group(['prefix' => 'api'], function() {
-    post('test', function (\Illuminate\Http\Request $request) {
-        return $request->all();
-    });
+    Route::get('/', 'TeamsController@index');
+    Route::get('all', 'TeamsController@all');
+    Route::post('store', 'TeamsController@store');
+    Route::delete('delete', 'TeamsController@destroy');
+    Route::put('update', 'TeamsController@update');
 });

@@ -2,12 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Team;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreTeamRequest;
 
-class StudentTeamsController extends Controller
+class TeamsController extends Controller
 {
+
+    protected $university;
+
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+
+        if (auth()->check()) {
+            $this->university = auth()->user()->university;
+        }
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +30,7 @@ class StudentTeamsController extends Controller
      */
     public function index()
     {
-        //
+        return view('university.teams.listing')->with('university', $this->university);
     }
 
     /**
@@ -31,12 +46,12 @@ class StudentTeamsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param StoreTeamRequest|Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTeamRequest $request)
     {
-        //
+        return $this->university->teams()->create($request->all());
     }
 
     /**
@@ -70,7 +85,7 @@ class StudentTeamsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
     }
 
     /**
@@ -79,8 +94,14 @@ class StudentTeamsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        Team::findOrFail($request->input('id'))->delete();
+        return response('Deleted Team.', 200);
+    }
+
+    public function all()
+    {
+        return $this->university->teams;
     }
 }

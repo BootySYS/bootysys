@@ -3,6 +3,7 @@
 @section('content')
 
     <div ng-controller="ProfessorsController" ng-cloak>
+
         <loader ng-show="loading"></loader>
         <div class="row">
             <div class="col-lg-12">
@@ -27,6 +28,7 @@
                                 <th>Last Name</th>
                                 <th>Email</th>
                                 <th></th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tr ng-repeat="professor in professors">
@@ -35,6 +37,9 @@
                                 <td>@{{ professor.email }}</td>
                                 <td>
                                     <a ng-click="delete(professor)">Delete</a>
+                                </td>
+                                <td>
+                                    <a ng-click="updateProfessor(professor)">Update</a>
                                 </td>
                             </tr>
                         </table>
@@ -93,6 +98,45 @@
                         <br>
                         <input type="submit" class="btn btn-primary" value="Save" />
                         <a ng-show="state === 'add'" ng-click="cancel()" class="btn btn-danger"> cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div ng-show="state === 'update'" ng-cloak>
+            <div class="row">
+                <div class="col-lg-8">
+
+                    <uib-alert ng-repeat="alert in alerts" type="@{{alert.type}}" close="closeAlert($index)">
+                        <p>
+                            <strong>Whoops!</strong> There were some errors:
+                        </p>
+                        <ul>
+                            <li ng-repeat="message in alert.msg">
+                                @{{ message }}
+                            </li>
+                        </ul>
+                    </uib-alert>
+
+                    <form ng-submit="updateOldProfessor(professorToUpdate)" name="professorForm">
+                        <div class="form-group">
+                            <label>First Name</label>
+                            <input ng-model="professorToUpdate.first_name" name="first_name" class="form-control" value="@{{ professor.first_name }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <input ng-model="professorToUpdate.last_name" name="last_name" class="form-control" value="@{{ professor.last_name }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input ng-model="professorToUpdate.email" name="email" class="form-control" value="@{{ professor.email }}">
+                        </div>
+
+                        <br>
+                        <input type="submit" class="btn btn-primary" value="Save" />
+                        <a ng-show="state === 'update'" ng-click="cancel()" class="btn btn-danger"> cancel</a>
                     </form>
                 </div>
             </div>

@@ -3,17 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Course;
-use App\Group;
 use App\Http\Requests\ModuleRequest;
 use App\Http\Requests\ModuleUpdateRequest;
 use App\Module;
+use App\Professor;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 
-class ModulesController extends Controller
+class ProfessorsModulesController extends Controller
 {
     protected $university;
 
@@ -29,14 +29,13 @@ class ModulesController extends Controller
     public function index()
     {
         $modules = $this->university->modules;
-        return view('university.modules.listing')->with(compact('modules'));
+        return view('professor.modules.listing')->with(compact('modules'));
     }
 
     public function all()
     {
-        $modules = $this->university->modules->load('professors', 'courses', 'courses.groups');
-
-        return $modules;
+        $professor = $this->university->professors()->where('id', auth()->user()->id);
+        return $professor->modules;
     }
 
     public function coursesForModule($id)
@@ -68,8 +67,7 @@ class ModulesController extends Controller
         return $course;
     }
 
-    public function deleteCourse(Request $request)
-    {
+    public function deleteCourse(Request $request) {
         $this->validate($request, [
             'module_id' => 'required|exists:modules,id',
             'course_id' => 'required'
@@ -100,32 +98,6 @@ class ModulesController extends Controller
         $module->courses()->detach();
         $module->delete();
         Session::flash('success', 'The module was deleted');
-        return redirect()->action('ModulesController@index');
-    }
-
-    public function saveGroup(Request $request)
-    {
-        $this->validate($request, [
-            'module_id' => 'required|exists:modules,id',
-            'course_id' => 'required|exists:courses,id',
-            'group'     => 'required|array'
-        ]);
-
-        $module = $this->university->modules()->find($request->input('module_id'));
-        $course = $module->courses()->find($request->input('course_id'));
-        $group = $course->groups()->create($request->input('group'));
-        return $group;
-    }
-
-    public function saveEvent(Request $request)
-    {
-        $this->validate($request, [
-            'group_id'     => 'required|exists:groups,id',
-            'event'        => 'required|array'
-        ]);
-
-        $group = Group::find($request->input('group_id'));
-        $event = $group->events()->create($request->input('event'));
-        return $event;
+        return redirect()->action('ProfessorsModulesController@index');
     }
 }

@@ -1,0 +1,84 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{ student.name }}</h3>
+</div>
+
+<div class="modal-body">
+    <uib-tabset vertical="true" type="pills" class="modules-nav">
+        <uib-tab heading="General">
+            <p class="tab-title">
+                <strong>General</strong>
+            </p>
+
+            <table class="table module-table">
+                <tr>
+                    <td><strong>First Name</strong></td>
+                    <td>{{ student.first_name }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Last Name</strong></td>
+                    <td>{{ student.last_name }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Email</strong></td>
+                    <td>{{ student.email }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Major</strong></td>
+                    <td>{{ student.major }}</td>
+                </tr>
+                <tr><td><strong>Semester</strong></td>
+                    <td>{{ student.semester }}</td>
+                </tr>
+            </table>
+        </uib-tab>
+        <uib-tab heading="Teams">
+            <p class="tab-title">
+                <strong>Teams</strong>
+            </p>
+            <table class="table-bordered table">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Role in Team</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr ng-repeat="team in student.teams">
+                    <td>{{ team.name }}</td>
+                    <td>{{ team.pivot.role }}</td>
+                    <td>
+                        <a ng-click="deleteMember(student)">delete</a>
+                    </td>
+                    <td>
+                        <a ng-click="updateMember(student)">update</a>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+
+        </uib-tab>
+        <uib-tab heading="Courses">
+            <p class="tab-title">
+                <strong>Courses</strong>
+            </p>
+
+            <pre>{{ student | json }}</pre>
+        </uib-tab>
+        <uib-tab heading="Grades">
+            <p class="tab-title">
+                <strong>Grades</strong>
+            </p>
+
+            <pre>{{ student | json }}</pre>
+        </uib-tab>
+
+    </uib-tabset>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="ok()">Close</button>
+</div>

@@ -37419,16 +37419,16 @@ require('angular-bootstrap-npm');
 
 (function () {
 
-    angular.module('app', ['ui.bootstrap', 'app.modals', 'app.directives', 'app.services']).controller('ModulesController', require('./controllers/ModulesController')).controller('ProfessorsController', require('./controllers/ProfessorsController'));
+    angular.module('app', ['ui.bootstrap', 'app.modals', 'app.directives', 'app.services']).controller('ModulesController', require('./controllers/ModulesController')).controller('ProfessorsController', require('./controllers/ProfessorsController')).controller('StudentsController', require('./controllers/StudentsController')).controller('TeamsController', require('./controllers/TeamsController')).controller('ProfessorsModulesController', require('./controllers/ProfessorsModulesController'));
 
     angular.module('app.directives', []).directive('loader', require('./directives/loader')).directive('professorsList', require('./directives/professorsList')).directive('coursesList', require('./directives/coursesList')).directive('courseGroupsList', require('./directives/courseGroupsList'));
 
-    angular.module('app.modals', []).controller('ModulesModalController', require('./controllers/ModulesModalController'));
+    angular.module('app.modals', []).controller('ModulesModalController', require('./controllers/ModulesModalController')).controller('StudentsModalController', require('./controllers/StudentsModalController')).controller('TeamsModalController', require('./controllers/TeamsModalController'));
 
     angular.module('app.services', []).service('moduleService', require('./services/moduleService'));
 })();
 
-},{"./controllers/ModulesController":5,"./controllers/ModulesModalController":6,"./controllers/ProfessorsController":7,"./directives/courseGroupsList":8,"./directives/coursesList":9,"./directives/loader":10,"./directives/professorsList":11,"./services/moduleService":12,"angular":3,"angular-bootstrap-npm":1}],5:[function(require,module,exports){
+},{"./controllers/ModulesController":5,"./controllers/ModulesModalController":6,"./controllers/ProfessorsController":7,"./controllers/ProfessorsModulesController":8,"./controllers/StudentsController":9,"./controllers/StudentsModalController":10,"./controllers/TeamsController":11,"./controllers/TeamsModalController":12,"./directives/courseGroupsList":13,"./directives/coursesList":14,"./directives/loader":15,"./directives/professorsList":16,"./services/moduleService":17,"angular":3,"angular-bootstrap-npm":1}],5:[function(require,module,exports){
 'use strict';
 
 module.exports = function ($scope, $http, $window, $uibModal, $log, moduleService) {
@@ -37538,7 +37538,7 @@ module.exports = function ($scope, $http, $window, $uibModal, $log, moduleServic
     };
 };
 
-},{"../templates/modals/module.html":16}],6:[function(require,module,exports){
+},{"../templates/modals/module.html":21}],6:[function(require,module,exports){
 'use strict';
 
 module.exports = function ($scope, $uibModalInstance, module) {
@@ -37629,12 +37629,404 @@ module.exports = function ($scope, $http, $window) {
             }
         });
     };
+
+    $scope.updateProfessor = function (professor) {
+
+        $scope.state = 'update';
+        $scope.professorToUpdate = professor;
+    };
+
+    $scope.updateOldProfessor = function (professor) {
+        $scope.loading = true;
+        $scope.alerts = [];
+        console.log(professor);
+        $http.put('/professors/update', professor).then(function (result) {
+
+            $scope.professors.push(result.data);
+            $window.location.reload();
+        }, function (response) {
+            var alerts = [];
+
+            angular.forEach(response.data, function (errors, field) {
+
+                for (var i in errors) {
+                    alerts.push(errors[i]);
+                }
+            });
+
+            $scope.alerts.push({
+                type: 'danger',
+                msg: alerts
+            });
+
+            $scope.loading = false;
+        });
+    };
 };
 
 },{}],8:[function(require,module,exports){
 'use strict';
 
-module.exports = function () {
+module.exports = function ($scope, $http, $window, $uibModal, $log, moduleService) {
+
+    $scope.state = 'all';
+
+    $scope.alerts = [];
+
+    $scope.loading = false;
+
+    function init() {
+        moduleService.getModules().then(function (response) {
+            $scope.modules = response.data;
+        });
+
+        $http.get('/professors/your-modules/all').then(function (result) {
+            $scope.professors = result.data;
+        });
+    }
+
+    init();
+
+    $scope.cancel = function () {
+        $scope.state = 'all';
+    };
+
+    $scope.closeAlert = function (index) {
+        $scope.alerts.splice(index, 1);
+    };
+
+    $scope.showModule = function (module) {
+
+        $uibModal.open({
+            animation: false,
+            template: require('../templates/modals/module.html'),
+            controller: 'ModulesModalController',
+            size: 'lg',
+            resolve: {
+                module: (function (_module2) {
+                    function module() {
+                        return _module2.apply(this, arguments);
+                    }
+
+                    module.toString = function () {
+                        return _module2.toString();
+                    };
+
+                    return module;
+                })(function () {
+                    return module;
+                })
+            }
+        });
+    };
+};
+
+},{"../templates/modals/module.html":21}],9:[function(require,module,exports){
+'use strict';
+
+module.exports = function ($scope, $http, $window, $uibModal, $log, moduleService) {
+
+    $scope.students = [];
+
+    $scope.state = 'all';
+
+    $scope.alerts = [];
+
+    $scope.newStudent = {
+        first_name: '',
+        last_name: '',
+        email: '',
+        major: '',
+        semester: ''
+    };
+
+    function init() {
+        $http.get('/students/all').then(function (result) {
+            $scope.students = result.data;
+        });
+    }
+
+    init();
+
+    $scope.addStudent = function () {
+        $scope.state = 'add';
+    };
+
+    $scope.cancel = function () {
+        $scope.state = 'all';
+    };
+
+    $scope.submitNewStudent = function () {
+
+        $scope.loading = true;
+        $scope.alerts = [];
+
+        $http.post('/students/store', $scope.newStudent).then(function (result) {
+
+            $scope.students.push(result.data);
+            $window.location.reload();
+        }, function (response) {
+            var alerts = [];
+
+            angular.forEach(response.data, function (errors, field) {
+
+                for (var i in errors) {
+                    alerts.push(errors[i]);
+                }
+            });
+
+            $scope.alerts.push({
+                type: 'danger',
+                msg: alerts
+            });
+
+            $scope.loading = false;
+        });
+    };
+
+    $scope.closeAlert = function (index) {
+        $scope.alerts.splice(index, 1);
+    };
+
+    $scope['delete'] = function (student) {
+
+        $scope.loading = true;
+
+        $http['delete']('/students/delete', { params: { id: student.id } }).then(function (result) {
+            if (result.status == 200) {
+                $window.location.reload();
+            }
+        });
+    };
+
+    $scope.updateStudent = function (student) {
+
+        $scope.state = 'update';
+        $scope.studentToUpdate = student;
+    };
+
+    $scope.updateOldStudent = function (student) {
+        $scope.loading = true;
+        $scope.alerts = [];
+        $http.put('/students/update', student).then(function (result) {
+
+            $scope.students.push(result.data);
+            $window.location.reload();
+        }, function (response) {
+            var alerts = [];
+
+            angular.forEach(response.data, function (errors, field) {
+
+                for (var i in errors) {
+                    alerts.push(errors[i]);
+                }
+            });
+
+            $scope.alerts.push({
+                type: 'danger',
+                msg: alerts
+            });
+
+            $scope.loading = false;
+        });
+    };
+
+    $scope.showStudent = function (_student) {
+
+        $uibModal.open({
+            animation: false,
+            template: require('../templates/modals/student.html'),
+            controller: 'StudentsModalController',
+            size: 'lg',
+            resolve: {
+                student: function student() {
+                    return _student;
+                }
+            }
+        });
+    };
+};
+
+},{"../templates/modals/student.html":22}],10:[function(require,module,exports){
+'use strict';
+
+module.exports = function ($scope, $uibModalInstance, $http, student) {
+
+    $scope.student = student;
+
+    $scope.ok = function () {
+        $uibModalInstance.close();
+    };
+
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
+
+    $scope['delete'] = function (student) {
+
+        $scope.loading = true;
+
+        $http['delete']('/students/delete', { params: { id: student.id } }).then(function (result) {
+            if (result.status == 200) {
+                $window.location.reload();
+            }
+        });
+    };
+
+    $scope.deleteMember = function (student) {
+
+        $scope.loading = true;
+
+        $http['delete']('/teams/delete', { params: { id: student.id } }).then(function (result) {
+            if (result.status == 200) {
+                $window.location.reload();
+            }
+        });
+    };
+
+    $scope.updateMember = function (student) {
+
+        $scope.state = 'update';
+        $scope.memberToUpdate = student;
+    };
+};
+
+},{}],11:[function(require,module,exports){
+'use strict';
+
+module.exports = function ($scope, $http, $window, $uibModal, $log, moduleService) {
+
+    $scope.teams = [];
+
+    $scope.state = 'all';
+
+    $scope.alerts = [];
+
+    function init() {
+        $http.get('/teams/all').then(function (result) {
+            $scope.teams = result.data;
+        });
+    }
+
+    init();
+
+    $scope.cancel = function () {
+        $scope.state = 'all';
+    };
+
+    //$scope.submitNewStudent = function() {
+    //
+    //    $scope.loading = true;
+    //    $scope.alerts = [];
+    //
+    //    $http.post('/students/store', $scope.newStudent)
+    //        .then(function (result) {
+    //
+    //            $scope.students.push(result.data);
+    //            $window.location.reload();
+    //
+    //        }, function (response) {
+    //            var alerts = [];
+    //
+    //            angular.forEach(response.data, function(errors, field) {
+    //
+    //                for (var i in errors) {
+    //                    alerts.push(errors[i]);
+    //                }
+    //            });
+    //
+    //            $scope.alerts.push({
+    //                type: 'danger',
+    //                msg: alerts
+    //            });
+    //
+    //            $scope.loading = false;
+    //        });
+    //};
+
+    $scope.closeAlert = function (index) {
+        $scope.alerts.splice(index, 1);
+    };
+
+    $scope['delete'] = function (team) {
+
+        $scope.loading = true;
+
+        $http['delete']('/teams/delete', { params: { id: team.id } }).then(function (result) {
+            if (result.status == 200) {
+                $window.location.reload();
+            }
+        });
+    };
+
+    $scope.updateTeam = function (team) {
+
+        $scope.state = 'update';
+        $scope.teamToUpdate = team;
+    };
+
+    $scope.updateOldTeam = function (team) {
+        $scope.loading = true;
+        $scope.alerts = [];
+        $http.put('/teams/update', team).then(function (result) {
+
+            $scope.teams.push(result.data);
+            $window.location.reload();
+        }, function (response) {
+            var alerts = [];
+
+            angular.forEach(response.data, function (errors, field) {
+
+                for (var i in errors) {
+                    alerts.push(errors[i]);
+                }
+            });
+
+            $scope.alerts.push({
+                type: 'danger',
+                msg: alerts
+            });
+
+            $scope.loading = false;
+        });
+    };
+
+    $scope.showTeam = function (team) {
+
+        $uibModal.open({
+            animation: false,
+            template: require('../templates/modals/team.html'),
+            controller: 'TeamsModalController',
+            size: 'lg',
+            resolve: {
+                student: function student() {
+                    return team;
+                }
+            }
+        });
+    };
+};
+
+},{"../templates/modals/team.html":23}],12:[function(require,module,exports){
+'use strict';
+
+module.exports = function ($scope, $uibModalInstance, team) {
+
+    $scope.team = team;
+
+    $scope.ok = function () {
+        $uibModalInstance.close();
+    };
+
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
+};
+
+},{}],13:[function(require,module,exports){
+'use strict';
+
+module.exports = function ($http) {
 
     return {
         restrict: 'E',
@@ -37644,15 +38036,82 @@ module.exports = function () {
         },
         link: function link(scope) {
 
+            scope.event = {};
+            scope.group = {};
+
+            scope.addGroupActive = false;
+            scope.addEventActive = false;
+
             scope.setActiveCourse = function (course) {
                 scope.activeCourse = course;
+            };
+
+            scope.addGroup = function () {
+                scope.addGroupActive = !scope.addGroupActive;
+            };
+
+            scope.saveGroup = function () {
+                var request = {};
+                request.module_id = scope.activeCourse.module_id;
+                request.course_id = scope.activeCourse.id;
+
+                request.group = scope.group;
+
+                $http.post('/modules/course/group', request).then(function (result) {
+                    scope.addGroupActive = false;
+                }, function (result) {
+                    var alerts = [];
+
+                    angular.forEach(result.data, function (errors, field) {
+
+                        for (var i in errors) {
+                            alerts.push(errors[i]);
+                        }
+                    });
+
+                    scope.alerts.push({
+                        type: 'danger',
+                        msg: alerts
+                    });
+                });
+            };
+
+            scope.addEvent = function (group) {
+                scope.addEventActive = !scope.addEventActive;
+                scope.activeGroup = group;
+            };
+
+            scope.saveEvent = function () {
+
+                var request = {};
+                request.group_id = scope.activeGroup.id;
+
+                request.event = scope.event;
+
+                $http.post('/modules/course/group/event', request).then(function (result) {
+                    scope.addEventActive = false;
+                }, function (result) {
+                    var alerts = [];
+
+                    angular.forEach(result.data, function (errors, field) {
+
+                        for (var i in errors) {
+                            alerts.push(errors[i]);
+                        }
+                    });
+
+                    scope.alerts.push({
+                        type: 'danger',
+                        msg: alerts
+                    });
+                });
             };
         },
         template: require('../templates/courseGroupsList.html')
     };
 };
 
-},{"../templates/courseGroupsList.html":13}],9:[function(require,module,exports){
+},{"../templates/courseGroupsList.html":18}],14:[function(require,module,exports){
 'use strict';
 
 module.exports = function ($http) {
@@ -37716,7 +38175,7 @@ module.exports = function ($http) {
     };
 };
 
-},{"../templates/coursesList.html":14}],10:[function(require,module,exports){
+},{"../templates/coursesList.html":19}],15:[function(require,module,exports){
 'use strict';
 
 module.exports = ['$http', function ($http) {
@@ -37728,7 +38187,7 @@ module.exports = ['$http', function ($http) {
     };
 }];
 
-},{"../templates/loader.html":15}],11:[function(require,module,exports){
+},{"../templates/loader.html":20}],16:[function(require,module,exports){
 'use strict';
 
 module.exports = function () {
@@ -37761,7 +38220,7 @@ module.exports = function () {
     };
 };
 
-},{"../templates/professorsList.html":17}],12:[function(require,module,exports){
+},{"../templates/professorsList.html":24}],17:[function(require,module,exports){
 'use strict';
 
 module.exports = function ($http, $q) {
@@ -37780,14 +38239,18 @@ module.exports = function ($http, $q) {
     };
 };
 
-},{}],13:[function(require,module,exports){
-module.exports = '<div>\n    <div class="row">\n        <div class="col-lg-4">\n            <ul class="list-group">\n                <li class="list-group-item" ng-repeat="course in courses">\n                    <a ng-click="setActiveCourse(course)">{{ course.name }}</a>\n                </li>\n            </ul>\n        </div>\n        <div class="col-lg-8">\n            {{ activeCourse.name }}\n        </div>\n    </div>\n</div>';
-},{}],14:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
+module.exports = '<div>\n\n        <select name="course" id="course" class="form-control" ng-model="activeCourse" ng-options="course as course.name for course in courses track by course.id">\n        </select>\n\n        <div ng-if="activeCourse">\n\n            <a ng-click="addGroup()"><i class="fa fa-plus"></i> Add a new group </a>\n\n            <div ng-if="addGroupActive">\n                <form name="addGroupForm" ng-submit="saveGroup()">\n                    <div class="form-group">\n                        <label for="group_name">Group Name</label>\n                        <input type="text" ng-model="group.name" class="form-control" name="group_name" id="group_name">\n                    </div>\n\n                    <div class="form-group">\n                        <label for="group_capacity">Group Capacity</label>\n                        <input type="text" ng-model="group.capacity" class="form-control" name="group_capacity" id="group_capacity">\n                    </div>\n\n                    <input type="submit" class="btn btn-primary" value="Save">\n                </form>\n\n                <hr/>\n\n            </div>\n\n            <div>\n\n                <ul class="list-group">\n                    <li class="list-group-item" ng-repeat="group in activeCourse.groups" ng-click="addEvent(group)"> {{ group.name }}</li>\n                </ul>\n            </div>\n\n            <div ng-if="addEventActive">\n                <div class="row">\n                    <hr>\n                    <div class="col-lg-12">\n                        <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">\n                            <p>\n                                <strong>Whoops!</strong> There were some errors:\n                            </p>\n                            <ul>\n                                <li ng-repeat="message in alert.msg">\n                                    {{ message }}\n                                </li>\n                            </ul>\n                        </uib-alert>\n\n                        <form name="addEventForm" ng-submit="saveEvent()">\n                            <div class="form-group">\n                                <label for="event_day">Day</label>\n                                <input type="date" ng-model="event.day" class="form-control" name="event_day" id="event_day">\n                            </div>\n                            <div class="form-group">\n                                <label for="event_start">Start time</label>\n                                <input type="time" ng-model="event.start_time" class="form-control" name="event_start" id="event_start">\n                            </div>\n                            <div class="form-group">\n                                <label for="event_end">End time</label>\n                                <input type="time" ng-model="event.end_time" class="form-control" name="event_end" id="event_end">\n                            </div>\n\n                            <input type="submit" class="btn btn-primary" value="Save">\n                        </form>\n\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n';
+},{}],19:[function(require,module,exports){
 module.exports = '<div class="courses-list">\n\n    <div ng-if="module.courses.length == 0">\n        <p class="text-muted">No courses available.</p>\n    </div>\n\n    <table class="table-bordered table" ng-if="module.courses.length > 0">\n        <thead>\n            <tr>\n                <th>Name</th>\n                <th>Type</th>\n                <th>Actions</th>\n            </tr>\n        </thead>\n        <tr ng-repeat="course in module.courses">\n            <td>\n                {{ course.name }}\n            </td>\n            <td>\n                {{ course.type }}\n            </td>\n            <td>\n                <a ng-click="removeCourse($index)">Delete course</a>\n            </td>\n        </tr>\n    </table>\n\n    <a ng-click="addCourse()"><i class="fa fa-plus"></i> Add a new course </a>\n\n    <div ng-if="addCourseActive">\n        <div class="row">\n            <hr>\n            <div class="col-lg-12">\n                <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">\n                    <p>\n                        <strong>Whoops!</strong> There were some errors:\n                    </p>\n                    <ul>\n                        <li ng-repeat="message in alert.msg">\n                            {{ message }}\n                        </li>\n                    </ul>\n                </uib-alert>\n\n                <form name="addCourseForm" ng-submit="saveCourse()">\n                    <div class="form-group">\n                        <label for="course_type">Type</label>\n                        <select name="course_type" id="course_type" class="form-control" ng-model="course.course_type">\n                            <option value="lecture">Lecture</option>\n                            <option value="practical_course">Practical course</option>\n                        </select>\n                    </div>\n                    <div class="form-group">\n                        <label for="course_name">Name</label>\n                        <input type="text" ng-model="course.course_name" class="form-control" name="course_name" id="course_name">\n                    </div>\n\n                    <input type="submit" class="btn btn-primary" value="Save">\n                </form>\n            </div>\n        </div>\n    </div>\n\n</div>';
-},{}],15:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 module.exports = '<div class="loader">\n    <div class="progress">\n        <div class="progress-bar progress-bar-primary progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">\n            <span class="sr-only">40% Complete (success)</span>\n        </div>\n    </div>\n</div>\n';
-},{}],16:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 module.exports = '<div class="modal-header">\n    <h3 class="modal-title">{{ module.name }}</h3>\n</div>\n\n<div class="modal-body">\n    <uib-tabset vertical="true" type="pills" class="modules-nav">\n        <uib-tab heading="General">\n            <p class="tab-title">\n                <strong>General</strong>\n            </p>\n\n            <table class="table module-table">\n                <tr>\n                    <td><strong>Short Name</strong></td>\n                    <td>{{ module.short_name }}</td>\n                </tr>\n                <tr>\n                    <td><strong>Description</strong></td>\n                    <td>{{ module.description }}</td>\n                </tr>\n                <tr>\n                    <td><strong>Responsible Professors</strong></td>\n                    <td>\n                        <ul class="list-unstyled">\n                            <li ng-repeat="professor in module.professors">\n                                {{ professor.last_name }}, {{ professor.first_name }}\n                            </li>\n                        </ul>\n                    </td>\n                </tr>\n            </table>\n        </uib-tab>\n        <uib-tab heading="Courses">\n            <p class="tab-title">\n                <strong>Courses</strong>\n            </p>\n\n            <courses-list module="module"></courses-list>\n        </uib-tab>\n        <uib-tab heading="Course groups">\n            <p class="tab-title">\n                <strong>Course groups & events</strong>\n            </p>\n\n            <course-groups-list courses="module.courses"></course-groups-list>\n        </uib-tab>\n    </uib-tabset>\n</div>\n\n<div class="modal-footer">\n    <button class="btn btn-primary" type="button" ng-click="ok()">Close</button>\n</div>';
-},{}],17:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
+module.exports = '<div class="modal-header">\n    <h3 class="modal-title">{{ student.name }}</h3>\n</div>\n\n<div class="modal-body">\n    <uib-tabset vertical="true" type="pills" class="modules-nav">\n        <uib-tab heading="General">\n            <p class="tab-title">\n                <strong>General</strong>\n            </p>\n\n            <table class="table module-table">\n                <tr>\n                    <td><strong>First Name</strong></td>\n                    <td>{{ student.first_name }}</td>\n                </tr>\n                <tr>\n                    <td><strong>Last Name</strong></td>\n                    <td>{{ student.last_name }}</td>\n                </tr>\n                <tr>\n                    <td><strong>Email</strong></td>\n                    <td>{{ student.email }}</td>\n                </tr>\n                <tr>\n                    <td><strong>Major</strong></td>\n                    <td>{{ student.major }}</td>\n                </tr>\n                <tr><td><strong>Semester</strong></td>\n                    <td>{{ student.semester }}</td>\n                </tr>\n            </table>\n        </uib-tab>\n        <uib-tab heading="Teams">\n            <p class="tab-title">\n                <strong>Teams</strong>\n            </p>\n            <table class="table-bordered table">\n                <thead>\n                <tr>\n                    <th>Name</th>\n                    <th>Role in Team</th>\n                    <th></th>\n                    <th></th>\n                </tr>\n                </thead>\n                <tbody>\n\n                <tr ng-repeat="team in student.teams">\n                    <td>{{ team.name }}</td>\n                    <td>{{ team.pivot.role }}</td>\n                    <td>\n                        <a ng-click="deleteMember(student)">delete</a>\n                    </td>\n                    <td>\n                        <a ng-click="updateMember(student)">update</a>\n                    </td>\n                </tr>\n\n                </tbody>\n            </table>\n\n        </uib-tab>\n        <uib-tab heading="Courses">\n            <p class="tab-title">\n                <strong>Courses</strong>\n            </p>\n\n            <pre>{{ student | json }}</pre>\n        </uib-tab>\n        <uib-tab heading="Grades">\n            <p class="tab-title">\n                <strong>Grades</strong>\n            </p>\n\n            <pre>{{ student | json }}</pre>\n        </uib-tab>\n\n    </uib-tabset>\n</div>\n\n<div class="modal-footer">\n    <button class="btn btn-primary" type="button" ng-click="ok()">Close</button>\n</div>';
+},{}],23:[function(require,module,exports){
+module.exports = '';
+},{}],24:[function(require,module,exports){
 module.exports = '<div>\n    <label>Professor(s)</label>\n\n    <small class="text-muted">\n        You can select multiple professors.\n    </small>\n\n    <ul class="professors-list">\n        <li ng-repeat="professor in professors | orderBy: \'last_name\'" ng-class="{ selected: selected(professor) }">\n            <a ng-click="handleSelection(professor)">\n                {{ professor.title }} {{ professor.last_name }}, {{ professor.first_name }}\n            </a>\n        </li>\n    </ul>\n\n    <div ng-if="professors.length == 0" class="no-professors text-center panel panel-default">\n        <div class="panel-body">\n            <h4>\n                <i class="fa fa-exclamation fa-2x"></i><br>\n                You haven\'t created any professors yet.\n            </h4>\n\n            <a href="" class="btn btn-default">Create one here</a>\n\n        </div>\n    </div>\n\n</div>';
 },{}]},{},[4]);

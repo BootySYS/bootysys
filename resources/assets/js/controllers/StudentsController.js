@@ -1,26 +1,28 @@
-module.exports = function($scope, $http, $window) {
+module.exports = function($scope, $http, $window, $uibModal, $log, moduleService) {
 
-    $scope.professors = [];
+    $scope.students = [];
 
     $scope.state = 'all';
 
     $scope.alerts = [];
 
-    $scope.newProfessor = {
+    $scope.newStudent = {
         first_name: '',
         last_name: '',
-        email: ''
+        email: '',
+        major:'',
+        semester:''
     };
 
     function init() {
-        $http.get('/professors/all').then(function (result) {
-            $scope.professors = result.data;
+        $http.get('/students/all').then(function (result) {
+            $scope.students = result.data;
         });
     }
 
     init();
 
-    $scope.addProfessor = function() {
+    $scope.addStudent = function() {
         $scope.state = 'add';
     };
 
@@ -28,15 +30,15 @@ module.exports = function($scope, $http, $window) {
         $scope.state = 'all';
     };
 
-    $scope.submitNewProfessor = function() {
+    $scope.submitNewStudent = function() {
 
         $scope.loading = true;
         $scope.alerts = [];
 
-        $http.post('/professors/store', $scope.newProfessor)
+        $http.post('/students/store', $scope.newStudent)
             .then(function (result) {
 
-                $scope.professors.push(result.data);
+                $scope.students.push(result.data);
                 $window.location.reload();
 
             }, function (response) {
@@ -62,11 +64,11 @@ module.exports = function($scope, $http, $window) {
         $scope.alerts.splice(index, 1);
     };
 
-    $scope.delete = function(professor) {
+    $scope.delete = function(student) {
 
         $scope.loading = true;
 
-        $http.delete('/professors/delete', {params: {id: professor.id}})
+        $http.delete('/students/delete', {params: {id: student.id}})
             .then(function (result) {
                 if (result.status == 200) {
                     $window.location.reload();
@@ -74,20 +76,21 @@ module.exports = function($scope, $http, $window) {
             });
     };
 
-    $scope.updateProfessor = function (professor) {
+
+    $scope.updateStudent = function (student) {
 
         $scope.state = 'update';
-        $scope.professorToUpdate = professor;
+       $scope.studentToUpdate = student;
     };
 
-    $scope.updateOldProfessor = function(professor) {
+
+    $scope.updateOldStudent = function(student) {
         $scope.loading = true;
         $scope.alerts = [];
-        console.log(professor);
-        $http.put('/professors/update',professor)
+        $http.put('/students/update',student)
             .then(function (result) {
 
-                $scope.professors.push(result.data);
+                $scope.students.push(result.data);
                 $window.location.reload();
 
             }, function (response) {
@@ -110,4 +113,18 @@ module.exports = function($scope, $http, $window) {
 
     };
 
+    $scope.showStudent = function (student) {
+
+        $uibModal.open({
+            animation: false,
+            template: require('../templates/modals/student.html'),
+            controller: 'StudentsModalController',
+            size: 'lg',
+            resolve: {
+                student: function () {
+                    return student;
+                }
+            }
+        });
+    };
 };

@@ -57,4 +57,14 @@ class University extends Model
     {
         return $this->hasOne(User::class);
     }
+
+    /**
+     * Teams belong to a university.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function teams()
+    {
+        return $this->hasMany('App\Team');
+    }
 }

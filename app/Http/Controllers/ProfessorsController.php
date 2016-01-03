@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProfessorRequest;
+use App\Http\Requests\UpdateProfessorRequest;
 use App\Professor;
 use App\University;
 use Illuminate\Http\Request;
@@ -37,9 +38,14 @@ class ProfessorsController extends Controller
         return $this->university->professors()->create($request->all());
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateProfessorRequest $request)
     {
-        //
+        $professor = Professor::findOrFail($request->input('id'));
+        $professor->first_name = $request->input('first_name');
+        $professor->last_name = $request->input('last_name');
+        $professor->email = $request->input('email');
+        $professor->save();
+        return $professor;
     }
 
     public function destroy(Request $request)
