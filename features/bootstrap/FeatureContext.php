@@ -67,6 +67,6 @@ class FeatureContext extends MinkContext
 
     }
 
-    
+
 
 }

@@ -14,6 +14,6 @@ Feature: Update details of a professor
     And I should see "Dashboard"
     And I follow "Professors"
     And I click on the element with id "update-0"
-    And I fill in "emailUpdate" with "pfosten.buntukalismus@haw-hamburg.de"
+    And I fill in "emailUpdate" with "renate.granaten@haw-hamburg.de"
     And I click on the element with id "saveUpdate"
-    Then the "table" element should contain "pfosten.buntukalismus@haw-hamburg.de"
+    Then the "table" element should contain "renate.granaten@haw-hamburg.de"

@@ -16,12 +16,12 @@ Feature: Add a professor
     And I should see "Add professor"
     And I click on the element with id "addProfessor"
     And I should see "First Name"
-    And I fill in "first_name" with "Pfosten"
-    And I fill in "last_name" with "Bunt"
-    And I fill in "email" with "pfosten.buntukalis@haw-hamburg.de"
+    And I fill in "first_name" with "Renate"
+    And I fill in "last_name" with "Granate"
+    And I fill in "email" with "renate.granate@haw-hamburg.de"
     And I click on the element with id "save"
-    And the "table" element should contain "Pfosten"
-    And the "table" element should contain "Bunt"
-    And the "table" element should contain "pfosten.buntukalis@haw-hamburg.de"
+    And the "table" element should contain "Renate"
+    And the "table" element should contain "Granate"
+    And the "table" element should contain "renate.granate@haw-hamburg.de"
 
 

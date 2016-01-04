@@ -14,6 +14,6 @@ Feature: Update details of a student
     And I should see "Dashboard"
     And I follow "Students"
     And I click on the element with id "update-0"
-    And I fill in "emailUpdate" with "bingodominus.efdegringo@haw-hamburg.de"
+    And I fill in "emailUpdate" with "uwe.schuhweg@haw-hamburg.de"
     And I click on the element with id "saveUpdate"
-    Then the "table" element should contain "bingodominus.efdegringo@haw-hamburg.de"
+    Then the "table" element should contain "uwe.schuhweg@haw-hamburg.de"

@@ -10,7 +10,7 @@ Feature: Sign up
     And I fill in "name" with "HAW"
     And I fill in "contact_first_name" with "Max"
     And I fill in "contact_last_name" with "Mustermann"
-    And I fill in "email" with "maximus.mustermann@haw-hamburg.de"
+    And I fill in "email" with "maximanus.mustermann@haw-hamburg.de"
     And I fill in "state" with "Deutschland"
     And I fill in "city" with "Hamburg"
     And I fill in "zip_code" with "20097"
