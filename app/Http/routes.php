@@ -54,6 +54,8 @@ Route::group(['prefix' => 'teams'], function() {
     Route::post('add/member', 'TeamsController@addMember');
     Route::post('apply', 'TeamsController@applyToCourse');
     Route::get('leave/{course}/{team}', 'TeamsController@leaveCourse');
+    Route::get('remove/member/{member}/{team}', 'TeamsController@kickMember');
+    Route::get('delete/{id}', 'TeamsController@delete');
 });
 
 Route::group(['prefix' => 'import'], function() {
@@ -68,7 +70,8 @@ Route::group(['prefix' => 'api'], function() {
     Route::get('send', 'DistributionServerController@send');
 });
 
-Route::get('test', function() {
-    dd(Carbon::createFromFormat('d-m-Y', '01-01-2016'));
-});
+Route::group(['prefix' => 'distribution'], function() {
 
+    Route::get('/', 'DistributionServerController@index');
+    Route::get('start', 'DistributionServerController@start');
+});

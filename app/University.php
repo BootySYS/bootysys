@@ -66,4 +66,9 @@ class University extends Model
     {
         return $this->hasMany('App\Team');
     }
+
+    public function distributions()
+    {
+        return $this->hasMany('App\Distribution');
+    }
 }

@@ -18,8 +18,12 @@
             <ul class="list-group">
                 @foreach($team->members as $member)
                     <li class="list-group-item">
-                        {{ $member->first_name }} {{ $member->last_name }}, {{ $member->email }}<br>
-                        <strong>Role:</strong> {{ ucfirst($member->pivot->role) }}
+                        {{ $member->first_name }} {{ $member->last_name }}, {{ $member->email }} ({{ $member->pivot->role }})
+                        @if($member->pivot->role === 'member')
+                            @can('manage-this-team', $team)
+                                <a href="{{ action('TeamsController@kickMember', ['team' => $team->id, 'member' => $member->id]) }}" class="text-danger"><i class="fa fa-ban"></i> Kick</a>
+                            @endcan
+                        @endif
                     </li>
                 @endforeach
             </ul>
@@ -34,11 +38,15 @@
             @if($team->courses->isEmpty())
                 Your team has not applied for any courses.
             @else
-                <ul class="list-unstyled">
+                <ul class="list-group">
                 @foreach($team->courses as $course)
-                    <li>
-                        <strong>{{$course->type}}</strong> {{ $course->name }} in <i>{{ $course->module->name }}</i>
-                        <a href="{{ action('TeamsController@leaveCourse', ['course' => $course->id, 'team' => $team->id]) }}">(Leave)</a>
+                    <li class="list-group-item">
+                        <strong>Type:</strong> {{$course->type}} <br>
+                        <strong>Name:</strong> {{ $course->name }} <br>
+                        <strong>Module:</strong> {{ $course->module->name }} <br>
+                        @can('manage-this-team', $team)
+                            <a href="{{ action('TeamsController@leaveCourse', ['course' => $course->id, 'team' => $team->id]) }}">(Leave)</a>
+                        @endcan
                     </li>
                 @endforeach
                 </ul>
@@ -54,7 +62,7 @@
             @if($team->groups->isEmpty())
                 Your team has no accepted groups.
             @else
-                <ul>
+                <ul class="list-group">
                     @foreach($team->groups as $group)
                         <li>{{ $group->name }}</li>
                     @endforeach
@@ -65,9 +73,6 @@
 
     @can('manage-this-team', $team)
         <hr>
-        <strong class="text-muted">Team Lead Actions</strong>
-        <br><br>
-
         <div class="row">
             <div class="col-lg-2">
                 <strong>Apply to course</strong>
@@ -131,7 +136,8 @@
                 <p>
                     <strong class="text-danger">Danger Zone</strong>
                 </p>
-                <a href="" class="btn btn-danger btn-sm">Delete this team</a>
+                <a href="{{ action('TeamsController@delete', ['id' => $team->id]) }}" class="btn btn-danger btn-sm">Delete this team</a>
+                <small class="text-muted">This action cannot be undone!</small>
             </div>
         </div>
     @endcan

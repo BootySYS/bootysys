@@ -86,6 +86,15 @@ class TeamsController extends Controller
         return view('student.teams.show')->with(compact('team', 'modules'));
     }
 
+    public function delete($id)
+    {
+        $team = Team::findOrFail($id);
+        $team->delete();
+
+        Session::flash('success', 'Your team was deleted successfully.');
+        return redirect('/teams');
+    }
+
     public function addMember(Request $request)
     {
         $this->validate($request, [
@@ -109,9 +118,12 @@ class TeamsController extends Controller
         return redirect()->back();
     }
 
-    public function removeMember(Request $request)
+    public function kickMember($member, $team)
     {
-        // TODO
+        $team = Team::findOrFail($team);
+        $team->members()->detach($member);
+        Session::flash('success', 'You updated your team members successfully.');
+        return redirect()->back();
     }
 
     public function applyToCourse(Request $request)
