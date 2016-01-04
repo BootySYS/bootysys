@@ -88,26 +88,23 @@ class ImportExportController extends Controller
         $csv = Reader::createFromPath($filePath);
         $allStudents = collect($csv->setOffset(1)->fetchAll());
 
-        DB::transaction(function() use ($allStudents) {
+        foreach ($allStudents as $student) {
 
-            foreach ($allStudents as $student) {
+            $tmp = collect([
+                'id'            => $student[0],
+                'first_name'    => $student[1],
+                'last_name'     => $student[2],
+                'email'         => $student[3],
+                'major'         => $student[4],
+                'semester'      => $student[5]
+            ]);
 
-                $tmp = collect([
-                    'id'            => $student[0],
-                    'first_name'    => $student[1],
-                    'last_name'     => $student[2],
-                    'email'         => $student[3],
-                    'major'         => $student[4],
-                    'semester'      => $student[5]
-                ]);
-
-                try {
-                    $this->university->students()->create($tmp->toArray());
-                } catch (\Exception $e) {
-                    // error
-                }
+            try {
+                $this->university->students()->create($tmp->toArray());
+            } catch (\Exception $e) {
+                Log::error($e);
             }
-        });
+        }
 
         Session::flash('success', "You imported your students successfully.");
     }

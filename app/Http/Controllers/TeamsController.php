@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Student;
 use App\Team;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTeamRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Session;
 
 class TeamsController extends Controller
 {
@@ -21,6 +26,10 @@ class TeamsController extends Controller
         if (auth()->check()) {
             $this->university = auth()->user()->university;
         }
+
+        if (Gate::denies('is-student')) {
+            abort(403);
+        }
     }
 
     /**
@@ -30,17 +39,18 @@ class TeamsController extends Controller
      */
     public function index()
     {
-        return view('university.teams.listing')->with('university', $this->university);
+        $teams = Student::where('email', Auth::user()->email)->firstOrFail()->teams;
+        return view('student.teams.index')->with(compact('teams'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new team.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        //
+        return view('student.teams.create');
     }
 
     /**
@@ -51,7 +61,15 @@ class TeamsController extends Controller
      */
     public function store(StoreTeamRequest $request)
     {
-        return $this->university->teams()->create($request->all());
+        if (!$request->input('participants') === "") {
+            $participants = explode(PHP_EOL, $request->input('participants'));
+            // TODO notify via email
+        }
+
+        $team = $this->university->teams()->create($request->all());
+        $team->members()->attach(Student::where('email', Auth::user()->email)->firstOrFail(), ['role' => 'leader']);
+        Session::flash('success', 'The team was created successfully!');
+        return redirect('/teams');
     }
 
     /**
@@ -62,18 +80,8 @@ class TeamsController extends Controller
      */
     public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        $team = $this->university->teams()->findOrFail($id);
+        return view('student.teams.show')->with(compact('team'));
     }
 
     /**
@@ -86,22 +94,5 @@ class TeamsController extends Controller
     public function update(Request $request, $id)
     {
 
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Request $request)
-    {
-        Team::findOrFail($request->input('id'))->delete();
-        return response('Deleted Team.', 200);
-    }
-
-    public function all()
-    {
-        return $this->university->teams;
     }
 }

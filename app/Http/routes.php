@@ -48,10 +48,9 @@ Route::group(['prefix' => 'students'], function() {
 
 Route::group(['prefix' => 'teams'], function() {
     Route::get('/', 'TeamsController@index');
-    Route::get('all', 'TeamsController@all');
+    Route::get('create', 'TeamsController@create');
     Route::post('store', 'TeamsController@store');
-    Route::delete('delete', 'TeamsController@destroy');
-    Route::put('update', 'TeamsController@update');
+    Route::get('show/{id}', 'TeamsController@show');
 });
 
 Route::group(['prefix' => 'import'], function() {

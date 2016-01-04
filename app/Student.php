@@ -15,17 +15,6 @@ class Student extends Model
         'semester'
     ];
 
-    protected $visible = [
-        'id',
-        'first_name',
-        'last_name',
-        'email',
-        'password',
-        'major',
-        'semester',
-        'teams'
-    ];
-
     protected static function boot()
     {
         // TODO send email with randomly generated password

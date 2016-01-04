@@ -57,6 +57,14 @@
                                 <a href="{{ action('StudentsController@index') }}"><i class="fa fa-graduation-cap"></i> Students</a>
                             </li>
                         @endcan
+
+                        @can('is-student')
+
+                            <li>
+                                <a href="{{ action('TeamsController@index') }}"><i class="fa fa-users"></i> Teams</a>
+                            </li>
+
+                        @endcan
                 </ul>
             </div>
         </div>
