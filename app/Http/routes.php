@@ -51,8 +51,9 @@ Route::group(['prefix' => 'teams'], function() {
     Route::get('create', 'TeamsController@create');
     Route::post('store', 'TeamsController@store');
     Route::get('show/{id}', 'TeamsController@show');
-
     Route::post('add/member', 'TeamsController@addMember');
+    Route::post('apply', 'TeamsController@applyToCourse');
+    Route::get('leave/{course}/{team}', 'TeamsController@leaveCourse');
 });
 
 Route::group(['prefix' => 'import'], function() {
@@ -64,7 +65,7 @@ Route::group(['prefix' => 'import'], function() {
 Route::group(['prefix' => 'api'], function() {
 
     Route::get('/', 'DistributionServerController@time');
-
+    Route::get('send', 'DistributionServerController@send');
 });
 
 Route::get('test', function() {

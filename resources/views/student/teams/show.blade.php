@@ -12,7 +12,7 @@
 
     <div class="row">
         <div class="col-lg-2">
-            <strong>Members</strong>
+            <strong>Members ({{ count($team->members) }})</strong>
         </div>
         <div class="col-lg-10">
             <ul class="list-group">
@@ -25,13 +25,41 @@
             </ul>
         </div>
     </div>
-
+    <hr>
     <div class="row">
         <div class="col-lg-2">
             <strong>Courses applied to</strong>
         </div>
         <div class="col-lg-10">
-
+            @if($team->courses->isEmpty())
+                Your team has not applied for any courses.
+            @else
+                <ul class="list-unstyled">
+                @foreach($team->courses as $course)
+                    <li>
+                        <strong>{{$course->type}}</strong> {{ $course->name }} in <i>{{ $course->module->name }}</i>
+                        <a href="{{ action('TeamsController@leaveCourse', ['course' => $course->id, 'team' => $team->id]) }}">(Leave)</a>
+                    </li>
+                @endforeach
+                </ul>
+            @endif
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-lg-2">
+            <strong>Groups, accepted <i class="fa fa-check"></i></strong>
+        </div>
+        <div class="col-lg-10">
+            @if($team->groups->isEmpty())
+                Your team has no accepted groups.
+            @else
+                <ul>
+                    @foreach($team->groups as $group)
+                        <li>{{ $group->name }}</li>
+                    @endforeach
+                </ul>
+            @endif
         </div>
     </div>
 
@@ -39,7 +67,37 @@
         <hr>
         <strong class="text-muted">Team Lead Actions</strong>
         <br><br>
-    
+
+        <div class="row">
+            <div class="col-lg-2">
+                <strong>Apply to course</strong>
+            </div>
+            <div class="col-lg-10">
+                <form action="{{ action('TeamsController@applyToCourse') }}" method="POST">
+                    {!! csrf_field() !!}
+                    <input type="hidden" name="team" value="{{ $team->id }}">
+                    <div class="form-group">
+                        <label for="courses">Courses</label>
+                        <select name="course" id="courses" class="form-control">
+                            <option disabled selected>-- Please select --</option>
+                            @foreach($modules as $module)
+                                <optgroup label="{{ $module->name }}">
+                                    @foreach($module->courses as $course)
+                                        <option value="{{ $course->id }}">{{ $course->name }}, {{ $course->type }}</option>
+                                    @endforeach
+                                </optgroup>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Apply" class="btn btn-success btn-sm">
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    <hr>
         <div class="row">
             <div class="col-lg-2">
                 <strong>Add a member</strong>

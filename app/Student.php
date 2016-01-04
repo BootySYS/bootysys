@@ -58,4 +58,14 @@ class Student extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * Mutator for lowercasing the email, before save.
+     *
+     * @param $value
+     */
+    public function setEmailAttribute($value)
+    {
+        $this->attributes['email'] = strtolower($value);
+    }
 }

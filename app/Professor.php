@@ -59,4 +59,14 @@ class Professor extends Model
     {
         return $this->title . ' ' . $this->first_name . ' ' . $this->last_name;
     }
+
+    /**
+     * Mutator for lowercasing the email, before save.
+     *
+     * @param $value
+     */
+    public function setEmailAttribute($value)
+    {
+        $this->attributes['email'] = strtolower($value);
+    }
 }

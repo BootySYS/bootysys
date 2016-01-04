@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Course;
 use App\Student;
 use App\Team;
 use App\User;
@@ -81,7 +82,8 @@ class TeamsController extends Controller
     public function show($id)
     {
         $team = $this->university->teams()->findOrFail($id);
-        return view('student.teams.show')->with(compact('team'));
+        $modules = $this->university->modules;
+        return view('student.teams.show')->with(compact('team', 'modules'));
     }
 
     public function addMember(Request $request)
@@ -93,8 +95,6 @@ class TeamsController extends Controller
 
         $member = Student::where('email', $request->input('email'))->firstOrFail();
         $team = Team::find($request->input('team'));
-
-        $memberExistsInTeam = false;
 
         foreach ($team->members as $student)
         {
@@ -111,6 +111,30 @@ class TeamsController extends Controller
 
     public function removeMember(Request $request)
     {
+        // TODO
+    }
 
+    public function applyToCourse(Request $request)
+    {
+        $this->validate($request, [
+            'team'      => 'required|integer|exists:teams,id',
+            'course'    => 'required|integer|exists:courses,id'
+        ]);
+
+        $team = Team::find($request->input('team'));
+        $course = Course::find($request->input('course'));
+
+        $team->courses()->attach($course);
+
+        Session::flash('success', "Your team applied to {$course->name}");
+        return redirect()->back();
+    }
+
+    public function leaveCourse($course, $team)
+    {
+        $team = Team::findOrFail($team);
+        $team->courses()->detach($course);
+        Session::flash('success', 'Your application to the course has been removed');
+        return redirect()->back();
     }
 }
