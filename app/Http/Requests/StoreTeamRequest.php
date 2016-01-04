@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class StoreTeamRequest extends Request
 {
@@ -13,7 +15,7 @@ class StoreTeamRequest extends Request
      */
     public function authorize()
     {
-        return false;
+        return Auth::check() && Gate::allows('is-student');
     }
 
     /**
@@ -24,7 +26,7 @@ class StoreTeamRequest extends Request
     public function rules()
     {
         return [
-            //
+            'name'      => 'required|unique:teams'
         ];
     }
 }

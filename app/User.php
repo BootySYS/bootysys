@@ -46,4 +46,14 @@ class User extends Model implements AuthenticatableContract,
     {
         return $this->belongsTo(University::class);
     }
+
+    /**
+     * Mutator for lowercasing the email, before save.
+     *
+     * @param $value
+     */
+    public function setEmailAttribute($value)
+    {
+        $this->attributes['email'] = strtolower($value);
+    }
 }

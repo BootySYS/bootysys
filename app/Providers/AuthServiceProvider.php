@@ -42,5 +42,21 @@ class AuthServiceProvider extends ServiceProvider
             return $user->role === 'professor';
         });
 
+        $gate->define('is-student', function($user) {
+            return $user->role === 'student';
+        });
+
+        $gate->define('manage-this-team', function($user, $team) {
+
+            $lead = null;
+
+            foreach ($team->members as $member) {
+                if ($member->pivot->role === 'leader') {
+                    $lead = $member;
+                }
+            }
+
+            return $lead && ($lead->email === $user->email);
+        });
     }
 }

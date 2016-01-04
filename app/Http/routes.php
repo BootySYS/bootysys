@@ -48,10 +48,14 @@ Route::group(['prefix' => 'students'], function() {
 
 Route::group(['prefix' => 'teams'], function() {
     Route::get('/', 'TeamsController@index');
-    Route::get('all', 'TeamsController@all');
+    Route::get('create', 'TeamsController@create');
     Route::post('store', 'TeamsController@store');
-    Route::delete('delete', 'TeamsController@destroy');
-    Route::put('update', 'TeamsController@update');
+    Route::get('show/{id}', 'TeamsController@show');
+    Route::post('add/member', 'TeamsController@addMember');
+    Route::post('apply', 'TeamsController@applyToCourse');
+    Route::get('leave/{course}/{team}', 'TeamsController@leaveCourse');
+    Route::get('remove/member/{member}/{team}', 'TeamsController@kickMember');
+    Route::get('delete/{id}', 'TeamsController@delete');
 });
 
 Route::group(['prefix' => 'import'], function() {
@@ -63,10 +67,11 @@ Route::group(['prefix' => 'import'], function() {
 Route::group(['prefix' => 'api'], function() {
 
     Route::get('/', 'DistributionServerController@time');
-
+    Route::get('send', 'DistributionServerController@send');
 });
 
-Route::get('test', function() {
-    dd(Carbon::createFromFormat('d-m-Y', '01-01-2016'));
-});
+Route::group(['prefix' => 'distribution'], function() {
 
+    Route::get('/', 'DistributionServerController@index');
+    Route::get('start', 'DistributionServerController@start');
+});

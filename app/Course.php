@@ -34,4 +34,14 @@ class Course extends Model
     {
         return $this->belongsTo('App\Module');
     }
+
+    /**
+     * A course has many teams, that apply to it.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function applyingTeams()
+    {
+        return $this->belongsToMany('App\Team');
+    }
 }
