@@ -20,9 +20,4 @@ class Event extends Model
     {
         return $this->belongsTo('App\Group');
     }
-
-    public function getDayAttribute($value)
-    {
-        return Carbon::createFromFormat('dd-mm-YYYY', $value);
-    }
 }

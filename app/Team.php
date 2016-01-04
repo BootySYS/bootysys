@@ -10,7 +10,6 @@ class Team extends Model
         'name'
     ];
 
-
     /**
      * A team has members, which are students.
      *
@@ -32,13 +31,23 @@ class Team extends Model
         return $this->belongsTo('App\University');
     }
 
+    /**
+     * Courses, that the team has applied to.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function courses()
     {
-        return $this->hasMany('App\Course');
+        return $this->belongsToMany('App\Course');
     }
 
+    /**
+     * Groups, that the team has been applied to.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function groups()
     {
-        return $this->hasMany('App\Group');
+        return $this->belongsToMany('App\Group');
     }
 }

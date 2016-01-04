@@ -30,4 +30,9 @@ class Group extends Model
     {
         return $this->belongsTo('App\Course');
     }
+
+    public function assignedTeams()
+    {
+        return $this->belongsToMany('App\Team');
+    }
 }

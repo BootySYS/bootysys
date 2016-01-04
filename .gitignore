@@ -6,3 +6,4 @@ Homestead.json
 /.idea
 /.vagrant
 /bower_components
+/public/uploads

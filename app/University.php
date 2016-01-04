@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class University extends Model
 {
-
     protected $fillable = [
         'name',
         'contact_first_name',
@@ -66,5 +65,10 @@ class University extends Model
     public function teams()
     {
         return $this->hasMany('App\Team');
+    }
+
+    public function distributions()
+    {
+        return $this->hasMany('App\Distribution');
     }
 }

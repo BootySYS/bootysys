@@ -15,17 +15,6 @@ class Student extends Model
         'semester'
     ];
 
-    protected $visible = [
-        'id',
-        'first_name',
-        'last_name',
-        'email',
-        'password',
-        'major',
-        'semester',
-        'teams'
-    ];
-
     protected static function boot()
     {
         // TODO send email with randomly generated password
@@ -34,7 +23,7 @@ class Student extends Model
                 'name' => $student->first_name . ' ' . $student->last_name,
                 'email' => $student->email,
                 'password' => bcrypt('1234'),
-                'role' => 'professor'
+                'role' => 'student'
             ]);
         });
     }
@@ -70,5 +59,13 @@ class Student extends Model
         return $this->belongsTo(User::class);
     }
 
-
+    /**
+     * Mutator for lowercasing the email, before save.
+     *
+     * @param $value
+     */
+    public function setEmailAttribute($value)
+    {
+        $this->attributes['email'] = strtolower($value);
+    }
 }
