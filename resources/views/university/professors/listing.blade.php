@@ -10,7 +10,7 @@
                 <div class="page-header">
                     <h3>
                         Professors
-                        <a ng-show="state === 'all'" ng-click="addProfessor()" class="btn btn-primary btn-sm pull-right"><i class="fa fa-plus"></i> Add professor</a>
+                        <a id="addProfessor" ng-show="state === 'all'" ng-click="addProfessor()" class="btn btn-primary btn-sm pull-right"><i class="fa fa-plus"></i> Add professor</a>
                     </h3>
                 </div>
             </div>
@@ -36,10 +36,10 @@
                                 <td>@{{ professor.last_name }}</td>
                                 <td>@{{ professor.email }}</td>
                                 <td>
-                                    <a ng-click="delete(professor)">Delete</a>
+                                    <a ng-click="delete(professor)" id="delete-@{{ $index }}">Delete</a>
                                 </td>
                                 <td>
-                                    <a ng-click="updateProfessor(professor)">Update</a>
+                                    <a ng-click="updateProfessor(professor)" id="update-@{{ $index }}">Update</a>
                                 </td>
                             </tr>
                         </table>
@@ -96,7 +96,7 @@
                         </div>
 
                         <br>
-                        <input type="submit" class="btn btn-primary" value="Save" />
+                        <input type="submit" class="btn btn-primary" value="Save" id="save"/>
                         <a ng-show="state === 'add'" ng-click="cancel()" class="btn btn-danger"> cancel</a>
                     </form>
                 </div>
@@ -131,11 +131,11 @@
 
                         <div class="form-group">
                             <label>Email</label>
-                            <input ng-model="professorToUpdate.email" name="email" class="form-control" value="@{{ professor.email }}">
+                            <input ng-model="professorToUpdate.email" id="emailUpdate" name="email" class="form-control" value="@{{ professor.email }}">
                         </div>
 
                         <br>
-                        <input type="submit" class="btn btn-primary" value="Save" />
+                        <input type="submit" id="saveUpdate" class="btn btn-primary" value="Save" />
                         <a ng-show="state === 'update'" ng-click="cancel()" class="btn btn-danger"> cancel</a>
                     </form>
                 </div>

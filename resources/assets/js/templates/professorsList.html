@@ -7,7 +7,7 @@
 
     <ul class="professors-list">
         <li ng-repeat="professor in professors | orderBy: 'last_name'" ng-class="{ selected: selected(professor) }">
-            <a ng-click="handleSelection(professor)">
+            <a ng-click="handleSelection(professor)" id="professor-{{ $index }}">
                 {{ professor.title }} {{ professor.last_name }}, {{ professor.first_name }}
             </a>
         </li>

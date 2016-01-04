@@ -13,7 +13,7 @@
                         <span ng-show="state == 'add'">
                             @{{ newStudent.name ? newStudent.name : 'Create a new Student' }}
                         </span>
-                        <a ng-if="state === 'all'" ng-click="addStudent()" class="btn btn-primary btn-sm pull-right" ng-cloak><i class="fa fa-plus"></i> Add student</a>
+                        <a id="addStudent" ng-if="state === 'all'" ng-click="addStudent()" class="btn btn-primary btn-sm pull-right" ng-cloak><i class="fa fa-plus"></i> Add student</a>
                     </h3>
                 </div>
             </div>
@@ -44,10 +44,10 @@
                             <td>@{{ student.major }}</td>
                             <td>@{{ student.semester }}</td>
                             <td>
-                                <a ng-click="delete(student)">Delete</a>
+                                <a ng-click="delete(student)" id="delete-@{{ $index }}">Delete</a>
                             </td>
                             <td>
-                                <a ng-click="updateStudent(student)">Update</a>
+                                <a ng-click="updateStudent(student)" id="update-@{{ $index }}">Update</a>
                             </td>
                         </tr>
 
@@ -112,7 +112,7 @@
                         </div>
 
                         <br>
-                        <input type="submit" class="btn btn-primary" value="Save" />
+                        <input type="submit" id="save" class="btn btn-primary" value="Save" />
                         <a ng-show="state === 'add'" ng-click="cancel()" class="btn btn-danger"> cancel</a>
                     </form>
                 </div>
@@ -152,7 +152,7 @@
 
                         <div class="form-group">
                             <label>Email</label>
-                            <input ng-model="studentToUpdate.email" name="email" class="form-control" value="@{{ student.email }}">
+                            <input ng-model="studentToUpdate.email" id="emailUpdate" name="email" class="form-control" value="@{{ student.email }}">
                         </div>
 
                         <div class="form-group">
@@ -166,7 +166,7 @@
                         </div>
 
                         <br>
-                        <input type="submit" class="btn btn-primary" value="Save" />
+                        <input type="submit" class="btn btn-primary" id="saveUpdate" value="Save" />
                         <a ng-show="state === 'update'" ng-click="cancel()" class="btn btn-danger"> cancel</a>
                     </form>
                 </div>
