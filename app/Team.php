@@ -30,14 +30,4 @@ class Team extends Model
     {
         return $this->belongsTo('App\University');
     }
-
-    public function courses()
-    {
-        return $this->hasMany('App\Course');
-    }
-
-    public function groups()
-    {
-        return $this->hasMany('App\Group');
-    }
 }

@@ -84,14 +84,32 @@ class TeamsController extends Controller
         return view('student.teams.show')->with(compact('team'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function addMember(Request $request)
+    {
+        $this->validate($request, [
+            'email'     => 'required|email|exists:students',
+            'team'      => 'required|integer|exists:teams,id'
+        ]);
+
+        $member = Student::where('email', $request->input('email'))->firstOrFail();
+        $team = Team::find($request->input('team'));
+
+        $memberExistsInTeam = false;
+
+        foreach ($team->members as $student)
+        {
+            if ($student->id == $member->id) {
+                Session::flash('errors', collect(['This student is already a member of this team!']));
+                return redirect()->back();
+            }
+        }
+
+        $team->members()->attach($member, ['role' => 'member']);
+        Session::flash('success', "{$member->first_name} is now a member of your team.");
+        return redirect()->back();
+    }
+
+    public function removeMember(Request $request)
     {
 
     }

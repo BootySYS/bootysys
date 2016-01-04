@@ -39,7 +39,7 @@
     <hr>
     <div class="row">
         <div class="col-lg-12">
-            <a href="{{ action('TeamsController@create') }}" class="btn btn-primary">Create a team</a> &nbsp; or &nbsp; <a href="" class="btn btn-primary">Join a team</a>
+            <a href="{{ action('TeamsController@create') }}" class="btn btn-primary">Create a team</a>
         </div>
     </div>
 

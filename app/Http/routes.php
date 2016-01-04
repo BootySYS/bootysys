@@ -51,6 +51,8 @@ Route::group(['prefix' => 'teams'], function() {
     Route::get('create', 'TeamsController@create');
     Route::post('store', 'TeamsController@store');
     Route::get('show/{id}', 'TeamsController@show');
+
+    Route::post('add/member', 'TeamsController@addMember');
 });
 
 Route::group(['prefix' => 'import'], function() {
