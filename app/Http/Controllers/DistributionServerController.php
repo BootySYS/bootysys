@@ -78,9 +78,7 @@ class DistributionServerController extends Controller
         try {
 
             $client->request('POST', '/receive', [
-                'json' => [
-                    $request
-                ]
+                'json' => $request
             ]);
 
         } catch(\Exception $e) {

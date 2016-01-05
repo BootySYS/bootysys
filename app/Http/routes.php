@@ -73,6 +73,10 @@ Route::group(['prefix' => 'api'], function() {
     Route::get('send', 'DistributionServerController@send');
 });
 
+Route::group(['prefix' => 'receiver'], function () {
+    Route::post('receive', 'ReceiverController@receive');
+});
+
 Route::group(['prefix' => 'distribution'], function() {
 
     Route::get('/', 'DistributionServerController@index');
