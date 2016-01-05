@@ -12,7 +12,7 @@ class ReceiverController extends Controller
 {
     public function receive(Request $request)
     {
-        $received = $request->all();
+        $received = $request;
         Log::info($received);
     }
 }
